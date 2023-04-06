@@ -10,13 +10,13 @@ const GridTest = () => {
     // layout is an array of objects, see the demo for more complete usage
     const layout = [
         { i: "a", x: 0, y: 0, w: 1, h: 2, static: true },
-        { i: "b", x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
+        { i: "b", x: 1, y: 0, w: 5, h: 1, minW: 2, maxW: 8 },
         { i: "c", x: 4, y: 0, w: 1, h: 2 }
     ];
     const changeStatic = (e) => {
         e.preventDefault();
         !isStatic ? setStatic(true) : setStatic(false);
-        isStatic ? setNewKey("a") : setNewKey("b");
+        // isStatic ? setNewKey("a") : setNewKey("b");
         console.log("static", isStatic);
     }
     useEffect(() => {
@@ -31,7 +31,7 @@ const GridTest = () => {
             cols={12}
             rowHeight={400}
             width={1800}
-            // isDraggable={!isStatic}
+            isDraggable={!isStatic}
         >
             {/* <GridConponent
                 layout={layout}
@@ -40,9 +40,9 @@ const GridTest = () => {
                 key="n"
             ></GridConponent> */}
             <div
-                key={"n"}
+                key={"b"}
                 style={{ backgroundColor: 'green'}}
-                draggable={!isStatic}
+                // draggable={!isStatic}
             >
                 <button onClick={(e) => changeStatic(e)} >Pin</button>
                 <GridLayout
