@@ -20,7 +20,8 @@ const GridChart = () => {
             columns: 12,
             rowHeight: 90,
             width: 1350,
-            // bounded: true,
+            bounded: true,
+            resizable: false,
             subGrids: [
                 {
                     data: { x: 0, y: 0, w: 2, h: 2, static: true },
@@ -35,17 +36,21 @@ const GridChart = () => {
                     // bounded: true,
                 },
                 {
-                    data: { x: 2.5, y: 0, w: 2, h: 2, minW: 2, maxW: 4, static: true },
+                    data: { x: 2.5, y: 0, w: 2, h: 2, minW: 4, maxW: 4, static: true },
                     // color: "blue",
                     opacity: '0.5',
                     borderRadius: '40px',
                     border: "solid",
                     columns: 10,
-                    rowHeight: 30,
+                    rowHeight: 60,
                     width: 300,
+                    compactType: "horizontal",
+                    resizable: false,
+                    bounded: true,
+                    preventCollision: true,
                     elementGrids: [
                         {
-                            data: { x: 0, y: 0, w: 2, h: 2 },
+                            data: { x: 0, y: 0, w: 2, h: 1 },
                             color: "#F8F70A",
                             opacity: '1',
                             borderRadius: '20px',
@@ -56,7 +61,7 @@ const GridChart = () => {
                             // bounded: true,
                         },
                         {
-                            data: { x: 1, y: 0, w: 2, h: 2, minW: 2, maxW: 4 },
+                            data: { x: 1, y: 0, w: 2, h: 1, minW: 2, maxW: 4 },
                             color: "blue",
                             opacity: '1',
                             borderRadius: '20px',
@@ -67,7 +72,7 @@ const GridChart = () => {
                             // bounded: true,
                         },
                         {
-                            data: { x: 6, y: 0, w: 1, h: 2, minW: 2, maxW: 4 },
+                            data: { x: 6, y: 0, w: 1, h: 1, minW: 2, maxW: 4 },
                             color: "white",
                             opacity: '1',
                             borderRadius: '10px',
@@ -82,7 +87,7 @@ const GridChart = () => {
 
                 },
                 {
-                    data: { x: 8, y: 0, w: 6, h: 2, minW: 2, maxW: 4, static: true },
+                    data: { x: 8, y: 0, w: 6, h: 2, minW: 4, maxW: 4, static: true },
                     // color: "white",
                     opacity: '0.5',
                     borderRadius: '5px',
@@ -90,6 +95,10 @@ const GridChart = () => {
                     columns: 40,
                     rowHeight: 10,
                     width: 650,
+                    compactType: "horizontal",
+                    resizable: false,
+                    bounded: true,
+                    preventCollision: true,
                     elementGrids: [
                         {
                             data: { x: 0, y: 0, w: 2, h: 3, static: true },
@@ -313,7 +322,7 @@ const GridChart = () => {
                     // bounded: true,
                 },
                 {
-                    data: { x: 2.5, y: 0, w: 2, h: 2, minW: 2, maxW: 4, static: true },
+                    data: { x: 2.5, y: 0, w: 2, h: 2, minW: 4, maxW: 4, static: true },
                     // color: "blue",
                     opacity: '0.5',
                     borderRadius: '40px',
@@ -321,6 +330,10 @@ const GridChart = () => {
                     columns: 10,
                     rowHeight: 30,
                     width: 300,
+                    compactType: "horizontal",
+                    resizable: false,
+                    bounded: true,
+                    preventCollision: true,
                     elementGrids: [
                         {
                             data: { x: 0, y: 2, w: 2, h: 2 },
@@ -360,7 +373,7 @@ const GridChart = () => {
 
                 },
                 {
-                    data: { x: 8, y: 0, w: 6, h: 2, minW: 2, maxW: 4, static: true },
+                    data: { x: 8, y: 0, w: 6, h: 2, minW: 4, maxW: 4, static: true },
                     // color: "white",
                     opacity: '0.5',
                     borderRadius: '5px',
@@ -368,6 +381,10 @@ const GridChart = () => {
                     columns: 40,
                     rowHeight: 10,
                     width: 650,
+                    compactType: "horizontal",
+                    resizable: false,
+                    bounded: true,
+                    preventCollision: true,
                     elementGrids: [
                         {
                             data: { x: 0, y: 0, w: 2, h: 3, static: true },
@@ -591,7 +608,7 @@ const GridChart = () => {
                     // bounded: true,
                 },
                 {
-                    data: { x: 2.5, y: 0, w: 2, h: 2, minW: 2, maxW: 4, static: true },
+                    data: { x: 2.5, y: 0, w: 2, h: 2, minW: 4, maxW: 4, static: true },
                     // color: "blue",
                     opacity: '0.5',
                     borderRadius: '40px',
@@ -599,6 +616,10 @@ const GridChart = () => {
                     columns: 10,
                     rowHeight: 30,
                     width: 300,
+                    compactType: "horizontal",
+                    resizable: false,
+                    bounded: true,
+                    preventCollision: true,
                     elementGrids: [
                         {
                             data: { x: 0, y: 2, w: 2, h: 2 },
@@ -638,7 +659,7 @@ const GridChart = () => {
 
                 },
                 {
-                    data: { x: 8, y: 0, w: 6, h: 2, minW: 2, maxW: 4, static: true },
+                    data: { x: 8, y: 0, w: 6, h: 2, minW: 4, maxW: 4, static: true },
                     // color: "white",
                     opacity: '0.5',
                     borderRadius: '5px',
@@ -646,6 +667,10 @@ const GridChart = () => {
                     columns: 40,
                     rowHeight: 10,
                     width: 650,
+                    compactType: "horizontal",
+                    resizable: false,
+                    bounded: true,
+                    preventCollision: true,
                     elementGrids: [
                         {
                             data: { x: 0, y: 0, w: 2, h: 3, static: true },
@@ -900,6 +925,7 @@ const GridChart = () => {
                                     width={grid.width}
                                     isDraggable={isStatic}
                                     isBounded={grid.bounded}
+                                    isResizable={grid.resizable}
                                 >
                                     {grid.subGrids.map((subGrid, indexSubGrid) => {
                                         return (
@@ -914,8 +940,12 @@ const GridChart = () => {
                                                     cols={subGrid.columns}
                                                     rowHeight={subGrid.rowHeight}
                                                     width={subGrid.width}
+                                                    compactType={subGrid.compactType}
                                                     isDraggable={isStatic}
                                                     isBounded={subGrid.bounded}
+                                                    isResizable={subGrid.resizable}
+                                                    preventCollision={subGrid.preventCollision}
+                                                    style={{height: '170px'}}
                                                 >
                                                     {subGrid.elementGrids.map((elementGrid, indexElementGrid) => {
                                                         return (
