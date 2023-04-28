@@ -7,6 +7,7 @@ const GridChart = () => {
     const [newKey, setNewKey] = useState("b");
     const [sourceGridId, setSourceGridId] = useState(null);
     const [targetGridId, setTargetGridId] = useState(null);
+    const [draggable, setDraggable] = useState(true);
     const [isStatic, setStatic] = useState(true);
     const [position, setPosition] = useState(39);
     const [element, setElement] = useState(null);
@@ -29,6 +30,7 @@ const GridChart = () => {
             columns: 6,
             rowHeight: 30,
             width: 400,
+            dragOut: false,
             elementGrids: []
             // bounded: true,
         },
@@ -46,6 +48,7 @@ const GridChart = () => {
             resizable: false,
             bounded: true,
             preventCollision: true,
+            dragOut: false,
             elementGrids: [
                 {
                     id: "elementGrid1",
@@ -65,7 +68,7 @@ const GridChart = () => {
                     color: "blue",
                     opacity: '1',
                     borderRadius: '20px',
-                    border: "solid",
+                    // border: "solid",
                     columns: 6,
                     rowHeight: 30,
                     width: 400,
@@ -77,7 +80,7 @@ const GridChart = () => {
                     color: "white",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     columns: 10,
                     rowHeight: 10,
                     width: 400,
@@ -101,6 +104,7 @@ const GridChart = () => {
             resizable: false,
             bounded: true,
             preventCollision: true,
+            dragOut: false,
             elementGrids: [
                 {
                     id: "elementGrid1",
@@ -287,7 +291,7 @@ const GridChart = () => {
                     color: "blue",
                     opacity: '1',
                     borderRadius: '5px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -296,7 +300,7 @@ const GridChart = () => {
                     color: "white",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -312,7 +316,7 @@ const GridChart = () => {
                     color: "blue",
                     opacity: '1',
                     borderRadius: '5px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -321,7 +325,7 @@ const GridChart = () => {
                     color: "white",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 }
             ]
@@ -339,6 +343,7 @@ const GridChart = () => {
             columns: 6,
             rowHeight: 30,
             width: 400,
+            dragOut: false,
             elementGrids: []
             // bounded: true,
         },
@@ -356,6 +361,7 @@ const GridChart = () => {
             resizable: false,
             bounded: true,
             preventCollision: true,
+            dragOut: false,
             elementGrids: [
                 {
                     id: "elementGrid1",
@@ -372,7 +378,7 @@ const GridChart = () => {
                     color: "red",
                     opacity: '1',
                     borderRadius: '20px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -381,7 +387,7 @@ const GridChart = () => {
                     color: "yelllow",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 }
             ]
@@ -402,6 +408,7 @@ const GridChart = () => {
             resizable: false,
             bounded: true,
             preventCollision: true,
+            dragOut: false,
             margin: [0, 0],
             elementGrids: [// 40, 90, 100, 120, 140, 170, 180, 190, /n 0-30,50-80, 120-160, 200
                 {
@@ -586,7 +593,7 @@ const GridChart = () => {
                     color: "blue",
                     opacity: '1',
                     borderRadius: '5px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -595,7 +602,7 @@ const GridChart = () => {
                     color: "white",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -611,7 +618,7 @@ const GridChart = () => {
                     color: "blue",
                     opacity: '1',
                     borderRadius: '5px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -620,7 +627,7 @@ const GridChart = () => {
                     color: "white",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 }
             ]
@@ -638,6 +645,7 @@ const GridChart = () => {
             columns: 6,
             rowHeight: 30,
             width: 400,
+            dragOut: false,
             elementGrids: []
             // bounded: true,
         },
@@ -655,6 +663,7 @@ const GridChart = () => {
             resizable: false,
             bounded: true,
             preventCollision: true,
+            dragOut: false,
             elementGrids: [
                 {
                     id: "elementGrid1",
@@ -674,7 +683,7 @@ const GridChart = () => {
                     color: "blue",
                     opacity: '1',
                     borderRadius: '20px',
-                    border: "solid",
+                    // border: "solid",
                     columns: 6,
                     rowHeight: 30,
                     width: 400,
@@ -686,7 +695,7 @@ const GridChart = () => {
                     color: "maroon",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     columns: 10,
                     rowHeight: 10,
                     width: 400,
@@ -710,6 +719,7 @@ const GridChart = () => {
             resizable: false,
             bounded: true,
             preventCollision: true,
+            dragOut: false,
             elementGrids: [
                 {
                     id: "elementGrid1",
@@ -890,7 +900,7 @@ const GridChart = () => {
                     color: "orange",
                     opacity: '1',
                     borderRadius: '5px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -899,7 +909,7 @@ const GridChart = () => {
                     color: "red",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -915,7 +925,7 @@ const GridChart = () => {
                     color: "green",
                     opacity: '1',
                     borderRadius: '5px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 },
                 {
@@ -924,7 +934,7 @@ const GridChart = () => {
                     color: "brown",
                     opacity: '1',
                     borderRadius: '10px',
-                    border: "solid",
+                    // border: "solid",
                     // bounded: true,
                 }
             ]
@@ -961,7 +971,10 @@ const GridChart = () => {
     const dragStartHandle = (sourceElement, id) => {
         setSourceGridId(id);
         setElement(sourceElement);
+        setDraggable(true);
     }
+    console.log(draggable);
+
     const onDropHandle = (layout, layoutItem, id, e) => {
         e.preventDefault();
         setTargetGridId(id);
@@ -980,9 +993,9 @@ const GridChart = () => {
                 if (newGrid[i].subGrids[j].id == id & id != sourceGridId) {
                     newGrid[i].subGrids[j].elementGrids.push(newElement);
                 }
-                if(newGrid[i].subGrids[j].id == sourceGridId & id != sourceGridId){
+                if (newGrid[i].subGrids[j].id == sourceGridId & id != sourceGridId) {
                     newGrid[i].subGrids[j].elementGrids.forEach((elementgrid, k) => {
-                        if(newGrid[i].subGrids[j].elementGrids[k].id == element.id){
+                        if (newGrid[i].subGrids[j].elementGrids[k].id == element.id) {
                             newGrid[i].subGrids[j].elementGrids.splice(k, 1);
                         }
                     })
@@ -990,88 +1003,111 @@ const GridChart = () => {
             })
         });
         setGrids(newGrid)
+        setDraggable(false);
         console.log(id);
+    }
+
+    const changeDraggable = (id) => {
+        // e.preventDefault();
+        let newGrid = grids;
+        console.log(id);
+        newGrid.forEach((grid, i) => {
+            grid.subGrids.forEach((subgrid, j) => {
+                if (newGrid[i].subGrids[j].id == id) {
+                    newGrid[i].subGrids[j].dragOut = !newGrid[i].subGrids[j].dragOut;
+                }
+            })
+        });
+        setGrids(newGrid)
+
+    }
+    const blurHandle = () => {
+        console.log("blur");
     }
     return (
         <Fragment>
-            <button style={{ float: 'right' }} onClick={(e) => changeStatic(e)} >Pin</button>
-            <GridLayout
-                className={styles.layout}
-                layout={layout}
-                cols={12}
-                rowHeight={100}
-                width={5500}
-                isDraggable={!isStatic}
-            >
-                {
-                    grids.map((grid, indexGrid) => {
-                        return (
-                            <div
-                                key={"grid" + indexGrid}
-                                style={{ backgroundColor: grid.color, borderRadius: '40px', }}
-                                data-grid={grid.data}
-                            // draggable={!isStatic}
-                            >
-                                <GridLayout
-                                    className="layout"
-                                    layout={layout1}
-                                    cols={grid.columns}
-                                    rowHeight={grid.rowHeight}
-                                    width={grid.width}
-                                    isDraggable={isStatic}
-                                    isBounded={grid.bounded}
-                                    isResizable={grid.resizable}
+            {/* <button style={{ float: 'right' }} onClick={() => changeStatic()} >Pin</button> */}
+            <Fragment>
+                <GridLayout
+                    className={styles.layout}
+                    layout={layout}
+                    cols={12}
+                    rowHeight={100}
+                    width={5500}
+                    isDraggable={false}
+                >
+                    {
+                        grids.map((grid, indexGrid) => {
+                            return (
+                                <div
+                                    key={"grid" + indexGrid}
+                                    style={{ backgroundColor: grid.color, borderRadius: '40px', }}
+                                    data-grid={grid.data}
+                                // draggable={!isStatic}
                                 >
-                                    {grid.subGrids.map((subGrid, indexSubGrid) => {
-                                        return (
-                                            <div
-                                                data-grid={subGrid.data}
-                                                key={"subGrid" + indexSubGrid}
-                                                style={{ backgroundColor: subGrid.color, borderRadius: subGrid.borderRadius, opacity: subGrid.opacity, borderColor: 'black', border: subGrid.border }}
-                                            >
-                                                <GridLayout
-                                                    className="layout"
-                                                    layout={layout}
-                                                    cols={subGrid.columns}
-                                                    rowHeight={subGrid.rowHeight}
-                                                    width={subGrid.width}
-                                                    compactType={subGrid.compactType}
-                                                    isDraggable={isStatic}
-                                                    isBounded={subGrid.bounded}
-                                                    isResizable={subGrid.resizable}
-                                                    preventCollision={subGrid.preventCollision}
-                                                    // margin={subGrid.margin}
-                                                    isDroppable={true}
-                                                    style={{ height: '170px' }}
-                                                    // droppingItem={{ i: "string", w: 4, h: 2 }}
-                                                    onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, subGrid.id, e)}
-                                                // onDropDragOver={e => setId(subGrid.id)}
+                                    <GridLayout
+                                        className="layout"
+                                        layout={layout1}
+                                        cols={grid.columns}
+                                        rowHeight={grid.rowHeight}
+                                        width={grid.width}
+                                        isDraggable={false}
+                                        isBounded={grid.bounded}
+                                        isResizable={grid.resizable}
+                                    >
+                                        {grid.subGrids.map((subGrid, indexSubGrid) => {
+                                            return (
+                                                <div
+                                                    data-grid={subGrid.data}
+                                                    key={"subGrid" + indexSubGrid}
+                                                    // onBlur={() => setStatic(!isStatic)}
+                                                    style={{ backgroundColor: subGrid.color, borderRadius: subGrid.borderRadius, opacity: subGrid.opacity, borderColor: 'black', border: subGrid.border }}
                                                 >
-                                                    {subGrid.elementGrids.map((elementGrid, indexElementGrid) => {
-                                                        return (
-                                                            <div
-                                                                data-grid={elementGrid.data}
-                                                                key={"elementGrid" + indexElementGrid}
-                                                                draggable={true}
-                                                                // isDroppable={true}
-                                                                // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                                                onDragStart={e => dragStartHandle(elementGrid, subGrid.id)}
-                                                                // onDragStart={(e) => { }}
-                                                                style={{ backgroundColor: elementGrid.color, borderRadius: elementGrid.borderRadius, opacity: elementGrid.opacity, borderColor: 'black', border: elementGrid.border, padding: '0px' }}
-                                                            >
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </GridLayout>
-                                            </div>
-                                        )
-                                    })}
-                                </GridLayout>
-                            </div>
-                        )
-                    })
-                }
-            </GridLayout>
+                                                    {/* <button type="button" disabled={false} style={{ float: 'right' }} onClick={(subGrid) => changeDraggable(subGrid.id)} onblur={blurHandle} >Pin</button> */}
+                                                    <GridLayout
+                                                        className="layout"
+                                                        layout={layout}
+                                                        cols={subGrid.columns}
+                                                        rowHeight={subGrid.rowHeight}
+                                                        width={subGrid.width}
+                                                        compactType={subGrid.compactType}
+                                                        // isDraggable={!subGrid.dragOut}
+                                                        isDraggable={true}
+                                                        isBounded={subGrid.bounded}
+                                                        isResizable={subGrid.resizable}
+                                                        preventCollision={subGrid.preventCollision}
+                                                        // margin={subGrid.margin}
+                                                        isDroppable={true}
+                                                        style={{ height: '170px' }}
+                                                        // droppingItem={{ i: "string", w: 4, h: 2 }}
+                                                        onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, subGrid.id, e)}
+                                                    // onDropDragOver={e => setId(subGrid.id)}
+                                                    >
+                                                        {subGrid.elementGrids.map((elementGrid, indexElementGrid) => {
+                                                            return (
+                                                                <div
+                                                                    data-grid={elementGrid.data}
+                                                                    key={"elementGrid" + indexElementGrid}
+                                                                    // draggable={subGrid.dragOut}
+                                                                    draggable={true}
+                                                                    // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                                                    onDragStart={e => dragStartHandle(elementGrid, subGrid.id)}
+                                                                    style={{ backgroundColor: elementGrid.color, borderRadius: elementGrid.borderRadius, opacity: elementGrid.opacity, borderColor: 'black', border: elementGrid.border, padding: '0px' }}
+                                                                >
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </GridLayout>
+                                                </div>
+                                            )
+                                        })}
+                                    </GridLayout>
+                                </div>
+                            )
+                        })
+                    }
+                </GridLayout>
+            </Fragment>
         </Fragment>
     );
 }
