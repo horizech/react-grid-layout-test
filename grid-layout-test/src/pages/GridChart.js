@@ -7,7 +7,7 @@ const GridChart = () => {
     const [newKey, setNewKey] = useState("b");
     const [sourceGridId, setSourceGridId] = useState(null);
     const [targetGridId, setTargetGridId] = useState(null);
-    const [draggable, setDraggable] = useState(true);
+    const [draggable, setDraggable] = useState(false);
     const [isStatic, setStatic] = useState(true);
     const [position, setPosition] = useState(39);
     const [element, setElement] = useState(null);
@@ -77,7 +77,7 @@ const GridChart = () => {
                 {
                     id: "elementGrid3",
                     data: { x: 6, y: 0, w: 1, h: 1, minW: 2, maxW: 4 },
-                    color: "white",
+                    color: "green",
                     opacity: '1',
                     borderRadius: '10px',
                     // border: "solid",
@@ -297,7 +297,7 @@ const GridChart = () => {
                 {
                     id: "elementGrid13",
                     data: { x: 6, y: 0, w: 1, h: 1, minW: 2, maxW: 4 },
-                    color: "white",
+                    color: "green",
                     opacity: '1',
                     borderRadius: '10px',
                     // border: "solid",
@@ -322,7 +322,7 @@ const GridChart = () => {
                 {
                     id: "elementGrid16",
                     data: { x: 6, y: 0, w: 0.2, h: 1, minW: 2, maxW: 4 },
-                    color: "white",
+                    color: "green",
                     opacity: '1',
                     borderRadius: '10px',
                     // border: "solid",
@@ -366,7 +366,7 @@ const GridChart = () => {
                 {
                     id: "elementGrid1",
                     data: { x: 0, y: 1, w: 2, h: 1 },
-                    color: "grey",
+                    color: "black",
                     opacity: '1',
                     borderRadius: '20px',
                     // border:"solid",
@@ -599,7 +599,7 @@ const GridChart = () => {
                 {
                     id: "elementGrid10",
                     data: { x: 14, y: 2, w: 2, h: 1, minW: 2, maxW: 4 },
-                    color: "white",
+                    color: "green",
                     opacity: '1',
                     borderRadius: '10px',
                     // border: "solid",
@@ -624,7 +624,7 @@ const GridChart = () => {
                 {
                     id: "elementGrid13",
                     data: { x: 24, y: 1, w: 0.4, h: 1, minW: 2, maxW: 4 },
-                    color: "white",
+                    color: "green",
                     opacity: '1',
                     borderRadius: '10px',
                     // border: "solid",
@@ -941,6 +941,7 @@ const GridChart = () => {
             // bounded: true,
         }
     ]
+
     const [grids, setGrids] = useState([
         {
             data: { x: 0, y: 0, w: 3, h: 6, static: true },
@@ -957,17 +958,20 @@ const GridChart = () => {
             ]
         },
     ]);
+
     const changeStatic = (e) => {
         e.preventDefault();
         !isStatic ? setStatic(true) : setStatic(false);
         // isStatic ? setNewKey("a") : setNewKey("b");
         console.log("static", isStatic);
     }
+
     useEffect(() => {
         console.log("hello")
 
         console.log("newKey", newKey);
-    }, [isStatic, newKey])
+    }, [isStatic, newKey]);
+
     const dragStartHandle = (sourceElement, id) => {
         setSourceGridId(id);
         setElement(sourceElement);
@@ -1019,11 +1023,12 @@ const GridChart = () => {
             })
         });
         setGrids(newGrid)
-
     }
+
     const blurHandle = () => {
         console.log("blur");
     }
+
     return (
         <Fragment>
             {/* <button style={{ float: 'right' }} onClick={() => changeStatic()} >Pin</button> */}
@@ -1072,7 +1077,7 @@ const GridChart = () => {
                                                         width={subGrid.width}
                                                         compactType={subGrid.compactType}
                                                         // isDraggable={!subGrid.dragOut}
-                                                        isDraggable={true}
+                                                        isDraggable={!draggable}
                                                         isBounded={subGrid.bounded}
                                                         isResizable={subGrid.resizable}
                                                         preventCollision={subGrid.preventCollision}
@@ -1089,7 +1094,8 @@ const GridChart = () => {
                                                                     data-grid={elementGrid.data}
                                                                     key={"elementGrid" + indexElementGrid}
                                                                     // draggable={subGrid.dragOut}
-                                                                    draggable={true}
+                                                                    draggable={draggable}
+                                                                    onContextMenu={(e) => {e.preventDefault(); setDraggable(!draggable)}}
                                                                     // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
                                                                     onDragStart={e => dragStartHandle(elementGrid, subGrid.id)}
                                                                     style={{ backgroundColor: elementGrid.color, borderRadius: elementGrid.borderRadius, opacity: elementGrid.opacity, borderColor: 'black', border: elementGrid.border, padding: '0px' }}
