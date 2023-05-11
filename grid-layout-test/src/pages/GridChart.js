@@ -19,7 +19,7 @@ const GridChart = () => {
         {}
     ];
 
-    
+
     const [grids, setGrids] = useState([
         {
             "data": {
@@ -66,9 +66,9 @@ const GridChart = () => {
                     "opacity": "0.5",
                     "borderRadius": "40px",
                     "border": "solid",
-                    "columns": 18,
+                    "columns": 12,
                     "rowHeight": 50,
-                    "width": 300,
+                    "width": 200,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -578,9 +578,9 @@ const GridChart = () => {
                     "opacity": "0.5",
                     "borderRadius": "40px",
                     "border": "solid",
-                    "columns": 18,
+                    "columns": 12,
                     "rowHeight": 50,
-                    "width": 300,
+                    "width": 200,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -1141,9 +1141,9 @@ const GridChart = () => {
                     "opacity": "0.5",
                     "borderRadius": "40px",
                     "border": "solid",
-                    "columns": 18,
+                    "columns": 12,
                     "rowHeight": 50,
-                    "width": 300,
+                    "width": 200,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -1633,18 +1633,18 @@ const GridChart = () => {
         console.log("static", isStatic);
     }
 
-    useEffect(() => {
-        console.log("hello")
+    // useEffect(() => {
+    //     console.log("hello")
 
-        console.log("newKey", newKey);
-    }, [isStatic, newKey]);
-    
+    //     console.log("newKey", newKey);
+    // }, [isStatic, newKey]);
+
     const dragStartHandle = (sourceElement, id) => {
         setSourceGridId(id);
         setElement(sourceElement);
         // setDraggable(true);
     }
-    console.log(draggable);
+    // console.log(draggable);
 
     const onDropHandle = (layout, layoutItem, id, e) => {
         e.preventDefault();
@@ -1658,6 +1658,7 @@ const GridChart = () => {
         let newGrid = grids;
         let newElement = element;
         setGrids();
+        let isDeleteElement = true
         newGrid.forEach((grid, i) => {
             grid.subGrids.forEach((subgrid, j) => {
                 // newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
@@ -1669,7 +1670,6 @@ const GridChart = () => {
                             elementAxis.push({ y: y, x: x });
                         }
                     }
-
                     subgrid.elementGrids.forEach((element, k) => {
                         let occopied = [];
                         elementAxis.map((a, i) => {
@@ -1680,33 +1680,63 @@ const GridChart = () => {
                         );
                         // console.log(occopied);
                     });
-                    console.log(newElement);
+                    // console.log(newElement);
                     let widthSpace = 0;
                     elementAxis.sort(function (a, b) { return a.y - b.y })
                     console.log(elementAxis);
                     for (let spaceIndex = 1; spaceIndex < 120; spaceIndex++) {
-                        console.log((elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x))
+                        if (elementAxis.length < (spaceIndex + 1)) {
+                            isDeleteElement = false;
+                            break;
+                        }
+                        // console.log((elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x))
                         if (((elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x) > 1 || (elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x) < 0) && newElement.data.w > widthSpace + 1) {
                             widthSpace = 0;
                         } else {
                             widthSpace++;
                         }
-                        console.log(widthSpace)
-                        console.log(spaceIndex);
+                        // console.log(widthSpace)
+                        // console.log(spaceIndex);
                         if (newElement.data.w <= widthSpace) {
                             newElement.data.x = elementAxis[spaceIndex - widthSpace]?.x;
                             newElement.data.y = elementAxis[spaceIndex - widthSpace]?.y;
                             newElement.id = newElement.data.i;
-                            console.log(newElement)
+                            // isDeleteElement = true;
                             break;
                         }
                     }
-                    newGrid[i].subGrids[j].elementGrids.push(newElement);
+                    console.log(isDeleteElement)
+                    if (isDeleteElement == true) {
+                        newGrid[i].subGrids[j].elementGrids.push(newElement);
+                    }
                 }
+                // if (newGrid[i].subGrids[j].id == sourceGridId && id != sourceGridId ) {
+                //     newGrid[i].subGrids[j].elementGrids.forEach((elementgrid, k) => {
+                //         console.log(isDeleteElement)
+                //         if (newGrid[i].subGrids[j].elementGrids[k].data.i == element.data.i) {
+                //             if (isDeleteElement == true) {
+                //                 console.log(newElement)
+                //                 newGrid[i].subGrids[j].elementGrids.splice(k, 1);
+                //                 // isDeleteElement = false
+                //             }
+                //         }
+                //     })
+                // }
+                // newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
+            })
+        });
+
+        newGrid.forEach((grid, i) => {
+            grid.subGrids.forEach((subgrid, j) => {
                 if (newGrid[i].subGrids[j].id == sourceGridId && id != sourceGridId) {
                     newGrid[i].subGrids[j].elementGrids.forEach((elementgrid, k) => {
+                        console.log(isDeleteElement)
                         if (newGrid[i].subGrids[j].elementGrids[k].data.i == element.data.i) {
-                            newGrid[i].subGrids[j].elementGrids.splice(k, 1);
+                            if (isDeleteElement == true) {
+                                console.log(newElement)
+                                newGrid[i].subGrids[j].elementGrids.splice(k, 1);
+                                // isDeleteElement = false
+                            }
                         }
                     })
                 }
@@ -1825,6 +1855,8 @@ const GridChart = () => {
                                                     // onDropDragOver={e => setId(subGrid.id)}
                                                     >{
                                                             subGrid?.elementGrids.map((elementGrid, indexElementGrid) => {
+                                                                // let drag = elementGrid.data.static ? false : draggable
+                                                                // console.log(drag);
                                                                 return (
                                                                     <div
                                                                         // data-grid={elementGrid.data}
