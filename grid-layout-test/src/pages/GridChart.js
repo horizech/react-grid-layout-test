@@ -1649,7 +1649,7 @@ const GridChart = () => {
     const onDropHandle = (layout, layoutItem, id, e) => {
         e.preventDefault();
         setTargetGridId(id);
-        console.log(layoutItem);
+        // console.log(layoutItem);
         // console.log(layout);
         // setLayout(layout);
         let newPosition = position
@@ -1661,12 +1661,12 @@ const GridChart = () => {
         let isDeleteElement = true
         newGrid.forEach((grid, i) => {
             grid.subGrids.forEach((subgrid, j) => {
-                // newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
                 if (newGrid[i].subGrids[j].id == id & id != sourceGridId) {
+                    newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
 
                     let elementAxis = [];
                     for (let y = 0; y <= 2; y++) {
-                        for (let x = 0; x < 40; x++) {
+                        for (let x = 0; x < subgrid.columns; x++) {
                             elementAxis.push({ y: y, x: x });
                         }
                     }
@@ -1680,12 +1680,12 @@ const GridChart = () => {
                         );
                         // console.log(occopied);
                     });
-                    // console.log(newElement);
+                    console.log(newElement);
                     let widthSpace = 0;
                     elementAxis.sort(function (a, b) { return a.y - b.y })
-                    console.log(elementAxis);
+                    // console.log(elementAxis);
                     for (let spaceIndex = 1; spaceIndex < 120; spaceIndex++) {
-                        if (elementAxis.length < (spaceIndex + 1)) {
+                        if (elementAxis.length <= spaceIndex) {
                             isDeleteElement = false;
                             break;
                         }
@@ -1705,24 +1705,11 @@ const GridChart = () => {
                             break;
                         }
                     }
-                    console.log(isDeleteElement)
+                    // console.log(isDeleteElement)
                     if (isDeleteElement == true) {
                         newGrid[i].subGrids[j].elementGrids.push(newElement);
                     }
                 }
-                // if (newGrid[i].subGrids[j].id == sourceGridId && id != sourceGridId ) {
-                //     newGrid[i].subGrids[j].elementGrids.forEach((elementgrid, k) => {
-                //         console.log(isDeleteElement)
-                //         if (newGrid[i].subGrids[j].elementGrids[k].data.i == element.data.i) {
-                //             if (isDeleteElement == true) {
-                //                 console.log(newElement)
-                //                 newGrid[i].subGrids[j].elementGrids.splice(k, 1);
-                //                 // isDeleteElement = false
-                //             }
-                //         }
-                //     })
-                // }
-                // newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
             })
         });
 
@@ -1730,22 +1717,22 @@ const GridChart = () => {
             grid.subGrids.forEach((subgrid, j) => {
                 if (newGrid[i].subGrids[j].id == sourceGridId && id != sourceGridId) {
                     newGrid[i].subGrids[j].elementGrids.forEach((elementgrid, k) => {
-                        console.log(isDeleteElement)
+                        // console.log(isDeleteElement)
                         if (newGrid[i].subGrids[j].elementGrids[k].data.i == element.data.i) {
                             if (isDeleteElement == true) {
-                                console.log(newElement)
+                                // console.log(newElement)
                                 newGrid[i].subGrids[j].elementGrids.splice(k, 1);
                                 // isDeleteElement = false
                             }
                         }
                     })
                 }
-                newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
+                // newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
             })
         });
         setGrids(newGrid);
         setDraggable(false);
-        console.log(id);
+        // console.log(id);
     }
 
     document.addEventListener("keydown", (e) => {
@@ -1782,7 +1769,7 @@ const GridChart = () => {
         })
         setGrids(newGrid);
 
-        console.log(newGrid);
+        // console.log(newGrid);
     }
 
     return (
