@@ -10,6 +10,7 @@ const GridChart = () => {
     const [isStatic, setStatic] = useState(true);
     const [position, setPosition] = useState(39);
     const [element, setElement] = useState(null);
+    const [isStart, setStart] = useState(true);
     // const [layout, setLayout] = useState([
     //     {}
     // ]);
@@ -48,9 +49,9 @@ const GridChart = () => {
                     "color": "#F8F70A",
                     "opacity": "0.5",
                     "borderRadius": "40px",
-                    "columns": 6,
-                    "rowHeight": 30,
-                    "width": 400,
+                    "columns": 0,
+                    "rowHeight": 0,
+                    "width": 0,
                     "dragOut": false,
                     "elementGrids": []
                 },
@@ -560,9 +561,9 @@ const GridChart = () => {
                     "color": "#F8F70A",
                     "opacity": "1.5",
                     "borderRadius": "40px",
-                    "columns": 6,
-                    "rowHeight": 30,
-                    "width": 400,
+                    "columns": 0,
+                    "rowHeight": 0,
+                    "width": 0,
                     "dragOut": false,
                     "elementGrids": []
                 },
@@ -1123,9 +1124,9 @@ const GridChart = () => {
                     "color": "#F8F70A",
                     "opacity": "0.5",
                     "borderRadius": "40px",
-                    "columns": 6,
-                    "rowHeight": 30,
-                    "width": 400,
+                    "columns": 0,
+                    "rowHeight": 0,
+                    "width": 0,
                     "dragOut": false,
                     "elementGrids": []
                 },
@@ -1626,99 +1627,89 @@ const GridChart = () => {
             ]
         }
     ]);
-    const changeStatic = (e) => {
-        e.preventDefault();
-        !isStatic ? setStatic(true) : setStatic(false);
-        // isStatic ? setNewKey("a") : setNewKey("b");
-        console.log("static", isStatic);
+
+    useEffect(() => {
+        if(isStart === true){
+            autoFill();
+            setStart(false);
+        }
+    })
+    const getEmptySpace = (subGrid) => {
+        let spaces = []
+        for (let y = 0; y <= 2; y++) {
+            for (let x = 0; x < subGrid.columns; x++) {
+                spaces.push({ y: y, x: x });
+            }
+        }
+        subGrid.elementGrids.forEach((element, k) => {
+            let occopied = [];
+            spaces.map((a, i) => {
+                if (element.data.y === a.y && element.data.x === a.x) {
+                    occopied = spaces.splice(i, element.data.w)
+                }
+            }
+            );
+            // console.log(occopied);
+        });
+        return spaces;
     }
 
-    // useEffect(() => {
-    //     console.log("hello")
-
-    //     console.log("newKey", newKey);
-    // }, [isStatic, newKey]);
-
-    const dragStartHandle = (sourceElement, id) => {
-        setSourceGridId(id);
-        setElement(sourceElement);
-        // setDraggable(true);
+    const updateAxisOfNewElement = (newElement, spaces, isDeleteElement) => {
+        let widthSpace = 0;
+        for (let spaceIndex = 1; spaceIndex < 120; spaceIndex++) {
+            if (spaces.length <= spaceIndex) {
+                isDeleteElement = false;
+                break;
+            }
+            // console.log((elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x))
+            if (((spaces[spaceIndex].x - spaces[spaceIndex - 1].x) > 1 || (spaces[spaceIndex].x - spaces[spaceIndex - 1].x) < 0) && newElement.data.w > widthSpace + 1) {
+                widthSpace = 0;
+            } else {
+                widthSpace++;
+            }
+            // console.log(widthSpace)
+            // console.log(spaceIndex);
+            if (newElement.data.w <= widthSpace) {
+                newElement.data.x = spaces[spaceIndex - widthSpace]?.x;
+                newElement.data.y = spaces[spaceIndex - widthSpace]?.y;
+                newElement.id = newElement.data.i;
+                // isDeleteElement = true;
+                break;
+            }
+        }
+        return ({ newElement, isDeleteElement })
     }
-    // console.log(draggable);
 
-    const onDropHandle = (layout, layoutItem, id, e) => {
-        e.preventDefault();
-        setTargetGridId(id);
-        // console.log(layoutItem);
-        // console.log(layout);
-        // setLayout(layout);
-        let newPosition = position
-        newPosition = newPosition - 1
-        setPosition(newPosition)
-        let newGrid = grids;
-        let newElement = element;
-        setGrids();
-        let isDeleteElement = true
+    const addNewElement = (newGrid, newElement, targetId, sourceId, isDeleteElement) => {
         newGrid.forEach((grid, i) => {
-            grid.subGrids.forEach((subgrid, j) => {
-                if (newGrid[i].subGrids[j].id == id & id != sourceGridId) {
+            grid.subGrids.forEach((subGrid, j) => {
+                if (newGrid[i].subGrids[j].id == targetId & targetId != sourceId) {
                     newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
-
+                    let updatedElement = {};
                     let elementAxis = [];
-                    for (let y = 0; y <= 2; y++) {
-                        for (let x = 0; x < subgrid.columns; x++) {
-                            elementAxis.push({ y: y, x: x });
-                        }
-                    }
-                    subgrid.elementGrids.forEach((element, k) => {
-                        let occopied = [];
-                        elementAxis.map((a, i) => {
-                            if (element.data.y === a.y && element.data.x === a.x) {
-                                occopied = elementAxis.splice(i, element.data.w)
-                            }
-                        }
-                        );
-                        // console.log(occopied);
-                    });
-                    console.log(newElement);
-                    let widthSpace = 0;
+                    elementAxis = getEmptySpace(subGrid);
                     elementAxis.sort(function (a, b) { return a.y - b.y })
+                    console.log(newElement);
+                    updatedElement = updateAxisOfNewElement(newElement, elementAxis, isDeleteElement);
                     // console.log(elementAxis);
-                    for (let spaceIndex = 1; spaceIndex < 120; spaceIndex++) {
-                        if (elementAxis.length <= spaceIndex) {
-                            isDeleteElement = false;
-                            break;
-                        }
-                        // console.log((elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x))
-                        if (((elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x) > 1 || (elementAxis[spaceIndex].x - elementAxis[spaceIndex - 1].x) < 0) && newElement.data.w > widthSpace + 1) {
-                            widthSpace = 0;
-                        } else {
-                            widthSpace++;
-                        }
-                        // console.log(widthSpace)
-                        // console.log(spaceIndex);
-                        if (newElement.data.w <= widthSpace) {
-                            newElement.data.x = elementAxis[spaceIndex - widthSpace]?.x;
-                            newElement.data.y = elementAxis[spaceIndex - widthSpace]?.y;
-                            newElement.id = newElement.data.i;
-                            // isDeleteElement = true;
-                            break;
-                        }
-                    }
-                    // console.log(isDeleteElement)
+                    isDeleteElement = updatedElement.isDeleteElement
+                    // console.log(updatedElement.isDeleteElement);
                     if (isDeleteElement == true) {
-                        newGrid[i].subGrids[j].elementGrids.push(newElement);
+                        newGrid[i].subGrids[j].elementGrids.push(updatedElement.newElement);
                     }
                 }
             })
         });
+        return ({ newGrid, isDeleteElement })
+    }
 
+    const deleteElement = (newGrid, targetId, sourceId, elementToBeDeleted, isDeleteElement) => {
         newGrid.forEach((grid, i) => {
             grid.subGrids.forEach((subgrid, j) => {
-                if (newGrid[i].subGrids[j].id == sourceGridId && id != sourceGridId) {
+                if (newGrid[i].subGrids[j].id == sourceId && targetId != sourceId) {
                     newGrid[i].subGrids[j].elementGrids.forEach((elementgrid, k) => {
                         // console.log(isDeleteElement)
-                        if (newGrid[i].subGrids[j].elementGrids[k].data.i == element.data.i) {
+                        if (newGrid[i].subGrids[j].elementGrids[k].data.i == elementToBeDeleted.data.i) {
                             if (isDeleteElement == true) {
                                 // console.log(newElement)
                                 newGrid[i].subGrids[j].elementGrids.splice(k, 1);
@@ -1730,6 +1721,58 @@ const GridChart = () => {
                 // newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
             })
         });
+        return newGrid;
+    }
+
+    const autoFill = () => {
+        let newGrid = grids;
+        // console.log(newGrid);
+        // setGrids();
+        setPosition();
+        let isDeleteElement = true
+        newGrid.forEach((grid, i) => {
+            let s = 1
+            let t = 2
+            grid.subGrids.forEach((subGrid, j) => {
+                if (j === s) {
+                    subGrid.elementGrids.forEach((elementgrid, k) => {
+                        let updatedGrid = addNewElement(newGrid, elementgrid, grid.subGrids[t].id, grid.subGrids[s].id, isDeleteElement);
+                        newGrid = updatedGrid.newGrid;
+                        isDeleteElement = updatedGrid.isDeleteElement
+                        newGrid = deleteElement(newGrid, grid.subGrids[t].id, grid.subGrids[s].id, elementgrid, isDeleteElement);
+                        newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
+                    });
+                    s = s + 3;
+                    t = t + 3;
+                }
+            });
+        });
+        setGrids(newGrid);
+    }
+
+    const dragStartHandle = (sourceElement, id) => {
+        setSourceGridId(id);
+        setElement(sourceElement);
+        // setDraggable(true);
+    }
+
+    // console.log(draggable);
+    const onDropHandle = (layout, layoutItem, id, e) => {
+        e.preventDefault();
+        setTargetGridId(id);
+        // console.log(layoutItem);
+        // console.log(layout);
+        // setLayout(layout);
+        let newGrid = grids;
+        let newElement = element;
+        let elementToBeDeleted = element;
+        let sourceId = sourceGridId;
+        setGrids();
+        let isDeleteElement = true
+        let updatedGrid = addNewElement(newGrid, newElement, id, sourceId, isDeleteElement);
+        newGrid = updatedGrid.newGrid;
+        isDeleteElement = updatedGrid.isDeleteElement
+        newGrid = deleteElement(newGrid, id, sourceId, elementToBeDeleted, isDeleteElement);
         setGrids(newGrid);
         setDraggable(false);
         // console.log(id);
