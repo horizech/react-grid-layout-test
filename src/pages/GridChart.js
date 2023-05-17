@@ -26,53 +26,190 @@ const GridChart = () => {
             "data": {
                 "x": 0,
                 "y": 0,
-                "w": 3,
-                "h": 6,
-                "static": true
+                "w": 4,
+                "h": 8,
+                "static": false
             },
             "color": "#ECF3F6",
-            "columns": 12,
-            "rowHeight": 90,
-            "width": 1350,
-            "bounded": true,
-            "resizable": false,
+            "columns": 18,
+            "rowHeight": 45,
+            "width": 2025,
+            "bounded": false,
+            "resizable": true,
             "subGrids": [
+                {
+                    "id": "subGrid0",
+                    "data": {
+                        "x": 6,
+                        "y": 0,
+                        "w": 9,
+                        "h": 1,
+                        "static": true
+                    },
+                    "color": "maroon",
+                    "opacity": "0.5",
+                    "borderRadius": "5px",
+                    "border": "solid",
+                    "borderColor": "green",
+                    "columns": 7,
+                    "rowHeight": 40,
+                    "width": 1000,
+                    margin: [2, 2],
+                    height: { height: '42px' },
+                    "compactType": 'horizontal',
+                    "resizable": false,
+                    "bounded": true,
+                    "preventCollision": false,
+                    "elementGrids": [
+                        {
+                            "id": "subGrid0elementGrid1",
+                            "data": {
+                                "x": 1,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid0elementGrid1"
+                            },
+                            "color": "white",
+                            "opacity": "1",
+                            text: "Mon, 01 May 2023"
+                            // "borderRadius": "5px",
+                            // "border": "solid",
+                        },
+                        {
+                            "id": "subGrid0elementGrid2",
+                            "data": {
+                                "x": 2,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid0elementGrid2"
+                            },
+                            "color": "white",
+                            "opacity": "1",
+                            text: "Tue, 02 May 2023"
+                            // "borderRadius": "5px",
+                            // "border": "solid",
+                        },
+                        {
+                            "id": "subGrid0elementGrid3",
+                            "data": {
+                                "x": 2,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid0elementGrid3"
+                            },
+                            "color": "white",
+                            "opacity": "1",
+                            text: "Wed, 03 May 2023"
+                            // "borderRadius": "5px",
+                            // "border": "solid",
+                        },
+                        {
+                            "id": "subGrid0elementGrid4",
+                            "data": {
+                                "x": 2,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid0elementGrid4"
+                            },
+                            "color": "white",
+                            "opacity": "1",
+                            text: "Thu, 04 May 2023"
+                            // "borderRadius": "5px",
+                            // "border": "solid",
+                        },
+                        {
+                            "id": "subGrid0elementGrid5",
+                            "data": {
+                                "x": 2,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid0elementGrid5"
+                            },
+                            "color": "white",
+                            "opacity": "1",
+                            text: "Fri, 05 May 2023"
+                            // "borderRadius": "5px",
+                            // "border": "solid",
+                        },
+                        {
+                            "id": "subGrid0elementGrid6",
+                            "data": {
+                                "x": 2,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid0elementGrid6"
+                            },
+                            "color": "white",
+                            "opacity": "1",
+                            text: "Sat, 06 May 2023"
+                            // "borderRadius": "5px",
+                            // "border": "solid",
+                        },
+                        {
+                            "id": "subGrid0elementGrid7",
+                            "data": {
+                                "x": 2,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid0elementGrid7"
+                            },
+                            "color": "white",
+                            "opacity": "1",
+                            text: "Sun, 07 May 2023"
+                            // "borderRadius": "1px",
+                            // "border": "solid",
+                        },
+                    ],
+                },
                 {
                     "id": "subGrid1",
                     "data": {
                         "x": 0,
-                        "y": 0,
+                        "y": 1,
                         "w": 2,
-                        "h": 2,
+                        "h": 4,
                         "static": true
                     },
                     "color": "#F8F70A",
                     "opacity": "0.5",
                     "borderRadius": "40px",
+                    "borderColor": "green",
                     "columns": 0,
                     "rowHeight": 0,
                     "width": 0,
+                    height: { height: '200px' },
                     "dragOut": false,
+                    text: "INTEGREX 200S",
                     "elementGrids": []
                 },
                 {
                     "id": "subGrid2",
                     "data": {
                         "x": 2.5,
-                        "y": 0,
+                        "y": 1,
                         "w": 2,
-                        "h": 2,
+                        "h": 4,
                         "static": true
                     },
                     "opacity": "0.5",
                     "borderRadius": "40px",
                     "border": "solid",
-                    "columns": 12,
-                    "rowHeight": 50,
+                    "borderColor": "green",
+                    "columns": 9,
+                    "rowHeight": 60,
                     "width": 200,
+                    height: { height: '200px' },
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
+                    margin: [1, 10],
                     "preventCollision": true,
                     "dragOut": false,
                     "elementGrids": [
@@ -87,7 +224,7 @@ const GridChart = () => {
                             },
                             "color": "green",
                             "opacity": "1",
-                            "borderRadius": "10px",
+                            "borderRadius": "5px",
                             "columns": 10,
                             "rowHeight": 10,
                             "width": 400
@@ -103,7 +240,7 @@ const GridChart = () => {
                             },
                             "color": "blue",
                             "opacity": "1",
-                            "borderRadius": "20px",
+                            "borderRadius": "5px",
                             "columns": 6,
                             "rowHeight": 30,
                             "width": 400
@@ -119,7 +256,81 @@ const GridChart = () => {
                             },
                             "color": "#F8F70A",
                             "opacity": "1",
-                            "borderRadius": "20px",
+                            "borderRadius": "5px",
+                            "columns": 6,
+                            "rowHeight": 30,
+                            "width": 400
+                        }
+                    ]
+                },
+                {
+                    "id": "subGrid2.1",
+                    "data": {
+                        "x": 4.5,
+                        "y": 1,
+                        "w": 1.5,
+                        "h": 4,
+                        "static": true
+                    },
+                    "opacity": "0.5",
+                    // "borderRadius": "1px",
+                    // "border": "dashed",
+                    "borderColor": "#ffffff",
+                    "columns": 7,
+                    "rowHeight": 60,
+                    "width": 160,
+                    height: { height: '200px' },
+                    "compactType": "",
+                    "resizable": false,
+                    "bounded": true,
+                    margin: [1, 10],
+                    "preventCollision": true,
+                    "dragOut": false,
+                    "elementGrids": [
+                        {
+                            "id": "subGrid2.1elementGrid2",
+                            "data": {
+                                "x": 9,
+                                "y": 0,
+                                "w": 1,
+                                "h": 1,
+                                "i": "subGrid2.1elementGrid2"
+                            },
+                            "color": "green",
+                            "opacity": "1",
+                            "borderRadius": "5px",
+                            "columns": 10,
+                            "rowHeight": 10,
+                            "width": 400
+                        },
+                        {
+                            "id": "subGrid2.1elementGrid1",
+                            "data": {
+                                "x": 2,
+                                "y": 1,
+                                "w": 2,
+                                "h": 1,
+                                "i": "subGrid2.1elementGrid1"
+                            },
+                            "color": "blue",
+                            "opacity": "1",
+                            "borderRadius": "5px",
+                            "columns": 6,
+                            "rowHeight": 30,
+                            "width": 400
+                        },
+                        {
+                            "id": "subGrid2.1elementGrid0",
+                            "data": {
+                                "x": 3,
+                                "y": 2,
+                                "w": 2,
+                                "h": 1,
+                                "i": "subGrid2.1elementGrid0"
+                            },
+                            "color": "#F8F70A",
+                            "opacity": "1",
+                            "borderRadius": "5px",
                             "columns": 6,
                             "rowHeight": 30,
                             "width": 400
@@ -129,21 +340,24 @@ const GridChart = () => {
                 {
                     "id": "subGrid3",
                     "data": {
-                        "x": 8,
-                        "y": 0,
-                        "w": 6,
-                        "h": 2,
+                        "x": 6,
+                        "y": 1,
+                        "w": 9,
+                        "h": 4,
                         "static": true
                     },
                     "opacity": "0.5",
                     "borderRadius": "5px",
                     "border": "dashed",
-                    "columns": 40,
-                    "rowHeight": 50,
-                    "width": 660,
+                    "borderColor": "#ffffff",
+                    "columns": 42,
+                    "rowHeight": 60,
+                    "width": 1000,
+                    height: { height: '200px' },
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
+                    margin: [1, 10],
                     "preventCollision": true,
                     "dragOut": false,
                     "elementGrids": [
@@ -298,7 +512,7 @@ const GridChart = () => {
                             },
                             "color": "green",
                             "opacity": "1",
-                            "borderRadius": "10px"
+                            "borderRadius": "5px"
                         },
                         {
                             "id": "subGrid3elementGrid32",
@@ -311,7 +525,7 @@ const GridChart = () => {
                             },
                             "color": "green",
                             "opacity": "1",
-                            "borderRadius": "10px"
+                            "borderRadius": "5px"
                         },
                         {
                             "id": "subGrid3elementGrid9",
@@ -553,38 +767,44 @@ const GridChart = () => {
                     "id": "subGrid4",
                     "data": {
                         "x": 0,
-                        "y": 2,
+                        "y": 5,
                         "w": 2,
-                        "h": 2,
+                        "h": 4,
                         "static": true
                     },
                     "color": "#F8F70A",
-                    "opacity": "1.5",
+                    "opacity": "0.5",
                     "borderRadius": "40px",
+                    "borderColor": "#ffffff",
                     "columns": 0,
                     "rowHeight": 0,
                     "width": 0,
+                    height: { height: '200px' },
                     "dragOut": false,
+                    text: "NEXUS",
                     "elementGrids": []
                 },
                 {
                     "id": "subGrid5",
                     "data": {
                         "x": 2.5,
-                        "y": 2,
+                        "y": 5,
                         "w": 2,
-                        "h": 2,
+                        "h": 4,
                         "static": true
                     },
                     "opacity": "0.5",
                     "borderRadius": "40px",
                     "border": "solid",
-                    "columns": 12,
-                    "rowHeight": 50,
+                    "borderColor": "#ffffff",
+                    "columns": 9,
+                    "rowHeight": 60,
                     "width": 200,
+                    height: { height: '200px' },
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
+                    margin: [1, 10],
                     "preventCollision": true,
                     "dragOut": false,
                     "elementGrids": [
@@ -599,7 +819,7 @@ const GridChart = () => {
                             },
                             "color": "red",
                             "opacity": "1",
-                            "borderRadius": "20px"
+                            "borderRadius": "5px"
                         },
                         {
                             "id": "subGrid5elementGrid0",
@@ -612,7 +832,7 @@ const GridChart = () => {
                             },
                             "color": "black",
                             "opacity": "1",
-                            "borderRadius": "20px"
+                            "borderRadius": "5px"
                         },
                         {
                             "id": "subGrid5elementGrid2",
@@ -625,34 +845,91 @@ const GridChart = () => {
                             },
                             "color": "yellow",
                             "opacity": "1",
-                            "borderRadius": "10px"
+                            "borderRadius": "5px"
                         }
+                    ]
+                },
+                {
+                    "id": "subGrid5.1",
+                    "data": {
+                        "x": 4.5,
+                        "y": 5,
+                        "w": 1.5,
+                        "h": 4,
+                        "static": true
+                    },
+                    "opacity": "0.5",
+                    // "borderRadius": "1px",
+                    // "border": "dashed",
+                    "borderColor": "#ffffff",
+                    "columns": 7,
+                    "rowHeight": 60,
+                    "width": 160,
+                    height: { height: '200px' },
+                    "compactType": "",
+                    "resizable": false,
+                    "bounded": true,
+                    margin: [1, 10],
+                    "preventCollision": true,
+                    "dragOut": false,
+                    "elementGrids": [
+                        {
+                            "id": "subGrid5.1elementGrid2",
+                            "data": {
+                                "x": 2,
+                                "y": 2,
+                                "w": 2,
+                                "h": 1,
+                                "i": "subGrid5.1elementGrid2"
+                            },
+                            "color": "maroon",
+                            "opacity": "1",
+                            "borderRadius": "5px",
+                            "columns": 10,
+                            "rowHeight": 10,
+                            "width": 400
+                        },
+                        {
+                            "id": "subGrid5.1elementGrid1",
+                            "data": {
+                                "x": 4,
+                                "y": 2,
+                                "w": 2,
+                                "h": 1,
+                                "i": "subGrid5.1elementGrid1"
+                            },
+                            "color": "red",
+                            "opacity": "1",
+                            "borderRadius": "5px",
+                            "columns": 6,
+                            "rowHeight": 30,
+                            "width": 400
+                        },
                     ]
                 },
                 {
                     "id": "subGrid6",
                     "data": {
-                        "x": 8,
-                        "y": 2,
-                        "w": 6,
-                        "h": 2,
+                        "x": 6,
+                        "y": 5,
+                        "w": 9,
+                        "h": 4,
                         "static": true
                     },
                     "opacity": "0.5",
                     "borderRadius": "5px",
                     "border": "dashed",
-                    "columns": 40,
-                    "rowHeight": 50,
-                    "width": 660,
+                    "borderColor": "#ffffff",
+                    "columns": 42,
+                    "rowHeight": 60,
+                    "width": 1000,
+                    height: { height: '200px' },
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
                     "preventCollision": true,
                     "dragOut": false,
-                    "margin": [
-                        0,
-                        0
-                    ],
+                    margin: [1, 10],
                     "elementGrids": [
                         {
                             "id": "subGrid6elementGrid0",
@@ -1000,7 +1277,7 @@ const GridChart = () => {
                             },
                             "color": "green",
                             "opacity": "1",
-                            "borderRadius": "10px"
+                            "borderRadius": "5px"
                         },
                         {
                             "data": {
@@ -1082,7 +1359,7 @@ const GridChart = () => {
                             },
                             "color": "green",
                             "opacity": "1",
-                            "borderRadius": "10px"
+                            "borderRadius": "5px"
                         },
                         {
                             "id": "subGrid6elementGrid30",
@@ -1116,38 +1393,44 @@ const GridChart = () => {
                     "id": "subGrid7",
                     "data": {
                         "x": 0,
-                        "y": 4,
+                        "y": 9,
                         "w": 2,
-                        "h": 2,
+                        "h": 4,
                         "static": true
                     },
                     "color": "#F8F70A",
                     "opacity": "0.5",
                     "borderRadius": "40px",
+                    "borderColor": "#ffffff",
                     "columns": 0,
                     "rowHeight": 0,
                     "width": 0,
+                    height: { height: '200px' },
                     "dragOut": false,
+                    text: "VTC",
                     "elementGrids": []
                 },
                 {
                     "id": "subGrid8",
                     "data": {
                         "x": 2.5,
-                        "y": 4,
+                        "y": 9,
                         "w": 2,
-                        "h": 2,
+                        "h": 4,
                         "static": true
                     },
                     "opacity": "0.5",
                     "borderRadius": "40px",
                     "border": "solid",
-                    "columns": 12,
-                    "rowHeight": 50,
+                    "borderColor": "#ffffff",
+                    "columns": 9,
+                    "rowHeight": 60,
                     "width": 200,
+                    height: { height: '200px' },
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
+                    margin: [1, 10],
                     "preventCollision": true,
                     "dragOut": false,
                     "elementGrids": [
@@ -1162,7 +1445,7 @@ const GridChart = () => {
                             },
                             "color": "blue",
                             "opacity": "1",
-                            "borderRadius": "20px",
+                            "borderRadius": "5px",
                             "columns": 6,
                             "rowHeight": 30,
                             "width": 400
@@ -1178,7 +1461,7 @@ const GridChart = () => {
                             },
                             "color": "maroon",
                             "opacity": "1",
-                            "borderRadius": "10px",
+                            "borderRadius": "5px",
                             "columns": 10,
                             "rowHeight": 10,
                             "width": 400
@@ -1194,7 +1477,7 @@ const GridChart = () => {
                             },
                             "color": "#F8F70A",
                             "opacity": "1",
-                            "borderRadius": "20px",
+                            "borderRadius": "5px",
                             "columns": 6,
                             "rowHeight": 30,
                             "width": 400
@@ -1202,23 +1485,84 @@ const GridChart = () => {
                     ]
                 },
                 {
+                    "id": "subGrid8.1",
+                    "data": {
+                        "x": 4.5,
+                        "y": 9,
+                        "w": 1.5,
+                        "h": 4,
+                        "static": true
+                    },
+                    "opacity": "0.5",
+                    // "borderRadius": "1px",
+                    // "border": "dashed",
+                    "borderColor": "#ffffff",
+                    "columns": 7,
+                    "rowHeight": 60,
+                    "width": 160,
+                    height: { height: '200px' },
+                    "compactType": "",
+                    "resizable": false,
+                    "bounded": true,
+                    margin: [1, 10],
+                    "preventCollision": true,
+                    "dragOut": false,
+                    "elementGrids": [
+                        {
+                            "id": "subGrid8.1elementGrid2",
+                            "data": {
+                                "x": 2,
+                                "y": 2,
+                                "w": 2,
+                                "h": 1,
+                                "i": "subGrid8.1elementGrid2"
+                            },
+                            "color": "green",
+                            "opacity": "1",
+                            "borderRadius": "5px",
+                            "columns": 10,
+                            "rowHeight": 10,
+                            "width": 400
+                        },
+                        {
+                            "id": "subGrid8.1elementGrid1",
+                            "data": {
+                                "x": 4,
+                                "y": 2,
+                                "w": 2,
+                                "h": 1,
+                                "i": "subGrid8.1elementGrid1"
+                            },
+                            "color": "orange",
+                            "opacity": "1",
+                            "borderRadius": "5px",
+                            "columns": 6,
+                            "rowHeight": 30,
+                            "width": 400
+                        },
+                    ]
+                },
+                {
                     "id": "subGrid9",
                     "data": {
-                        "x": 8,
-                        "y": 4,
-                        "w": 6,
-                        "h": 2,
+                        "x": 6,
+                        "y": 9,
+                        "w": 9,
+                        "h": 4,
                         "static": true
                     },
                     "opacity": "0.5",
                     "borderRadius": "5px",
                     "border": "dashed",
-                    "columns": 40,
-                    "rowHeight": 50,
-                    "width": 660,
+                    "borderColor": "#ffffff",
+                    "columns": 42,
+                    "rowHeight": 60,
+                    "width": 1000,
+                    height: { height: '200px' },
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
+                    margin: [1, 10],
                     "preventCollision": true,
                     "dragOut": false,
                     "elementGrids": [
@@ -1387,7 +1731,7 @@ const GridChart = () => {
                             },
                             "color": "red",
                             "opacity": "1",
-                            "borderRadius": "10px"
+                            "borderRadius": "5px"
                         },
                         {
                             "id": "subGrid9elementGrid30",
@@ -1537,7 +1881,7 @@ const GridChart = () => {
                             },
                             "color": "brown",
                             "opacity": "1",
-                            "borderRadius": "10px"
+                            "borderRadius": "5px"
                         },
                         {
                             "data": {
@@ -1629,11 +1973,27 @@ const GridChart = () => {
     ]);
 
     useEffect(() => {
-        if(isStart === true){
+        if (isStart === true) {
             autoFill();
             setStart(false);
         }
-    })
+    });
+
+    document.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        if (e.code == 'ControlLeft') {
+            setDraggable(true);
+            return;
+        }
+    });
+
+    document.addEventListener("keyup", (e) => {
+        e.preventDefault();
+        if (e.code == 'ControlLeft') {
+            setDraggable(false);
+            return;
+        }
+    });
     const getEmptySpace = (subGrid) => {
         let spaces = []
         for (let y = 0; y <= 2; y++) {
@@ -1731,8 +2091,8 @@ const GridChart = () => {
         setPosition();
         let isDeleteElement = true
         newGrid.forEach((grid, i) => {
-            let s = 1
-            let t = 2
+            let s = 2
+            let t = 4
             grid.subGrids.forEach((subGrid, j) => {
                 if (j === s) {
                     subGrid.elementGrids.forEach((elementgrid, k) => {
@@ -1742,8 +2102,8 @@ const GridChart = () => {
                         newGrid = deleteElement(newGrid, grid.subGrids[t].id, grid.subGrids[s].id, elementgrid, isDeleteElement);
                         newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
                     });
-                    s = s + 3;
-                    t = t + 3;
+                    s = s + 4;
+                    t = t + 4;
                 }
             });
         });
@@ -1751,14 +2111,19 @@ const GridChart = () => {
     }
 
     const dragStartHandle = (sourceElement, id) => {
-        setSourceGridId(id);
-        setElement(sourceElement);
-        // setDraggable(true);
+        if (sourceElement.data?.static === true) {
+            alert("This element is not draggable!");
+        } else {
+            setSourceGridId(id);
+            setElement(sourceElement);
+            // setDraggable(true);
+        }
     }
 
     // console.log(draggable);
     const onDropHandle = (layout, layoutItem, id, e) => {
         e.preventDefault();
+
         setTargetGridId(id);
         // console.log(layoutItem);
         // console.log(layout);
@@ -1767,57 +2132,47 @@ const GridChart = () => {
         let newElement = element;
         let elementToBeDeleted = element;
         let sourceId = sourceGridId;
-        setGrids();
-        let isDeleteElement = true
-        let updatedGrid = addNewElement(newGrid, newElement, id, sourceId, isDeleteElement);
-        newGrid = updatedGrid.newGrid;
-        isDeleteElement = updatedGrid.isDeleteElement
-        newGrid = deleteElement(newGrid, id, sourceId, elementToBeDeleted, isDeleteElement);
-        setGrids(newGrid);
-        setDraggable(false);
-        // console.log(id);
-    }
-
-    document.addEventListener("keydown", (e) => {
-        e.preventDefault();
-        if (e.code == 'ControlLeft') {
-            setDraggable(true);
-            return;
-        }
-    });
-
-    document.addEventListener("keyup", (e) => {
-        e.preventDefault();
-        if (e.code == 'ControlLeft') {
+        if (sourceId === "subGrid0") {
+            alert("This element is not draggable!");
+        } else {
+            setGrids();
+            let isDeleteElement = true
+            let updatedGrid = addNewElement(newGrid, newElement, id, sourceId, isDeleteElement);
+            newGrid = updatedGrid.newGrid;
+            isDeleteElement = updatedGrid.isDeleteElement
+            newGrid = deleteElement(newGrid, id, sourceId, elementToBeDeleted, isDeleteElement);
+            setGrids(newGrid);
             setDraggable(false);
-            return;
+            // console.log(id);
         }
-    });
+    }
 
     const onInternalDrag = (griditem, id) => {
         console.log(griditem);
         let newGrid = grids
-        newGrid.forEach((grid, i) => {
-            grid.subGrids.forEach((subGrid, j) => {
-                if (newGrid[i].subGrids[j].id == id) {
-                    subGrid?.elementGrids.map((elementGrid, indexElementGrid) => {
-                        if (griditem.i == elementGrid.data.i) {
-                            newGrid[i].subGrids[j].elementGrids[indexElementGrid].data.x = griditem.x
-                            newGrid[i].subGrids[j].elementGrids[indexElementGrid].data.y = griditem.y
-                        }
-                    })
-                }
-                newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
+        if (griditem.data?.static === true) {
+            alert("This element is not draggable!");
+        } else {
+            newGrid.forEach((grid, i) => {
+                grid.subGrids.forEach((subGrid, j) => {
+                    if (newGrid[i].subGrids[j].id == id) {
+                        subGrid?.elementGrids.map((elementGrid, indexElementGrid) => {
+                            if (griditem.i == elementGrid.data.i) {
+                                newGrid[i].subGrids[j].elementGrids[indexElementGrid].data.x = griditem.x
+                                newGrid[i].subGrids[j].elementGrids[indexElementGrid].data.y = griditem.y
+                            }
+                        })
+                    }
+                    newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
+                })
             })
-        })
-        setGrids(newGrid);
-
+            setGrids(newGrid);
+        }
         // console.log(newGrid);
     }
 
     return (
         <Fragment>
-            {/* <button style={{ float: 'right' }} onClick={() => changeStatic()} >Pin</button> */}
             <Fragment>
                 <GridLayout
                     className={"layout"}
@@ -1859,10 +2214,11 @@ const GridChart = () => {
                                                 <div
                                                     data-grid={subGrid.data}
                                                     key={"subGrid" + indexSubGrid}
-                                                    // onBlur={() => setStatic(!isStatic)}
-                                                    style={{ backgroundColor: subGrid.color, borderRadius: subGrid.borderRadius, opacity: subGrid.opacity, borderColor: 'black', border: subGrid.border }}
-                                                >
-                                                    {/* <button type="button" disabled={false} style={{ float: 'right' }} onClick={(subGrid) => changeDraggable(subGrid.id)} onblur={blurHandle} >Pin</button> */}
+                                                    style={{ textAlign: "center", backgroundColor: subGrid.color, borderRadius: subGrid.borderRadius, opacity: subGrid.opacity, borderColor: "black", border: subGrid.border }}
+                                                >{
+                                                        (subGrid.id === "subGrid1" || subGrid.id === "subGrid4" || subGrid.id === "subGrid7") &&
+                                                        <h2>{subGrid.text}</h2>
+                                                    }
                                                     <GridLayout
                                                         className="layout"
                                                         layout={layout}
@@ -1875,9 +2231,9 @@ const GridChart = () => {
                                                         isBounded={subGrid.bounded}
                                                         isResizable={subGrid.resizable}
                                                         preventCollision={subGrid.preventCollision}
-                                                        // margin={subGrid.margin}
-                                                        isDroppable={true}
-                                                        style={{ height: '170px' }}
+                                                        margin={subGrid.margin}
+                                                        isDroppable={(subGrid.id === "subGrid0" || subGrid.id === "subGrid2.1" || subGrid.id === "subGrid5.1" || subGrid.id === "subGrid8.1") ? false : true}
+                                                        style={subGrid.height}
                                                         // droppingItem={{ i: "string", w: 4, h: 2 }}
                                                         onDragStop={(layout, oldItem, newItem,
                                                             placeholder, e, element) => onInternalDrag(newItem, subGrid.id)}
@@ -1891,14 +2247,12 @@ const GridChart = () => {
                                                                     <div
                                                                         // data-grid={elementGrid.data}
                                                                         key={elementGrid.data.i}
-                                                                        // draggable={subGrid.dragOut}
-                                                                        // onClick={e => dragStartHandle(elementGrid, subGrid.id)}
-                                                                        draggable={draggable}
-                                                                        // onContextMenu={(e) => { e.preventDefault(); setDraggable(!draggable) }}
+                                                                        draggable={subGrid.id === "subGrid0" ? false : draggable}
                                                                         // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
                                                                         onDragStart={e => dragStartHandle(elementGrid, subGrid.id)}
                                                                         style={{ backgroundColor: elementGrid.color, borderRadius: elementGrid.borderRadius, opacity: elementGrid.opacity, borderColor: 'black', border: elementGrid.border, padding: '0px' }}
                                                                     >
+                                                                        <h4>{elementGrid.text}</h4>
                                                                     </div>
                                                                 )
                                                             })
