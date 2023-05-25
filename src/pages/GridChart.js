@@ -55,7 +55,7 @@ const GridChart = () => {
                     "rowHeight": 40,
                     "width": 1000,
                     margin: [2, 2],
-                    height: { height: '42px' },
+                    height: '42px' ,
                     "compactType": 'horizontal',
                     "resizable": false,
                     "bounded": true,
@@ -184,7 +184,7 @@ const GridChart = () => {
                     "columns": 0,
                     "rowHeight": 0,
                     "width": 0,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "dragOut": false,
                     text: "INTEGREX 200S",
                     "elementGrids": []
@@ -205,7 +205,7 @@ const GridChart = () => {
                     "columns": 9,
                     "rowHeight": 60,
                     "width": 200,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -279,7 +279,7 @@ const GridChart = () => {
                     "columns": 7,
                     "rowHeight": 60,
                     "width": 160,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -353,7 +353,7 @@ const GridChart = () => {
                     "columns": 42,
                     "rowHeight": 60,
                     "width": 1000,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -364,7 +364,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid0",
                             "data": {
-                                "x": 0,
+                                "x": 34,
                                 "y": 0,
                                 "w": 2,
                                 "h": 1,
@@ -392,7 +392,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid2",
                             "data": {
-                                "x": 4,
+                                "x": 28,
                                 "y": 0,
                                 "w": 2,
                                 "h": 1,
@@ -406,7 +406,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid3",
                             "data": {
-                                "x": 8,
+                                "x": 40,
                                 "y": 0,
                                 "w": 2,
                                 "h": 1,
@@ -434,7 +434,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid5",
                             "data": {
-                                "x": 13,
+                                "x": 14,
                                 "y": 0,
                                 "w": 2,
                                 "h": 1,
@@ -504,7 +504,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid29",
                             "data": {
-                                "x": 7,
+                                "x": 32,
                                 "y": 0,
                                 "w": 1,
                                 "h": 1,
@@ -517,7 +517,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid32",
                             "data": {
-                                "x": 12,
+                                "x": 26,
                                 "y": 0,
                                 "w": 1,
                                 "h": 1,
@@ -530,7 +530,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid9",
                             "data": {
-                                "x": 23,
+                                "x": 22,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -543,7 +543,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 25,
+                                "x": 26,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -557,7 +557,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 27,
+                                "x": 28,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -585,7 +585,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 33,
+                                "x": 34,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -613,7 +613,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 12,
+                                "x": 14,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -654,7 +654,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid3elementGrid30",
                             "data": {
-                                "x": 21,
+                                "x": 20,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -693,7 +693,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 38,
+                                "x": 40,
                                 "y": 2,
                                 "w": 2,
                                 "h": 1,
@@ -735,7 +735,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 5,
+                                "x": 6,
                                 "y": 2,
                                 "w": 2,
                                 "h": 1,
@@ -749,7 +749,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 8,
+                                "x": 10,
                                 "y": 2,
                                 "w": 2,
                                 "h": 1,
@@ -779,7 +779,7 @@ const GridChart = () => {
                     "columns": 0,
                     "rowHeight": 0,
                     "width": 0,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "dragOut": false,
                     text: "NEXUS",
                     "elementGrids": []
@@ -800,7 +800,7 @@ const GridChart = () => {
                     "columns": 9,
                     "rowHeight": 60,
                     "width": 200,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -839,7 +839,7 @@ const GridChart = () => {
                             "data": {
                                 "x": 8,
                                 "y": 2,
-                                "w": 3,
+                                "w": 0.5,
                                 "h": 1,
                                 "i": "subGrid5elementGrid2"
                             },
@@ -865,7 +865,7 @@ const GridChart = () => {
                     "columns": 7,
                     "rowHeight": 60,
                     "width": 160,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -923,7 +923,7 @@ const GridChart = () => {
                     "columns": 42,
                     "rowHeight": 60,
                     "width": 1000,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -1351,7 +1351,7 @@ const GridChart = () => {
                         {
                             "id": "subGrid6elementGrid29",
                             "data": {
-                                "x": 11,
+                                "x": 10,
                                 "y": 2,
                                 "w": 2,
                                 "h": 1,
@@ -1405,7 +1405,7 @@ const GridChart = () => {
                     "columns": 0,
                     "rowHeight": 0,
                     "width": 0,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "dragOut": false,
                     text: "VTC",
                     "elementGrids": []
@@ -1426,7 +1426,7 @@ const GridChart = () => {
                     "columns": 9,
                     "rowHeight": 60,
                     "width": 200,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -1439,7 +1439,7 @@ const GridChart = () => {
                             "data": {
                                 "x": 0,
                                 "y": 0,
-                                "w": 3,
+                                "w": 1,
                                 "h": 1,
                                 "i": "subGrid8elementGrid1"
                             },
@@ -1500,7 +1500,7 @@ const GridChart = () => {
                     "columns": 7,
                     "rowHeight": 60,
                     "width": 160,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -1558,7 +1558,7 @@ const GridChart = () => {
                     "columns": 42,
                     "rowHeight": 60,
                     "width": 1000,
-                    height: { height: '200px' },
+                    height: '200px' ,
                     "compactType": "",
                     "resizable": false,
                     "bounded": true,
@@ -1638,7 +1638,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 13,
+                                "x": 12,
                                 "y": 0,
                                 "w": 2,
                                 "h": 1,
@@ -1652,7 +1652,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 19,
+                                "x": 40,
                                 "y": 0,
                                 "w": 2,
                                 "h": 1,
@@ -1708,7 +1708,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 17,
+                                "x": 16,
                                 "y": 0,
                                 "w": 2,
                                 "h": 1,
@@ -1723,9 +1723,9 @@ const GridChart = () => {
                         {
                             "id": "subGrid9elementGrid29",
                             "data": {
-                                "x": 29,
+                                "x": 28,
                                 "y": 0,
-                                "w": 5,
+                                "w": 2,
                                 "h": 1,
                                 "i": "subGrid9elementGrid29"
                             },
@@ -1748,7 +1748,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 23,
+                                "x": 20,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -1762,7 +1762,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 25,
+                                "x": 24,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -1790,7 +1790,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 30,
+                                "x": 32,
                                 "y": 1,
                                 "w": 2,
                                 "h": 1,
@@ -1873,9 +1873,9 @@ const GridChart = () => {
                         {
                             "id": "subGrid9elementGrid32",
                             "data": {
-                                "x": 5,
+                                "x": 6,
                                 "y": 1,
-                                "w": 3,
+                                "w": 2,
                                 "h": 1,
                                 "i": "subGrid9elementGrid32"
                             },
@@ -1913,7 +1913,7 @@ const GridChart = () => {
                         },
                         {
                             "data": {
-                                "x": 5,
+                                "x": 6,
                                 "y": 2,
                                 "w": 2,
                                 "h": 1,
@@ -2088,7 +2088,7 @@ const GridChart = () => {
         let newGrid = grids;
         // console.log(newGrid);
         // setGrids();
-        setPosition();
+        // setPosition();
         let isDeleteElement = true
         newGrid.forEach((grid, i) => {
             let s = 2
@@ -2135,7 +2135,7 @@ const GridChart = () => {
         if (sourceId === "subGrid0") {
             alert("This element is not draggable!");
         } else {
-            setGrids();
+            // setGrids();
             let isDeleteElement = true
             let updatedGrid = addNewElement(newGrid, newElement, id, sourceId, isDeleteElement);
             newGrid = updatedGrid.newGrid;
@@ -2233,7 +2233,10 @@ const GridChart = () => {
                                                         preventCollision={subGrid.preventCollision}
                                                         margin={subGrid.margin}
                                                         isDroppable={(subGrid.id === "subGrid0" || subGrid.id === "subGrid2.1" || subGrid.id === "subGrid5.1" || subGrid.id === "subGrid8.1") ? false : true}
-                                                        style={subGrid.height}
+                                                        style={{height: subGrid.height, transitionProperty: "none"}}
+                                                        useCSSTransforms= {true}
+                                                        transformScale= {1}
+                                                        measureBeforeMount={true}
                                                         // droppingItem={{ i: "string", w: 4, h: 2 }}
                                                         onDragStop={(layout, oldItem, newItem,
                                                             placeholder, e, element) => onInternalDrag(newItem, subGrid.id)}
