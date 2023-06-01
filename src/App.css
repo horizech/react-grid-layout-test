@@ -7,6 +7,20 @@
   pointer-events: none;
 }
 
+.react-grid-item {
+  /* color: hotpink; */
+  /* background: yellow !important; */
+}
+
+.react-grid-placeholder {
+  background-color: blue !important;
+  width: 120px !important;
+}
+
+/* .react-grid-item.react-grid-placeholder {
+  background-color: yellow;
+} */
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

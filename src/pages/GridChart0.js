@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import GridLayout, { Responsive as ResponsiveGridLayout } from "react-grid-layout";
-import { defaultGrid, defaultJson } from "../data";
+import { defaultGrid } from "../data";
 
 import '../App.css';
 
-const GridChart = () => {
+const GridChart0 = () => {
     const [newKey, setNewKey] = useState("b");
     const [sourceGridId, setSourceGridId] = useState(null);
     const [targetGridId, setTargetGridId] = useState(null);
@@ -27,7 +27,7 @@ const GridChart = () => {
 
     useEffect(() => {
         if (isStart === true) {
-            // autoFill();
+            autoFill();
             setStart(false);
         }
     });
@@ -47,7 +47,6 @@ const GridChart = () => {
             return;
         }
     });
-
     const getEmptySpace = (subGrid) => {
         let spaces = []
         for (let y = 0; y <= 2; y++) {
@@ -97,7 +96,7 @@ const GridChart = () => {
     const addNewElement = (newGrid, newElement, targetId, sourceId, isDeleteElement) => {
         newGrid.forEach((grid, i) => {
             grid.subGrids.forEach((subGrid, j) => {
-                if (newGrid[i].subGrids[j].id == targetId && targetId != sourceId) {
+                if (newGrid[i].subGrids[j].id == targetId & targetId != sourceId) {
                     newGrid[i].subGrids[j].elementGrids.sort((a, b) => { return a.data.y - b.data.y })
                     let updatedElement = {};
                     let elementAxis = [];
@@ -225,24 +224,6 @@ const GridChart = () => {
         // console.log(newGrid);
     }
 
-    const generateBacklogBox = (data) => {
-        data.backlog.blocks.map((block, blockIndex) => {
-            // let drag = elementGrid.data.static ? false : draggable
-            // console.log(drag);
-            return (
-                <div
-                    // data-grid={elementGrid.data}
-                    key={block.data.i}
-                    draggable={draggable}
-                    // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                    onDragStart={e => dragStartHandle(block, `${data.machine} + backlog`)}
-                    style={{ backgroundColor: block.color, borderRadius: block.borderRadius, opacity: block.opacity, borderColor: 'black', border: block.border, padding: '0px' }}
-                >
-                    <h4>{block.text}</h4>
-                </div>
-            )
-        })
-    }
     return (
         <Fragment>
             <Fragment>
@@ -254,95 +235,6 @@ const GridChart = () => {
                     width={5500}
                     isDraggable={false}
                 >
-
-                    <div
-                        key={"grid_days"}
-                        style={{ backgroundColor: "lightblue", borderRadius: '40px', }}
-                        data-grid={{
-                            "x": 0,
-                            "y": 0,
-                            "w": 4,
-                            "h": 8,
-                            "static": false
-                        }}
-                    // draggable={!isStatic}
-                    >
-                        {/* <GridLayout
-                            className="layout"
-                            layout={grid.data}
-                            cols={grid.columns}
-                            rowHeight={grid.rowHeight}
-                            width={grid.width}
-                            isDraggable={false}
-                            isBounded={grid.bounded}
-                            isResizable={grid.resizable}
-                        >
-                            {grid?.subGrids.map((subGrid, indexSubGrid) => {
-                                let layout = subGrid?.elementGrids.map((elementGrid, indexElementGrid) => {
-                                    let data = elementGrid.data
-                                    data["i"] = `${subGrid.id}elementGrid` + indexElementGrid
-                                    elementGrid.data = data;
-                                    return data
-                                })
-                                // console.log()
-                                // console.log(layout);
-                                return (
-                                    <div
-                                        data-grid={subGrid.data}
-                                        key={"subGrid" + indexSubGrid}
-                                        style={{ overflow: "auto", textAlign: "center", backgroundColor: subGrid.color, borderRadius: subGrid.borderRadius, opacity: subGrid.opacity, borderColor: "black", border: subGrid.border }}
-                                    >{
-                                            (subGrid.id === "subGrid1" || subGrid.id === "subGrid4" || subGrid.id === "subGrid7") &&
-                                            <h2>{subGrid.text}</h2>
-                                        }
-                                        <GridLayout
-                                            className="layout"
-                                            layout={layout}
-                                            cols={subGrid.columns}
-                                            rowHeight={subGrid.rowHeight}
-                                            width={subGrid.width}
-                                            compactType={subGrid.compactType}
-                                            // isDraggable={!subGrid.dragOut}
-                                            isDraggable={!draggable}
-                                            isBounded={subGrid.bounded}
-                                            isResizable={subGrid.resizable}
-                                            preventCollision={subGrid.preventCollision}
-                                            margin={subGrid.margin}
-                                            isDroppable={(subGrid.id === "subGrid0" || subGrid.id === "subGrid2.1" || subGrid.id === "subGrid5.1" || subGrid.id === "subGrid8.1") ? false : true}
-                                            style={{ height: subGrid.height, transitionProperty: "none" }}
-                                            useCSSTransforms={true}
-                                            transformScale={1}
-                                            measureBeforeMount={true}
-                                            // droppingItem={{ i: "string", w: 4, h: 2 }}
-                                            onDragStop={(layout, oldItem, newItem,
-                                                placeholder, e, element) => onInternalDrag(newItem, subGrid.id)}
-                                            onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, subGrid.id, e)}
-                                        // onDropDragOver={e => setId(subGrid.id)}
-                                        >{
-                                                subGrid?.elementGrids.map((elementGrid, indexElementGrid) => {
-                                                    // let drag = elementGrid.data.static ? false : draggable
-                                                    // console.log(drag);
-                                                    return (
-                                                        <div
-                                                            // data-grid={elementGrid.data}
-                                                            key={elementGrid.data.i}
-                                                            draggable={subGrid.id === "subGrid0" ? false : draggable}
-                                                            // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                                            onDragStart={e => dragStartHandle(elementGrid, subGrid.id)}
-                                                            style={{ backgroundColor: elementGrid.color, borderRadius: elementGrid.borderRadius, opacity: elementGrid.opacity, borderColor: 'black', border: elementGrid.border, padding: '0px' }}
-                                                        >
-                                                            <h4>{elementGrid.text}</h4>
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </GridLayout>
-                                    </div>
-                                )
-                            })}
-                        </GridLayout> */}
-                    </div>
-
                     {
                         grids?.map((grid, indexGrid) => {
                             return (
@@ -436,4 +328,4 @@ const GridChart = () => {
     );
 }
 
-export default GridChart;
+export default GridChart0;
