@@ -24,6 +24,7 @@ const GridChart = () => {
 
 
     const [grids, setGrids] = useState(defaultGrid);
+    const [gridData, setGridData] = useState(defaultJson);
 
     useEffect(() => {
         if (isStart === true) {
@@ -225,123 +226,330 @@ const GridChart = () => {
         // console.log(newGrid);
     }
 
-    const generateBacklogBox = (data) => {
-        data.backlog.blocks.map((block, blockIndex) => {
-            // let drag = elementGrid.data.static ? false : draggable
-            // console.log(drag);
-            return (
-                <div
-                    // data-grid={elementGrid.data}
-                    key={block.data.i}
-                    draggable={draggable}
-                    // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                    onDragStart={e => dragStartHandle(block, `${data.machine} + backlog`)}
-                    style={{ backgroundColor: block.color, borderRadius: block.borderRadius, opacity: block.opacity, borderColor: 'black', border: block.border, padding: '0px' }}
-                >
-                    <h4>{block.text}</h4>
-                </div>
-            )
+    const dateTimeToPosition = (date, time, days) => {
+        let x = 0;
+        // let blockDate = date.slice(0, 2);
+        let dayIndex = days.map((day, i) => {
+            // let newDate = day.slice(4, 2);
+            // console.log(newDate);
+            if (date == day) {
+                // console.log(i)
+                x = i * 24;
+            }
+        });
+        x= x + parseInt(time.split(":")[0])
+        console.log(x);
+        return x;
+    }
+    const generateDaysBox = (days) => {
+        let x = 0;
+        let layout = days.map((day, blockIndex) => {
+
+            let dimension = { i: `days${blockIndex}`, x: x, y: 0, w: 24, h: 1, static: false }
+            x = x + 24;
+            return dimension
         })
+        return (
+            <div
+                key={"grid_days"}
+                style={{ backgroundColor: "lightYellow", borderRadius: '0px', }}
+                data-grid={{
+                    "x": 3,
+                    "y": 0,
+                    "w": 5,
+                    "h": 1,
+                    "static": true
+                }}>
+                <GridLayout
+                    className="layout"
+                    layout={layout}
+                    cols={48}
+                    rowHeight={40}
+                    width={800}
+                    compactType={""}
+                    isDraggable={!draggable}
+                    isBounded={true}
+                    isResizable={false}
+                    preventCollision={true}
+                    margin={[0, 0]}
+                    // isDroppable={true}
+                    style={{ height: "200px", transitionProperty: "none" }}
+                    useCSSTransforms={true}
+                    transformScale={1}
+                    measureBeforeMount={true}
+                    onDragStop={(layout, oldItem, newItem,
+                        placeholder, e, element) => onInternalDrag(newItem, `days`)}
+                    onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, `days`, e)}
+                // onDropDragOver={e => setId(subGrid.id)}
+                >
+                    {
+                        days.map((day, blockIndex) => {
+                            return (
+                                <div
+                                    key={`days${blockIndex}`}
+                                    // draggable={draggable}
+                                    // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                    onDragStart={e => dragStartHandle(day, `days${blockIndex}`)}
+                                    style={{ backgroundColor: "LightMaroon", padding: '0px', border: "solid" }}
+                                >
+                                    <h3>{day}</h3>
+                                </div>
+                            )
+                        })
+                    }
+                </GridLayout>
+            </div>
+        )
+    }
+    const generateBacklogBox = (data) => {
+        // data.backlog.blocks.map((block, blockIndex) => {
+        // let drag = elementGrid.data.static ? false : draggable
+        // console.log(drag);
+        let dimensions = []
+        let x = 0;
+        let y = 0;
+        let layout = data.backlog.blocks.map((block, blockIndex) => {
+            let dimension = { i: `${data.machine}backlog${block.id}`, x: x, y: y, w: 1, h: 1, static: false }
+            x = x + 1;
+            if (x === 16) {
+                y = y + 1;
+                x = 0
+            }
+            dimensions.push(dimension);
+            return dimension
+        })
+        return (
+            <div
+                data-grid={{
+                    "x": 1,
+                    "y": 1,
+                    "w": 1,
+                    "h": 3,
+                    "static": true
+                }}
+                key={data.machine + "backlog"}
+                style={{ overflow: "auto", textAlign: "center", backgroundColor: "lightYellow", borderRadius: "20px", opacity: 1, borderColor: "black", border: "solid" }}
+            >
+                <GridLayout
+                    className="layout"
+                    layout={layout}
+                    cols={16}
+                    rowHeight={40}
+                    width={200}
+                    compactType={""}
+                    isDraggable={!draggable}
+                    isBounded={true}
+                    isResizable={false}
+                    preventCollision={true}
+                    margin={[0, 5]}
+                    isDroppable={true}
+                    style={{ height: "220px", transitionProperty: "none" }}
+                    useCSSTransforms={true}
+                    transformScale={1}
+                    measureBeforeMount={true}
+                    onDragStop={(layout, oldItem, newItem,
+                        placeholder, e, element) => onInternalDrag(newItem, `${data.machine}backlog`)}
+                    onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, `${data.machine}backlog`, e)}
+                // onDropDragOver={e => setId(subGrid.id)}
+                >
+                    {
+                        data.backlog.blocks.map((block, blockIndex) => {
+                            return (
+                                <div
+                                    key={`${data.machine}backlog${block.id}`}
+                                    draggable={draggable}
+                                    // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                    onDragStart={e => dragStartHandle(block, `${data.machine}backlog`)}
+                                    style={{ backgroundColor: block.type, padding: '0px' }}
+                                >
+                                </div>
+                            )
+                        })
+                    }
+                </GridLayout>
+            </div>
+        )
+        // })
+    }
+    const generateLeftoversBox = (data) => {
+        // data.backlog.blocks.map((block, blockIndex) => {
+        // let drag = elementGrid.data.static ? false : draggable
+        // console.log(drag);
+        let dimensions = []
+        let x = 0;
+        let y = 0;
+        let layout = data.leftovers.blocks.map((block, blockIndex) => {
+            let dimension = { i: `${data.machine}leftovers${block.id}`, x: x, y: y, w: 1, h: 1, static: false }
+            x = x + 1;
+            if (x === 16) {
+                y = y + 1;
+                x = 0
+            }
+            dimensions.push(dimension);
+            return dimension
+        })
+        return (
+            <div
+                data-grid={{
+                    "x": 2,
+                    "y": 1,
+                    "w": 1,
+                    "h": 3,
+                    "static": true
+                }}
+                key={gridData.data[0].machine + "leftovers"}
+                style={{ overflow: "auto", textAlign: "center", backgroundColor: "white", opacity: 1, }}
+            >
+                <GridLayout
+                    className="layout"
+                    layout={layout}
+                    cols={16}
+                    rowHeight={40}
+                    width={200}
+                    compactType={""}
+                    isDraggable={!draggable}
+                    isBounded={true}
+                    isResizable={false}
+                    preventCollision={true}
+                    margin={[0, 5]}
+                    isDroppable={true}
+                    style={{ height: "220px", transitionProperty: "none" }}
+                    useCSSTransforms={true}
+                    transformScale={1}
+                    measureBeforeMount={true}
+                    onDragStop={(layout, oldItem, newItem,
+                        placeholder, e, element) => onInternalDrag(newItem, `${data.machine}leftovers`)}
+                    onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, `${data.machine}leftovers`, e)}
+                // onDropDragOver={e => setId(subGrid.id)}
+                >
+                    {
+                        data.leftovers.blocks.map((block, blockIndex) => {
+                            return (
+                                <div
+                                    key={`${data.machine}leftovers${block.id}`}
+                                    draggable={draggable}
+                                    // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                    onDragStart={e => dragStartHandle(block, `${data.machine}leftovers`)}
+                                    style={{ backgroundColor: block.type, padding: '0px' }}
+                                >
+                                </div>
+                            )
+                        })
+                    }
+                </GridLayout>
+            </div>
+        )
+        // })
+    }
+    const generateWorkBox = (data, days) => {
+        // data.backlog.blocks.map((block, blockIndex) => {
+        // let drag = elementGrid.data.static ? false : draggable
+        // console.log(drag);
+        let dimensions = []
+        let x = 0;
+        let layout = [...data.work.blocks.map((block, blockIndex) => {
+            x = dateTimeToPosition(block.date, block.time, days);
+            // console.log("check point",x)
+            let dimension = { i: `${data.machine}work${block.id}`, x: x, y: block.turn, w: block.hours, h: 1, static: false }
+
+            dimensions.push(dimension);
+            return dimension
+        }),
+        ...data.work.unavailable.map((block, blockIndex) => {
+            x = dateTimeToPosition(block.date, block.time, days);
+            // console.log("check point",x)
+            let dimension = { i: `${data.machine}unavailable${block.id}`, x: x, y: block.turn, w: block.hours, h: 1, static: true }
+
+            dimensions.push(dimension);
+            return dimension
+        })]
+        return (
+            <div
+                data-grid={{
+                    "x": 3,
+                    "y": 1,
+                    "w": 5,
+                    "h": 3,
+                    "static": true
+                }}
+                key={gridData.data[0].machine + "work"}
+                style={{ overflow: "auto", textAlign: "center", backgroundColor: "white", border: 'dashed', opacity: 1, }}
+            >
+                <GridLayout
+                    className="layout"
+                    layout={layout}
+                    cols={48}
+                    rowHeight={40}
+                    width={800}
+                    compactType={""}
+                    isDraggable={!draggable}
+                    isBounded={true}
+                    isResizable={false}
+                    preventCollision={true}
+                    margin={[0, 5]}
+                    isDroppable={true}
+                    style={{ height: "200px", transitionProperty: "none" }}
+                    useCSSTransforms={true}
+                    transformScale={1}
+                    measureBeforeMount={true}
+                    onDragStop={(layout, oldItem, newItem,
+                        placeholder, e, element) => onInternalDrag(newItem, `${data.machine}work`)}
+                    onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, `${data.machine}work`, e)}
+                // onDropDragOver={e => setId(subGrid.id)}
+                >
+                    {
+                        
+                        [
+                            ...data.work.blocks.map((block, blockIndex) => {
+                                return (
+                                    <div
+                                        key={`${data.machine}work${block.id}`}
+                                        draggable={draggable}
+                                        // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                        onDragStart={e => dragStartHandle(block, `${data.machine}work`)}
+                                        style={{ backgroundColor: block.type, padding: '0px' }}
+                                    >
+                                    </div>
+                                )
+                            }),
+                            ...data.work.unavailable.map((block, blockIndex) => {
+                                return (
+                                    <div
+                                        key={`${data.machine}unavailable${block.id}`}
+                                        draggable={draggable}
+                                        // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                        onDragStart={e => dragStartHandle(block, `${data.machine}work`)}
+                                        style={{ backgroundColor: block.type, padding: '0px' }}
+                                        
+                                    >
+                                    </div>
+                                )
+                            })
+                        ]
+                    }
+                </GridLayout>
+            </div>
+        )
+        // })
     }
     return (
         <Fragment>
             <Fragment>
+
                 <GridLayout
                     className={"layout"}
                     layout={layout1}
                     cols={12}
-                    rowHeight={100}
-                    width={5500}
+                    rowHeight={50}
+                    width={2000}
                     isDraggable={false}
                 >
+                    {generateDaysBox(gridData.days)}
+                    {generateBacklogBox(gridData.data[0])}
 
-                    <div
-                        key={"grid_days"}
-                        style={{ backgroundColor: "lightblue", borderRadius: '40px', }}
-                        data-grid={{
-                            "x": 0,
-                            "y": 0,
-                            "w": 4,
-                            "h": 8,
-                            "static": false
-                        }}
-                    // draggable={!isStatic}
-                    >
-                        {/* <GridLayout
-                            className="layout"
-                            layout={grid.data}
-                            cols={grid.columns}
-                            rowHeight={grid.rowHeight}
-                            width={grid.width}
-                            isDraggable={false}
-                            isBounded={grid.bounded}
-                            isResizable={grid.resizable}
-                        >
-                            {grid?.subGrids.map((subGrid, indexSubGrid) => {
-                                let layout = subGrid?.elementGrids.map((elementGrid, indexElementGrid) => {
-                                    let data = elementGrid.data
-                                    data["i"] = `${subGrid.id}elementGrid` + indexElementGrid
-                                    elementGrid.data = data;
-                                    return data
-                                })
-                                // console.log()
-                                // console.log(layout);
-                                return (
-                                    <div
-                                        data-grid={subGrid.data}
-                                        key={"subGrid" + indexSubGrid}
-                                        style={{ overflow: "auto", textAlign: "center", backgroundColor: subGrid.color, borderRadius: subGrid.borderRadius, opacity: subGrid.opacity, borderColor: "black", border: subGrid.border }}
-                                    >{
-                                            (subGrid.id === "subGrid1" || subGrid.id === "subGrid4" || subGrid.id === "subGrid7") &&
-                                            <h2>{subGrid.text}</h2>
-                                        }
-                                        <GridLayout
-                                            className="layout"
-                                            layout={layout}
-                                            cols={subGrid.columns}
-                                            rowHeight={subGrid.rowHeight}
-                                            width={subGrid.width}
-                                            compactType={subGrid.compactType}
-                                            // isDraggable={!subGrid.dragOut}
-                                            isDraggable={!draggable}
-                                            isBounded={subGrid.bounded}
-                                            isResizable={subGrid.resizable}
-                                            preventCollision={subGrid.preventCollision}
-                                            margin={subGrid.margin}
-                                            isDroppable={(subGrid.id === "subGrid0" || subGrid.id === "subGrid2.1" || subGrid.id === "subGrid5.1" || subGrid.id === "subGrid8.1") ? false : true}
-                                            style={{ height: subGrid.height, transitionProperty: "none" }}
-                                            useCSSTransforms={true}
-                                            transformScale={1}
-                                            measureBeforeMount={true}
-                                            // droppingItem={{ i: "string", w: 4, h: 2 }}
-                                            onDragStop={(layout, oldItem, newItem,
-                                                placeholder, e, element) => onInternalDrag(newItem, subGrid.id)}
-                                            onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, subGrid.id, e)}
-                                        // onDropDragOver={e => setId(subGrid.id)}
-                                        >{
-                                                subGrid?.elementGrids.map((elementGrid, indexElementGrid) => {
-                                                    // let drag = elementGrid.data.static ? false : draggable
-                                                    // console.log(drag);
-                                                    return (
-                                                        <div
-                                                            // data-grid={elementGrid.data}
-                                                            key={elementGrid.data.i}
-                                                            draggable={subGrid.id === "subGrid0" ? false : draggable}
-                                                            // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                                            onDragStart={e => dragStartHandle(elementGrid, subGrid.id)}
-                                                            style={{ backgroundColor: elementGrid.color, borderRadius: elementGrid.borderRadius, opacity: elementGrid.opacity, borderColor: 'black', border: elementGrid.border, padding: '0px' }}
-                                                        >
-                                                            <h4>{elementGrid.text}</h4>
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </GridLayout>
-                                    </div>
-                                )
-                            })}
-                        </GridLayout> */}
-                    </div>
+                    {generateLeftoversBox(gridData.data[0])}
+
+                    {generateWorkBox(gridData.data[0], gridData.days)}
 
                     {
                         grids?.map((grid, indexGrid) => {
@@ -432,7 +640,7 @@ const GridChart = () => {
                     }
                 </GridLayout>
             </Fragment>
-        </Fragment>
+        </Fragment >
     );
 }
 
