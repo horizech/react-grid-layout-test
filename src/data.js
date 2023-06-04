@@ -151,7 +151,7 @@ export const defaultJson = {
             }
         },
         {
-            machine: "DEF",
+            machine: "GHQ",
             backlog: {
                 blocks: [
                     {
