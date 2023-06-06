@@ -12,6 +12,7 @@ const GridChart = () => {
     const [isStatic, setStatic] = useState(true);
     const [position, setPosition] = useState(39);
     const [element, setElement] = useState(null);
+    const [blockId, setBlockId] = useState(null);
     const [isStart, setStart] = useState(true);
     // const [layout, setLayout] = useState([
     //     {}
@@ -93,10 +94,10 @@ const GridChart = () => {
                 break;
             }
         }
-        return ({ newElement, isDeleteElement })
+        return ({ updatedElement: newElement, isDeleteElement })
     }
 
-    const addNewElement = (newGrid, newElement, targetId, sourceId, isDeleteElement) => {
+    const addNewElement = (newGrid, newElement, targetId, sourceId, isDelete) => {
 
         let category = targetId.includes("backlog") ? "backlog" : 'work';
 
@@ -105,32 +106,33 @@ const GridChart = () => {
             newGrid.data.forEach((grid, i) => {
                 if (targetId.includes(grid.machine)) {
                     if (category == 'backlog') {
-                        console.log(newElement.id)
+                        console.log(newElement)
                         newElement.id = (newGrid.data[i][category].blocks.length > 0 ? parseInt(newGrid.data[i][category].blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) : 0) + 1
                             console.log(newElement.id)
                         newGrid.data[i][category].blocks.push(newElement);
                     }
                     else {
-                        let updatedElement = {};
+                        // const updatedElement = {newElement:{}, isDeleteElement: isDeleteElement};
                         newGrid.data[i][category].blocks.sort((a, b) => { return a.turn - b.turn })
                         let elementAxis = [];
                         elementAxis = getEmptySpace(grid[category].blocks, 48);
                         elementAxis.sort(function (a, b) { return a.y - b.y })
                         console.log(newElement);
-                        updatedElement = updateAxisOfNewElement(newElement, elementAxis, isDeleteElement);
+                        const {updatedElement, isDeleteElement} = updateAxisOfNewElement(newElement, elementAxis, isDelete);
                         // console.log(elementAxis);
-                        isDeleteElement = updatedElement.isDeleteElement
+                        // isDeleteElement = isDelete
                         // console.log(updatedElement.isDeleteElement);
-
+                        isDelete = isDeleteElement;
+                        newElement = updatedElement
                         if (isDeleteElement == true) {
-                            updatedElement['newElement']['id'] = (newGrid.data[i][category].blocks.length > 0 ? parseInt(newGrid.data[i][category].blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) : 0) + 1
-                            newGrid.data[i][category].blocks.push(updatedElement.newElement);
+                            updatedElement["id"] = (newGrid.data[i][category].blocks.length > 0 ? parseInt(newGrid.data[i][category].blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) : 0) + 1
+                            newGrid.data[i][category].blocks.push(updatedElement);
                         }
                     }
                 }
             });
         }
-        return ({ newGrid, isDeleteElement })
+        return ({ newGrid, isDelete })
     }
 
     const deleteElement = (newGrid, targetId, sourceId, elementToBeDeleted, isDeleteElement) => {
@@ -143,10 +145,11 @@ const GridChart = () => {
                         // console.log(isDeleteElement)
                         if (block.id == elementToBeDeleted.id) {
                             index = k
+                            console.log(index);
                         }
                     })
                     if (isDeleteElement == true) {
-                        // console.log(newElement)
+                        console.log(index);
                         newGrid.data[i][category].blocks.splice(index, 1);
                         // isDeleteElement = false
                     }
@@ -181,8 +184,10 @@ const GridChart = () => {
         setGrids(newGrid);
     }
 
-    const dragStartHandle = (sourceElement, id) => {
-
+    const dragStartHandle = (sourceElement, id, e) => {
+        // console.log(e);
+        // console.log(blockId);
+        setBlockId(blockId)
         setSourceGridId(id);
         setElement(sourceElement);
         // setDraggable(true);
@@ -198,7 +203,7 @@ const GridChart = () => {
         // console.log(layout);
         // setLayout(layout);
         let newGridData = gridData;
-        let newElement = element;
+        const newElement = JSON.parse(JSON.stringify(element));
         let elementToBeDeleted = element;
         let sourceId = sourceGridId;
         if (sourceId.includes('days')) {
@@ -206,10 +211,10 @@ const GridChart = () => {
         } else {
             // setGrids();
             let isDeleteElement = true
-            let updatedGrid = addNewElement(newGridData, newElement, id, sourceId, isDeleteElement);
-            console.log(updatedGrid)
-            newGridData = updatedGrid.newGrid;
-            isDeleteElement = updatedGrid.isDeleteElement
+            const {newGrid, isDelete} = addNewElement(newGridData, newElement, id, sourceId, isDeleteElement);
+            console.log(newGrid)
+            newGridData = newGrid;
+            isDeleteElement = isDelete
             newGridData = deleteElement(newGridData, id, sourceId, elementToBeDeleted, isDeleteElement);
             setGridData(newGridData);
             setDraggable(false);
@@ -253,7 +258,7 @@ const GridChart = () => {
             }
         });
         x = x + parseInt(time.split(":")[0])
-        console.log(x);
+        // console.log(x);
         return x;
     }
     const generateDaysBox = (days) => {
@@ -521,7 +526,7 @@ const GridChart = () => {
                                         key={`${data.machine}work${block.id}`}
                                         draggable={draggable}
                                         // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                        onDragStart={e => dragStartHandle(block, `${data.machine}work`)}
+                                        onDragStart={e => dragStartHandle(block, `${data.machine}work`, `${data.machine}work${block.id}`)}
                                         style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px" }}
                                     >
                                     </div>
@@ -533,7 +538,7 @@ const GridChart = () => {
                                         key={`${data.machine}unavailable${block.id}`}
                                         // draggable={false}
                                         // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                        onDragStart={e => alert("This Element is static and can not be dragged")}
+                                        // onDragStart={e => alert("This Element is static and can not be dragged")}
                                         style={{ backgroundColor: block.type, padding: '0px' }}
 
                                     >
