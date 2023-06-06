@@ -12,10 +12,10 @@
   /* background: yellow !important; */
 }
 
-.react-grid-placeholder {
+/* .react-grid-placeholder {
   background-color: blue !important;
   width: 120px !important;
-}
+} */
 
 /* .react-grid-item.react-grid-placeholder {
   background-color: yellow;
@@ -26,6 +26,32 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+/* 
+.hours-1 {
+  background-color: yellow !important;
+}
+
+.hours-1:has(+ .react-grid-placeholder) {
+  background-color: yellow !important;
+}
+
+.hours-2 {
+  background-color: cyan !important;
+}
+
+.hours-2 .react-grid-placeholder {
+  background-color: cyan !important;
+}
+
+.hours-3 .react-grid-placeholder {
+  background-color: blue !important;
+}
+
+
+.hel {
+  background-color: cyan !important;
+  /* width: 128px !important; */
+
 
 .App-header {
   background-color: #282c34;
