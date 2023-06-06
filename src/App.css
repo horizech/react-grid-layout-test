@@ -12,10 +12,10 @@
   /* background: yellow !important; */
 }
 
-/* .react-grid-placeholder {
-  background-color: blue !important;
-  width: 120px !important;
-} */
+.react-grid-placeholder {
+  background-color: transparent !important;
+  /* width: 120px !important; */
+}
 
 /* .react-grid-item.react-grid-placeholder {
   background-color: yellow;
