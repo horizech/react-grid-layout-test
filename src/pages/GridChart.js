@@ -15,6 +15,8 @@ const GridChart = () => {
     const [element, setElement] = useState(null);
     const [blockId, setBlockId] = useState(null);
     const [isStart, setStart] = useState(true);
+    const [dragItem, setDragItem] = useState(null);
+    const [blockColor, setBlockColor] = useState(null);
     // const [layout, setLayout] = useState([
     //     {}
     // ]);
@@ -54,7 +56,7 @@ const GridChart = () => {
         }
     });
 
-    
+
 
     const getEmptySpace = (subGrid, columns) => {
         let spaces = []
@@ -106,8 +108,8 @@ const GridChart = () => {
     const addNewElement = (newGrid, newElement, targetId, sourceId, isDelete) => {
 
         let category = targetId.split(',')[1];
-
         if (targetId != sourceId) {
+            // newElement.type = blockColor;
             console.log('checkpointz')
             newGrid.data.forEach((grid, i) => {
                 if (targetId.split(',')[0] == grid.machine) {
@@ -124,6 +126,7 @@ const GridChart = () => {
                         elementAxis = getEmptySpace(grid[category].blocks, 48);
                         elementAxis.sort(function (a, b) { return a.y - b.y })
                         console.log(newElement);
+
                         const { updatedElement, isDeleteElement } = updateAxisOfNewElement(newElement, elementAxis, isDelete);
                         // console.log(elementAxis);
                         // isDeleteElement = isDelete
@@ -132,12 +135,24 @@ const GridChart = () => {
                         newElement = updatedElement
                         if (isDeleteElement == true) {
                             updatedElement["id"] = (newGrid.data[i][category].blocks.length > 0 ? parseInt(newGrid.data[i][category].blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) : 0) + 1
+
+
                             newGrid.data[i][category].blocks.push(updatedElement);
                         }
                     }
                 }
             });
         }
+        else newGrid.data.forEach((grid, i) => {
+            if (sourceId.split(',')[0] == grid.machine) {
+                newGrid.data[i][sourceId.split(',')[1]].blocks.forEach((block, k) => {
+                    if (block.id == newElement.id) {
+                        newGrid.data[i][sourceId.split(',')[1]].blocks[k].type = blockColor
+                    }
+                });
+            }
+        })
+
         return ({ newGrid, isDelete })
     }
 
@@ -161,7 +176,15 @@ const GridChart = () => {
                     }
                 }
             });
-        }
+        } else newGrid.data.forEach((grid, i) => {
+            if (sourceId.split(',')[0] == grid.machine) {
+                newGrid.data[i][category].blocks.forEach((block, k) => {
+                    if (block.id == elementToBeDeleted.id) {
+                        newGrid.data[i][category].blocks[k].type = blockColor
+                    }
+                });
+            }
+        })
         return newGrid;
     }
     const autoFill = () => {
@@ -190,12 +213,14 @@ const GridChart = () => {
         setGrids(newGrid);
     }
 
-    const dragStartHandle = (sourceElement, id, e) => {
+    const dragStartHandle = (sourceElement, id, i) => {
         // console.log(e);
         // console.log(blockId);
+        sourceElement['i'] = i;
         setBlockId(blockId)
         setSourceGridId(id);
         setElement(sourceElement);
+        onItemDragStart(sourceElement, id);
         // setDraggable(true);
 
     }
@@ -203,17 +228,30 @@ const GridChart = () => {
     // console.log(draggable);
     const onDropHandle = (layout, layoutItem, id, e) => {
         e.preventDefault();
-
         setTargetGridId(id);
         console.log(layoutItem);
         // console.log(layout);
         // setLayout(layout);
+        console.log(id);
+        const category = id.split(',')[1];
         let newGridData = gridData;
         const newElement = JSON.parse(JSON.stringify(element));
+        newElement.type = blockColor;
         let elementToBeDeleted = element;
         let sourceId = sourceGridId;
+
         if (sourceId.includes('days')) {
             alert("This element is not draggable!");
+        } else if (id.split(',')[1] == 'leftovers') {
+            newGridData.data.forEach((grid, i) => {
+                if (sourceId.split(',')[0] == grid.machine) {
+                    newGridData.data[i][sourceId.split(',')[1]].blocks.forEach((block, k) => {
+                        if (block.id == newElement.id) {
+                            newGridData.data[i][sourceId.split(',')[1]].blocks[k].type = blockColor
+                        }
+                    });
+                }
+            })
         } else {
             // setGrids();
             let isDeleteElement = true
@@ -222,15 +260,17 @@ const GridChart = () => {
             newGridData = newGrid;
             isDeleteElement = isDelete
             newGridData = deleteElement(newGridData, id, sourceId, elementToBeDeleted, isDeleteElement);
-            setGridData(newGridData);
-            setDraggable(false);
             // console.log(id);
         }
+        setDraggable(false);
+        setGridData(newGridData);
+
     }
 
     const onInternalDrag = (griditem, id) => {
-        // console.log(griditem);
+        console.log(griditem);
         let newGrid = gridData
+        console.log(blockColor);
         if (griditem?.static === true) {
             alert("This element is not draggable!");
         } else {
@@ -245,6 +285,8 @@ const GridChart = () => {
                             index = k
                             newGrid.data[i][category].blocks[k].time = `${griditem.x}:00`;
                             newGrid.data[i][category].blocks[k].turn = griditem.y;
+                            newGrid.data[i][category].blocks[k].type = blockColor;
+
                             console.log(block);
                         }
                     })
@@ -264,7 +306,7 @@ const GridChart = () => {
             // console.log(newDate);
             if (date == day) {
                 // console.log(i)
-                x = i * 24;
+                x = i;
             }
         });
         x = x + parseInt(time.split(":")[0])
@@ -275,8 +317,8 @@ const GridChart = () => {
         let x = 0;
         let layout = days.map((day, blockIndex) => {
 
-            let dimension = { i: `days${blockIndex}`, x: x, y: 0, w: 24, h: 1, static: false }
-            x = x + 24;
+            let dimension = { i: `days${blockIndex}`, x: x, y: 0, w: 8, h: 1, static: false }
+            x = x + 8;
             return dimension
         })
         return (
@@ -286,16 +328,16 @@ const GridChart = () => {
                 data-grid={{
                     "x": 3,
                     "y": 0,
-                    "w": 5,
+                    "w": 5.6,
                     "h": 1,
                     "static": true
                 }}>
                 <GridLayout
                     className="layout"
                     layout={layout}
-                    cols={48}
+                    cols={56}
                     rowHeight={40}
-                    width={800}
+                    width={900}
                     compactType={""}
                     isDraggable={!draggable}
                     isBounded={true}
@@ -317,12 +359,13 @@ const GridChart = () => {
                             return (
                                 <div
                                     key={`days${blockIndex}`}
+
                                     // draggable={draggable}
                                     // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
                                     onDragStart={e => dragStartHandle(day, `days${blockIndex}`)}
-                                    style={{ backgroundColor: "LightMaroon", padding: '0px', border: "solid", borderRadius: "5px" }}
+                                    style={{ textAlign: 'center', backgroundColor: "LightMaroon", padding: '0px', border: "solid", borderRadius: "5px" }}
                                 >
-                                    <h3>{day}</h3>
+                                    <span ><h4 >{day}</h4></span>
                                 </div>
                             )
                         })
@@ -386,14 +429,19 @@ const GridChart = () => {
                 >
                     {
                         data.backlog.blocks.map((block, blockIndex) => {
+                            let width = (draggable ? block.hours : 1) * (200 / 16);
                             return (
                                 <div
                                     key={`${data.machine},backlog,${block.id}`}
                                     draggable={draggable}
                                     // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                    onDragStart={e => dragStartHandle(block, `${data.machine},backlog`)}
+                                    onDragStart={e => dragStartHandle(block, `${data.machine},backlog`, `${data.machine},backlog,${block.id}`)}
                                     style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px" }}
-                                >
+                                >{
+                                        showOverlay && (dragItem.i == `${data.machine},backlog,${block.id}` || dragItem.id == block.id) && (
+                                            <BlockOverlay overlayWidth={width} color={blockColor} />
+                                        )
+                                    }
                                 </div>
                             )
                         })
@@ -444,28 +492,33 @@ const GridChart = () => {
                     isResizable={false}
                     preventCollision={true}
                     margin={[0, 5]}
-                    isDroppable={false}
+                    isDroppable={true}
                     style={{ height: "220px", transitionProperty: "none" }}
                     useCSSTransforms={true}
                     transformScale={1}
                     measureBeforeMount={true}
                     onDragStop={(layout, oldItem, newItem,
-                        placeholder, e, element) => onInternalDrag(newItem, `${data.machine}leftovers`)}
-                    // onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, `${data.machine}leftovers`, e)}
+                        placeholder, e, element) => onInternalDrag(newItem, `${data.machine},leftovers`)}
+                    onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, `${data.machine},leftovers`, e)}
                     // onDropDragOver={e => setId(subGrid.id)}
                     onDragStart={(layout, oldItem, newItem,
                         placeholder, e, element) => onItemDragStart(newItem, `${data.machine},leftovers`)}
                 >
                     {
                         data.leftovers.blocks.map((block, blockIndex) => {
+                            let width = (draggable ? block.hours : 1) * (200 / 16);
                             return (
                                 <div
                                     key={`${data.machine},leftovers,${block.id}`}
                                     draggable={draggable}
                                     // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                    onDragStart={e => dragStartHandle(block, `${data.machine},leftovers`)}
+                                    onDragStart={e => dragStartHandle(block, `${data.machine},leftovers`, `${data.machine},leftovers,${block.id}`)}
                                     style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px" }}
-                                >
+                                >{
+                                        showOverlay && dragItem.i == `${data.machine},leftovers,${block.id}` && (
+                                            <BlockOverlay overlayWidth={width} color={blockColor} />
+                                        )
+                                    }
                                 </div>
                             )
                         })
@@ -476,8 +529,10 @@ const GridChart = () => {
         // })
     }
     const onItemDragStart = (griditem, id, data) => {
-        console.log(element);
+        console.log(id);
         let newGrid = gridData
+        setDragItem(griditem);
+
         if (griditem?.static === true) {
             alert("This element is not draggable!");
         } else {
@@ -492,7 +547,8 @@ const GridChart = () => {
                             index = k
                             // newGrid.data[i][category].blocks[k].time = `${griditem.x}:00`;
                             // newGrid.data[i][category].blocks[k].turn = griditem.y;
-                            // newGrid.data[i][category].blocks[k].hours = (griditem.w)*5;
+                            setBlockColor(newGrid.data[i][category].blocks[k].type);
+                            newGrid.data[i][category].blocks[k].type = "lightyellow";
                             // console.log(newGrid.data[i][category].blocks[k]);
                             setShowOverlay(true);
                             setOverlayWidth((newGrid.data[i][category].blocks[k].hours * 17) + 'px');
@@ -531,7 +587,7 @@ const GridChart = () => {
                 data-grid={{
                     "x": 3,
                     "y": 1,
-                    "w": 5,
+                    "w": 5.6,
                     "h": 3,
                     "static": true
                 }}
@@ -541,9 +597,9 @@ const GridChart = () => {
                 <GridLayout
                     className="layout"
                     layout={layout}
-                    cols={48}
+                    cols={56}
                     rowHeight={40}
-                    width={800}
+                    width={900}
                     compactType={""}
                     isDraggable={!draggable}
                     isBounded={true}
@@ -565,9 +621,9 @@ const GridChart = () => {
                 // onDropDragOver={e => setId(subGrid.id)}
                 >
                     {
-
                         [
                             ...data.work.blocks.map((block, blockIndex) => {
+                                let width = block.hours * 16.6666667;
                                 return (
                                     <div
                                         key={`${data.machine},work,${block.id}`}
@@ -577,8 +633,12 @@ const GridChart = () => {
                                         // onMouseOver={}
                                         // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
                                         onDragStart={e => dragStartHandle(block, `${data.machine},work`, `${data.machine},work,${block.id}`)}
-                                        style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px" }}
-                                    >
+                                        style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px", zIndex: '4' }}
+                                    >{
+                                            showOverlay && dragItem.i == `${data.machine},work,${block.id}` && (
+                                                <BlockOverlay overlayWidth={width} color={blockColor} />
+                                            )
+                                        }
                                     </div>
                                 )
                             }),
@@ -587,7 +647,6 @@ const GridChart = () => {
                                     <div
                                         key={`${data.machine},unavailable,${block.id}`}
                                         style={{ backgroundColor: block.type, padding: '0px' }}
-
                                     >
                                     </div>
                                 )
@@ -601,11 +660,7 @@ const GridChart = () => {
     }
     return (
         <Fragment>
-            {
-                showOverlay && (
-                    <BlockOverlay overlayWidth={overlayWidth}/>
-                )
-            }
+
             <GridLayout
                 className={"layout"}
                 layout={layout1}

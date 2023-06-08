@@ -9,11 +9,11 @@ export const defaultJson = {
     days: [
         "Mon, 01 May 2023",
         "Tue, 02 May 2023",
-        // "Wed, 03 May 2023",
-        // "Thu, 04 May 2023",
-        // "Fri, 05 May 2023",
-        // "Sat, 06 May 2023",
-        // "Sun, 07 May 2023",
+        "Wed, 03 May 2023",
+        "Thu, 04 May 2023",
+        "Fri, 05 May 2023",
+        "Sat, 06 May 2023",
+        "Sun, 07 May 2023",
     ],
     data: [
         {
@@ -80,7 +80,8 @@ export const defaultJson = {
                         hours: 2,
                         date: "Tue, 02 May 2023",
                         time: "10:00",
-                        turn: "0"
+                        turn: "0",
+                        workId: "3"
                     },
                     {
                         id: "3",
@@ -89,7 +90,18 @@ export const defaultJson = {
                         hours: 3,
                         date: "Mon, 01 May 2023",
                         time: "8:00",
-                        turn: "2"
+                        turn: "2",
+                        workId: "5"
+                    },
+                    {
+                        id: "4",
+                        type: "maroon",
+                        tooltip: "C",
+                        hours: 2,
+                        date: "Mon, 01 May 2023",
+                        time: "12:00",
+                        turn: "2",
+                        workId: "5"
                     },
 
                 ],
