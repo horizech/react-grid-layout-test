@@ -89,8 +89,8 @@ export const defaultJson = {
                         tooltip: "C",
                         hours: 3,
                         date: "Mon, 01 May 2023",
-                        time: "8:00",
-                        turn: "2",
+                        time: "1:00",
+                        turn: "1",
                         workId: "5"
                     },
                     {
@@ -99,7 +99,7 @@ export const defaultJson = {
                         tooltip: "C",
                         hours: 2,
                         date: "Mon, 01 May 2023",
-                        time: "12:00",
+                        time: "5:00",
                         turn: "2",
                         workId: "5"
                     },
@@ -107,12 +107,12 @@ export const defaultJson = {
                 ],
                 unavailable: [
                     {
-                        id: "4",
+                        id: "1000",
                         type: "grey",
                         tooltip: "C",
                         hours: 3,
                         date: "Mon, 01 May 2023",
-                        time: "02:00",
+                        time: "2:00",
                         turn: "2"
                     },
                 ]
