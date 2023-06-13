@@ -159,8 +159,31 @@ export const defaultJson = {
                 ]
             },
             work: {
-                blocks: []
-            }
+                blocks: [{
+                    id: "3",
+                    type: "maroon",
+                    tooltip: "C",
+                    hours: 3,
+                    date: "Mon, 01 May 2023",
+                    time: "1:00",
+                    turn: "1",
+                    workId: "5"
+                },
+                ]
+                ,
+                unavailable: [
+                    {
+                        id: "1000",
+                        type: "grey",
+                        tooltip: "C",
+                        hours: 3,
+                        date: "Mon, 01 May 2023",
+                        time: "2:00",
+                        turn: "2"
+                    },
+                ]
+            },
+
         },
         {
             machine: "GHQ",
@@ -203,8 +226,30 @@ export const defaultJson = {
                 ]
             },
             work: {
-                blocks: []
-            }
+                blocks: [{
+                    id: "3",
+                    type: "maroon",
+                    tooltip: "C",
+                    hours: 3,
+                    date: "Mon, 01 May 2023",
+                    time: "1:00",
+                    turn: "1",
+                    workId: "5"
+                },
+                ]
+                ,
+                unavailable: [
+                    {
+                        id: "1000",
+                        type: "grey",
+                        tooltip: "C",
+                        hours: 3,
+                        date: "Mon, 01 May 2023",
+                        time: "2:00",
+                        turn: "2"
+                    },
+                ]
+            },
         }
     ],
 }
