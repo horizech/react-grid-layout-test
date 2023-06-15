@@ -44,6 +44,9 @@ const GridChart = () => {
 
     const [grids, setGrids] = useState(defaultGrid);
     const [gridData, setGridData] = useState(defaultJson);
+    const [keyIds, setKeyIds] = useState({});
+
+    const [dragStarted, setDragStarted] = useState(false)
 
     useEffect(() => {
         if (isStart === true) {
@@ -336,6 +339,7 @@ const GridChart = () => {
         }
         setDraggable(false);
         setGridData(newGridData);
+        setDragStarted(false);
 
     }
 
@@ -368,6 +372,8 @@ const GridChart = () => {
         }
         // console.log(newGrid);
         setShowOverlay(false);
+        setDragStarted(false);
+
     }
 
     const dateTimeToPosition = (date, time) => {
@@ -601,46 +607,50 @@ const GridChart = () => {
         // })
     }
     const onItemDragStart = (griditem, id, data) => {
-        console.log(griditem);
-
-        let piece = griditem.i.split(',').length > 3 ? griditem.i.split(',').splice(3, 1) : null;
-
-        console.log(griditem);
-        let newGrid = gridData
-        setDragItem(griditem);
-
-        if (griditem?.static === true) {
-            alert("This element is not draggable!");
-        } else {
-            let category = id.split(',')[1];
-            // if (targetId == sourceId) {
-            newGrid.data.forEach((grid, i) => {
-                let index = -1;
-                if (id.split(',')[0] == grid.machine) {
-                    grid[category].blocks.forEach((block, k) => {
-                        // console.log(isDeleteElement)
-                        if (block.id == griditem.i.split(',')[2]) {
-                            index = k
-                            // newGrid.data[i][category].blocks[k].time = `${griditem.x}:00`;
-                            // newGrid.data[i][category].blocks[k].turn = griditem.y;
-                            setBlockColor(newGrid.data[i][category].blocks[k].type);
-                            // console.log(newGrid.data[i][category].blocks[k]);
-                            setShowOverlay(true);
-                            setOverlayWidth((newGrid.data[i][category].blocks[k].hours * 17) + 'px');
-                            newGrid.data[i][category].blocks[k].type = "lightyellow";
-                        }
-                    })
-                }
-            })
-            setGridData(newGrid);
+        // console.log(griditem);
+        if(!dragStarted) {
+            setDragStarted(true);
+            let piece = griditem.i.split(',').length > 3 ? griditem.i.split(',').splice(3, 1) : null;
+    
+            console.log(griditem);
+            let newGrid = gridData
+            setDragItem(griditem);
+    
+            if (griditem?.static === true) {
+                alert("This element is not draggable!");
+            } else {
+                let category = id.split(',')[1];
+                // if (targetId == sourceId) {
+                newGrid.data.forEach((grid, i) => {
+                    let index = -1;
+                    if (id.split(',')[0] == grid.machine) {
+                        grid[category].blocks.forEach((block, k) => {
+                            // console.log(isDeleteElement)
+                            if (block.id == griditem.i.split(',')[2]) {
+                                index = k
+                                // newGrid.data[i][category].blocks[k].time = `${griditem.x}:00`;
+                                // newGrid.data[i][category].blocks[k].turn = griditem.y;
+                                setBlockColor(newGrid.data[i][category].blocks[k].type);
+                                // console.log(newGrid.data[i][category].blocks[k]);
+                                setShowOverlay(true);
+                                setOverlayWidth((newGrid.data[i][category].blocks[k].hours * 17) + 'px');
+                                newGrid.data[i][category].blocks[k].type = "lightyellow";
+                            }
+                        })
+                    }
+                })
+                setGridData(newGrid);
+            }
         }
+
     }
+
     const generateWorkBox = (data, days, y) => {
         // data.backlog.blocks.map((block, blockIndex) => {
         // let drag = elementGrid.data.static ? false : draggable
         // console.log(drag);
         let newData = JSON.parse(JSON.stringify(data))
-        newData.work.blocks.map((block, i) => {
+        newData.work.blocks.forEach((block, i) => {
             block['key'] = `${data.machine},work,${block.id}`
             if (block.date == null) {
                 newData.work.blocks[i].date = days[0];
@@ -724,13 +734,22 @@ const GridChart = () => {
                             useCSSTransforms={true}
                             transformScale={1}
                             measureBeforeMount={true}
+                            
                             // placeholder={}
                             // droppingItem= {{ i: `${data.machine}work3`, w: '100px', h: '100px' }}
+                            onDrag={(layout, oldItem, newItem,
+                                placeholder, e, element) => {
+                                    e.preventDefault();
+                                    onItemDragStart(newItem, `${data.machine},work,${day}`);
+                                }}
                             onDragStop={(layout, oldItem, newItem,
                                 placeholder, e, element) => onInternalDrag(newItem, `${data.machine},work,${day}`)}
                             onDrop={(layout, layoutItem, e) => onDropHandle(layout, layoutItem, `${data.machine},work,${day}`, e)}
-                            onDragStart={(layout, oldItem, newItem,
-                                placeholder, e, element) => onItemDragStart(newItem, `${data.machine},work,${day}`)}
+                            // onDragStart={(layout, oldItem, newItem,
+                            //     placeholder, e, element) => {
+                            //         e.preventDefault();
+                            //         onItemDragStart(newItem, `${data.machine},work,${day}`);
+                            //     }}
                         // onDropDragOver={e => setId(subGrid.id)}
                         >
                             {
@@ -742,7 +761,9 @@ const GridChart = () => {
                                                 draggable={draggable}
                                                 // onClick={(e) => console.log(e)}
                                                 className={`hours-${block.hours}`}
+                                                // onMouseDown={}
                                                 // onMouseOver={}
+                                                // onDrag={() => {}}
                                                 // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
                                                 onDragStart={e => dragStartHandle(block, `${data.machine},work,${day}`, `${data.machine},work,${block.id}`, data)}
                                                 style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px", zIndex: '4' }}

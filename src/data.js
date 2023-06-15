@@ -68,7 +68,7 @@ export const defaultJson = {
             work: {
                 blocks: [
                     {
-                        id: "1",
+                        id: "7",
                         type: "green",
                         tooltip: "A",
                         hours: 1,
@@ -77,7 +77,7 @@ export const defaultJson = {
                         turn: "0"
                     },
                     {
-                        id: "2",
+                        id: "8",
                         type: "orange",
                         tooltip: "B",
                         hours: 2,
@@ -87,7 +87,7 @@ export const defaultJson = {
                         workId: "3"
                     },
                     {
-                        id: "3",
+                        id: "9",
                         type: "maroon",
                         tooltip: "C",
                         hours: 3,
@@ -97,7 +97,7 @@ export const defaultJson = {
                         workId: "5"
                     },
                     {
-                        id: "4",
+                        id: "10",
                         type: "maroon",
                         tooltip: "C",
                         hours: 2,
