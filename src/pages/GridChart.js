@@ -56,25 +56,80 @@ const GridChart = () => {
         }
     });
 
-    const getEmptySpace = (subGrid, columns) => {
+    const getEmptySpace = (subGrid, columns, newElement, isDeleteElement, requiredHours) => {
         let spaces = []
         for (let y = 0; y <= 2; y++) {
             for (let x = 0; x < columns; x++) {
                 spaces.push({ y: y, x: x });
             }
         }
+
+        let availableSpaces = (new Array(24)).fill(true);
+        console.log(availableSpaces);
+        [0, 1, 2].forEach(turn => {
+            subGrid
+                .filter(x => x.turn == turn)
+                .forEach((block, k) => {
+                    let offset = turn * 8;
+                    let time = parseInt(block.time);
+                    let hours = block.hours;
+                    // console.log(offset, time, hours);
+                    (new Array(hours)).fill(1).map((x, i) => i).forEach(x => {
+                        // console.log(x);
+                        availableSpaces[offset + time + x] = false;
+                    })
+                });
+        });
+
+        console.log(availableSpaces);
+        let widthSpace = 0;
+
+
+        let newIndex = -1;
+
+        for (let spaceIndex = 0; spaceIndex < availableSpaces.length; spaceIndex++) {
+            // availableSpaces.map((x, j) =>{
+            if (availableSpaces[spaceIndex]) {
+                if (newIndex == -1) {
+                    newIndex = spaceIndex;
+                }
+                widthSpace++;
+            }
+            else {
+                widthSpace = 0;
+                newIndex = -1;
+            }
+
+            if (widthSpace >= newElement.hours) {
+                // let quotient = newIndex / 8;
+                const x = newIndex % 8;
+                const y = Math.floor(newIndex / 8);
+
+                newElement.time = "" + x; //newIndex <= 7 ? newIndex : newIndex <= 15 ? newIndex - 7 : newIndex - 15;
+                newElement.turn = y; //newIndex <= 7 ? 0 : newIndex <= 15 ? 1: 2 ;
+                isDeleteElement = true;
+                break;
+            }
+            else {
+                isDeleteElement = false;
+            }
+        }
+        console.log(newElement)
+
+        console.log(columns);
+        console.log(spaces);
         subGrid.forEach((block, k) => {
             let occopied = [];
-            let x = parseInt(block.time.split(":")[0]);
+            let x = parseInt(block.time);
             spaces.map((a, i) => {
                 if (block.turn === a.y && x === a.x) {
                     occopied = spaces.splice(i, block.hours)
                 }
             }
             );
-            // console.log(occopied);
+            console.log(occopied);
         });
-        return spaces;
+        return ({ updatedElement: newElement, isDeleteElement })
     }
 
     const updateAxisOfNewElement = (newElement, spaces, isDeleteElement) => {
@@ -94,7 +149,7 @@ const GridChart = () => {
             // console.log(widthSpace)
             // console.log(spaceIndex);
             if (newElement.hours <= widthSpace) {
-                newElement.time = `${spaces[spaceIndex - widthSpace]?.x}:00`;
+                newElement.time = `${spaces[spaceIndex - widthSpace]?.x}`;
                 newElement.turn = spaces[spaceIndex - widthSpace]?.y;
                 // newElement.id = newElement.data.i;
                 // isDeleteElement = true;
@@ -111,7 +166,7 @@ const GridChart = () => {
         let category = targetId.split(',')[1];
         console.log(targetId)
         if (targetId != sourceId) {
-            // newElement.type = blockColor;
+            newElement.type = blockColor;
             // console.log('checkpointz')
             newGrid.data.forEach((grid, i) => {
                 if (targetId.split(',')[0] == grid.machine) {
@@ -125,11 +180,13 @@ const GridChart = () => {
                         // const updatedElement = {newElement:{}, isDeleteElement: isDeleteElement};
                         newGrid.data[i][category].blocks.sort((a, b) => { return a.turn - b.turn })
                         let elementAxis = [];
-                        elementAxis = getEmptySpace([...grid[category].blocks.filter((block) => block.date == date), ...grid[category].unavailable.filter((block) => block.date == date)], 8);
-                        elementAxis.sort(function (a, b) { return a.y - b.y })
+                        let gridElements = [...grid[category].blocks.filter((block) => block.date == date), ...grid[category].unavailable.filter((block) => block.date == date)];
+                        // elementAxis = getEmptySpace(gridElements, 8, newElement, isDeleteElement);
+                        // elementAxis.sort(function (a, b) { return a.y - b.y })
                         console.log(elementAxis);
 
-                        const { updatedElement, isDeleteElement } = updateAxisOfNewElement(newElement, elementAxis, isDelete);
+                        const { updatedElement, isDeleteElement } = getEmptySpace(gridElements, 8, newElement, isDelete);
+                        // updateAxisOfNewElement(newElement, elementAxis, isDelete);
                         // console.log(elementAxis);
                         // isDeleteElement = isDelete
                         // console.log(updatedElement.isDeleteElement);
@@ -153,7 +210,7 @@ const GridChart = () => {
                 });
             }
         })
-
+        console.log(newGrid);
         return ({ newGrid, isDelete })
     }
 
@@ -174,7 +231,7 @@ const GridChart = () => {
                         // console.log(index);
                         newGrid.data[i][category].blocks.splice(index, 1);
                         // isDeleteElement = false
-                    }
+                    } else newGrid.data[i][category].blocks[index].type = blockColor
                 }
             });
         } else newGrid.data.forEach((grid, i) => {
@@ -214,13 +271,15 @@ const GridChart = () => {
         setGrids(newGrid);
     }
 
-    const dragStartHandle = (sourceElement, id, i) => {
+    const dragStartHandle = (sourceElement, id, sourceElementId, data) => {
         // console.log(e);
         // console.log(blockId);
-        sourceElement['i'] = i;
+        let category = id.split(',')[1];
+        sourceElement['i'] = sourceElementId;
+        let element = data[category].blocks.filter(x => x.id == sourceElement.id)[0];
         setBlockId(blockId)
         setSourceGridId(id);
-        setElement(sourceElement);
+        setElement(element);
         onItemDragStart(sourceElement, id);
         // setDraggable(true);
 
@@ -310,7 +369,7 @@ const GridChart = () => {
                 x = i;
             }
         });
-        x = x + parseInt(time.split(":")[0])
+        x = x + parseInt(time)
         // console.log(x);
         return x;
     }
@@ -436,7 +495,7 @@ const GridChart = () => {
                                     key={`${data.machine},backlog,${block.id}`}
                                     draggable={draggable}
                                     // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                    onDragStart={e => dragStartHandle(block, `${data.machine},backlog`, `${data.machine},backlog,${block.id}`)}
+                                    onDragStart={e => dragStartHandle(block, `${data.machine},backlog`, `${data.machine},backlog,${block.id}`, data)}
                                     style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px" }}
                                 >{
                                         showOverlay && (dragItem.i == `${data.machine},backlog,${block.id}` || dragItem.id == block.id) && (
@@ -513,7 +572,7 @@ const GridChart = () => {
                                     key={`${data.machine},leftovers,${block.id}`}
                                     draggable={draggable}
                                     // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                    onDragStart={e => dragStartHandle(block, `${data.machine},leftovers`, `${data.machine},leftovers,${block.id}`)}
+                                    onDragStart={e => dragStartHandle(block, `${data.machine},leftovers`, `${data.machine},leftovers,${block.id}`, data)}
                                     style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px" }}
                                 >{
                                         showOverlay && dragItem.i == `${data.machine},leftovers,${block.id}` && (
@@ -530,7 +589,11 @@ const GridChart = () => {
         // })
     }
     const onItemDragStart = (griditem, id, data) => {
-        // console.log(id);
+        console.log(griditem);
+
+        let piece = griditem.i.split(',').length > 3? griditem.i.split(',').splice(3, 1): null;
+
+        console.log(griditem);
         let newGrid = gridData
         setDragItem(griditem);
 
@@ -549,10 +612,10 @@ const GridChart = () => {
                             // newGrid.data[i][category].blocks[k].time = `${griditem.x}:00`;
                             // newGrid.data[i][category].blocks[k].turn = griditem.y;
                             setBlockColor(newGrid.data[i][category].blocks[k].type);
-                            newGrid.data[i][category].blocks[k].type = "lightyellow";
                             // console.log(newGrid.data[i][category].blocks[k]);
                             setShowOverlay(true);
                             setOverlayWidth((newGrid.data[i][category].blocks[k].hours * 17) + 'px');
+                            newGrid.data[i][category].blocks[k].type = "lightyellow";
                         }
                     })
                 }
@@ -564,17 +627,43 @@ const GridChart = () => {
         // data.backlog.blocks.map((block, blockIndex) => {
         // let drag = elementGrid.data.static ? false : draggable
         // console.log(drag);
+        let newData = JSON.parse(JSON.stringify(data))
+        newData.work.blocks.map((block, i) => {
+            block['key'] = `${data.machine},work,${block.id}`
+            if (block.date == null) {
+                newData.work.blocks[i].date = days[0];
+            }
+            if ((block.hours + parseInt(block.time)) > 8) {
+                let firstElementWidth = 8 - parseInt(block.time);
+                let hours = block.hours;
+                newData.work.blocks.splice(i, 1);
+                block.hours = firstElementWidth;
+                block['width'] = hours * 16.6;
+                newData.work.blocks.push(block)
+                let UpdatedData = JSON.parse(JSON.stringify(newData))
+                block.hours = hours - firstElementWidth
+                // block.id = parseInt(UpdatedData.work.blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) + 1;
+                block.turn = block.turn + 1;
+                block.time = 0;
+                block['key'] = `${data.machine},work,${block.id},piece`
+                UpdatedData.work.blocks.push(block)
+                newData = UpdatedData;
+                // console.log(block.key);
+                
+            }
+        })
+        // console.log(newData);
         let dimensions = []
         let x = 0;
-        let layout = [...data.work.blocks.map((block, blockIndex) => {
-            x = parseInt(block.time.split(":")[0]);
+        let layout = [...newData.work.blocks.map((block, blockIndex) => {
+            x = parseInt(block.time);
+            // console.log(block.key);
             // console.log("check point",x)
-            let dimension = { i: `${data.machine},work,${block.id}`, x: x, y: block.turn, w: block.hours, h: 1, static: false }
+            let dimension = { i: block.key, x: x, y: block.turn, w: block.hours, h: 1, static: false }
 
-            dimensions.push(dimension);
             return dimension
         }),
-        ...data.work.unavailable.map((block, blockIndex) => {
+        ...newData.work.unavailable.map((block, blockIndex) => {
             x = dateTimeToPosition(block.date, block.time);
             // console.log("check point",x)
             let dimension = { i: `${data.machine},unavailable,${block.id}`, x: x, y: block.turn, w: block.hours, h: 1, static: true }
@@ -586,11 +675,7 @@ const GridChart = () => {
         let w = 0.8;
         let index = 1
 
-        data.work.blocks.map((item, i) => {
-            if (item.date == null) {
-                data.work.blocks[i].date = days[0];
-            }
-        })
+
         // console.log(data.work.blocks)
         return (
             days.map((day, j) => {
@@ -608,7 +693,7 @@ const GridChart = () => {
                             "static": true
                         }}
                         key={`${data.machine},work,${index}`}
-                        style={{ textAlign: "center", backgroundColor: "white", border: 'dashed', opacity: 1, }}
+                        style={{ textAlign: "center", backgroundColor: "white", borderLeft: 'dashed', opacity: 1, }}
                     >
                         <GridLayout
                             className="layout"
@@ -638,27 +723,27 @@ const GridChart = () => {
                         >
                             {
                                 [
-                                    ...data.work.blocks.filter(block => block.date == day).map((block, blockIndex) => {
-                                        let width = block.hours * 16.6;
+                                    ...newData.work.blocks.filter(block => block.date == day).map((block, j) => {
                                         return (
                                             <div
-                                                key={`${data.machine},work,${block.id}`}
+                                                key={block.key}
                                                 draggable={draggable}
-                                                onClick={(e) => console.log(e)}
+                                                // onClick={(e) => console.log(e)}
                                                 className={`hours-${block.hours}`}
                                                 // onMouseOver={}
                                                 // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                                onDragStart={e => dragStartHandle(block, `${data.machine},work,${day}`, `${data.machine},work,${block.id}`)}
+                                                onDragStart={e => dragStartHandle(block, `${data.machine},work,${day}`, `${data.machine},work,${block.id}`, data)}
                                                 style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px", zIndex: '4' }}
                                             >{
                                                     showOverlay && dragItem.i == `${data.machine},work,${block.id}` && (
-                                                        <BlockOverlay overlayWidth={width} color={blockColor} />
+                                                        <BlockOverlay overlayWidth={block.width} color={blockColor} />
                                                     )
                                                 }
                                             </div>
+
                                         )
                                     }),
-                                    ...data.work.unavailable.filter(block => block.date == day).map((block, blockIndex) => {
+                                    ...newData.work.unavailable.filter(block => block.date == day).map((block, blockIndex) => {
                                         return (
                                             <div
                                                 key={`${data.machine},unavailable,${block.id}`}
@@ -675,7 +760,7 @@ const GridChart = () => {
             }))
         // })
     }
-    let y = 0;
+    let y = 1;
     return (
         <Fragment>
             <GridLayout
@@ -708,8 +793,8 @@ const GridChart = () => {
                         {generateDaysBox(gridData.days)}
                         {
                             gridData.data.map((grid, j) => {
-                                
-                                y = y + 1;
+                                // console.log(grid);
+
                                 let gridsArray = [generateBacklogBox(grid, y), generateLeftoversBox(grid, y), generateWorkBox(grid, gridData.days, y), <div
                                     data-grid={{
                                         "x": 0,
@@ -722,6 +807,7 @@ const GridChart = () => {
                                     style={{ overflow: "auto", textAlign: "center", backgroundColor: "yellow", border: 'solid', opacity: 1, borderRadius: "20px" }}
                                 ><h3>{grid.machine}</h3></div>
                                 ]
+                                y = y + 2.5;
                                 return (
                                     gridsArray
                                 )

@@ -47,18 +47,21 @@ export const defaultJson = {
                         type: "red",
                         tooltip: "D",
                         hours: 2,
+                        time:''
                     },
                     {
                         id: "5",
                         type: "blue",
                         tooltip: "E",
                         hours: 4,
+                        time:''
                     },
                     {
                         id: "6",
                         type: "green",
                         tooltip: "F",
                         hours: 8,
+                        time:''
                     },
                 ]
             },
@@ -70,7 +73,7 @@ export const defaultJson = {
                         tooltip: "A",
                         hours: 1,
                         date: "Mon, 01 May 2023",
-                        time: "8:00",
+                        time: "7",
                         turn: "0"
                     },
                     {
@@ -79,7 +82,7 @@ export const defaultJson = {
                         tooltip: "B",
                         hours: 2,
                         date: "Tue, 02 May 2023",
-                        time: "10:00",
+                        time: "4",
                         turn: "0",
                         workId: "3"
                     },
@@ -89,7 +92,7 @@ export const defaultJson = {
                         tooltip: "C",
                         hours: 3,
                         date: "Mon, 01 May 2023",
-                        time: "1:00",
+                        time: "1",
                         turn: "1",
                         workId: "5"
                     },
@@ -99,7 +102,7 @@ export const defaultJson = {
                         tooltip: "C",
                         hours: 2,
                         date: "Mon, 01 May 2023",
-                        time: "5:00",
+                        time: "5",
                         turn: "2",
                         workId: "5"
                     },
@@ -112,7 +115,7 @@ export const defaultJson = {
                         tooltip: "C",
                         hours: 3,
                         date: "Mon, 01 May 2023",
-                        time: "2:00",
+                        time: "2",
                         turn: "2"
                     },
                 ]
@@ -124,18 +127,21 @@ export const defaultJson = {
                 blocks: [
                     {
                         id: "10",
-                        type: "green",
-                        tooltip: "AA"
+                        type: "red",
+                        tooltip: "AA",
+                        time:''
                     },
                     {
                         id: "20",
-                        type: "yellow",
+                        type: "orange",
                         tooltip: "BB",
+                        time:''
                     },
                     {
                         id: "30",
                         type: "blue",
                         tooltip: "CC",
+                        time:''
                     },
                 ]
             },
@@ -161,11 +167,11 @@ export const defaultJson = {
             work: {
                 blocks: [{
                     id: "3",
-                    type: "maroon",
+                    type: "green",
                     tooltip: "C",
                     hours: 3,
                     date: "Mon, 01 May 2023",
-                    time: "1:00",
+                    time: "1",
                     turn: "1",
                     workId: "5"
                 },
@@ -178,7 +184,7 @@ export const defaultJson = {
                         tooltip: "C",
                         hours: 3,
                         date: "Mon, 01 May 2023",
-                        time: "2:00",
+                        time: "2",
                         turn: "2"
                     },
                 ]
@@ -191,7 +197,7 @@ export const defaultJson = {
                 blocks: [
                     {
                         id: "10",
-                        type: "green",
+                        type: "purple",
                         tooltip: "AA"
                     },
                     {
@@ -201,7 +207,7 @@ export const defaultJson = {
                     },
                     {
                         id: "30",
-                        type: "blue",
+                        type: "cyan",
                         tooltip: "CC",
                     },
                 ]
@@ -210,12 +216,12 @@ export const defaultJson = {
                 blocks: [
                     {
                         id: "40",
-                        type: "red",
+                        type: "brown",
                         tooltip: "DD",
                     },
                     {
                         id: "50",
-                        type: "blue",
+                        type: "black",
                         tooltip: "EE",
                     },
                     {
@@ -228,12 +234,12 @@ export const defaultJson = {
             work: {
                 blocks: [{
                     id: "3",
-                    type: "maroon",
+                    type: "purple",
                     tooltip: "C",
                     hours: 3,
-                    date: "Mon, 01 May 2023",
-                    time: "1:00",
-                    turn: "1",
+                    date: "Tue, 02 May 2023",
+                    time: "7",
+                    turn: "0",
                     workId: "5"
                 },
                 ]
@@ -245,7 +251,7 @@ export const defaultJson = {
                         tooltip: "C",
                         hours: 3,
                         date: "Mon, 01 May 2023",
-                        time: "2:00",
+                        time: "2",
                         turn: "2"
                     },
                 ]
