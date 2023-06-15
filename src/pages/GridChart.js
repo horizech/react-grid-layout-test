@@ -4,7 +4,19 @@ import { defaultGrid, defaultJson } from "../data";
 
 import '../App.css';
 import { BlockOverlay } from "./BlockOverlay";
+import { PdfDoc } from "./PdfDoc";
+// import { Document, Page } from "react-pdf";
+// import PdfDoc from "./PdfDoc";
 
+// const PdfDoc = () => {
+
+//     return (
+//         <Document file={'https://www.africau.edu/images/default/sample.pdf'}>
+//             <Page />
+//         </Document>
+
+//     )
+// }
 const GridChart = () => {
     const [newKey, setNewKey] = useState("b");
     const [sourceGridId, setSourceGridId] = useState(null);
@@ -591,7 +603,7 @@ const GridChart = () => {
     const onItemDragStart = (griditem, id, data) => {
         console.log(griditem);
 
-        let piece = griditem.i.split(',').length > 3? griditem.i.split(',').splice(3, 1): null;
+        let piece = griditem.i.split(',').length > 3 ? griditem.i.split(',').splice(3, 1) : null;
 
         console.log(griditem);
         let newGrid = gridData
@@ -649,7 +661,7 @@ const GridChart = () => {
                 UpdatedData.work.blocks.push(block)
                 newData = UpdatedData;
                 // console.log(block.key);
-                
+
             }
         })
         // console.log(newData);
@@ -826,7 +838,9 @@ const GridChart = () => {
                     }}
                     key={"pdf"}
                     style={{ overflow: "auto", textAlign: "center", backgroundColor: "lightyellow", border: 'solid', opacity: 1, borderRadius: "20px" }}
-                ></div>
+                >
+                    <PdfDoc/>
+                </div>
                 <div
                     data-grid={{
                         "x": 0,
@@ -839,7 +853,6 @@ const GridChart = () => {
                     style={{ overflow: "auto", textAlign: "center", backgroundColor: "lightgrey", border: 'solid', opacity: 1, borderRadius: "20px" }}
                 ></div>
             </GridLayout >
-
         </Fragment >
     );
 }
