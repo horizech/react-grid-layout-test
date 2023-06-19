@@ -389,7 +389,7 @@ const GridChart = () => {
                         if (block.id == griditem.i.split(',')[2]) {
                             index = k
                             // newGrid.data[i].work.blocks[k].startedAt = `${x}, ${date}`;
-                            newGrid.data[i].work.blocks[k].shift = griditem.y;
+                            // newGrid.data[i].work.blocks[k].shift = griditem.y;
                             // newGrid.data[i].work.blocks[k].type = blockColor;
 
                             // console.log(block);
