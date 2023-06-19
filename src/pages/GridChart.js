@@ -120,7 +120,7 @@ const GridChart = () => {
                 const x = newIndex % 8;
                 const y = Math.floor(newIndex / 8);
 
-                newElement.startedAt = "" + x; //newIndex <= 7 ? newIndex : newIndex <= 15 ? newIndex - 7 : newIndex - 15;
+                newElement.startedAt = "" + newIndex; //newIndex <= 7 ? newIndex : newIndex <= 15 ? newIndex - 7 : newIndex - 15;
                 newElement.shift = y; //newIndex <= 7 ? 0 : newIndex <= 15 ? 1: 2 ;
                 isDeleteElement = true;
                 break;
