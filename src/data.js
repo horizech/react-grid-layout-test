@@ -43,12 +43,12 @@ export const defaultJson = {
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "black",
                         tooltip: "A",
-                        duration: 9, //hours: 1,
+                        duration: 2, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
-                        startedAt: '7, Tue, 02 May 2023', // time: "7", date time
+                        startedAt: '8, Tue, 02 May 2023', // time: "7", date time
                         finishedAt: '16, Tue, 02 May 2023', // date time
-                        shift: 0 // turn
+                        shift: 1 // turn
                     },
                     {
                         id: "2",
@@ -66,7 +66,7 @@ export const defaultJson = {
                         duration: 1, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
-                        startedAt: "1, Fri, 05 May 2023", // time: "7", date time
+                        startedAt: "9, Fri, 05 May 2023", // time: "7", date time
                         finishedAt: '2, Fri, 05 May 2023', // date time
                         shift: 1 // turn
                     },
@@ -83,7 +83,7 @@ export const defaultJson = {
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "orange",
                         tooltip: "A",
-                        duration: 6, //hours: 1,
+                        duration: 2, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: "16, Fri, 05 May 2023", // time: "7", date time
@@ -103,7 +103,7 @@ export const defaultJson = {
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "blue",
                         tooltip: "A",
-                        duration: 5, //hours: 1,
+                        duration: 2, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: "1, Wed, 03 May 2023", // time: "7", date time

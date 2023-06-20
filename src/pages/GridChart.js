@@ -81,20 +81,17 @@ const GridChart = () => {
 
         let availableSpaces = (new Array(24)).fill(true);
         console.log(availableSpaces);
-        [0, 1, 2].forEach(shift => {
-            subGrid
-                .filter(x => x.shift == shift)
-                .forEach((block, k) => {
-                    let offset = shift * 8;
-                    let startedAt = parseInt(block.startedAt);
-                    let duration = block.duration;
-                    // console.log(offset, startedAt, duration);
-                    (new Array(duration)).fill(1).map((x, i) => i).forEach(x => {
-                        // console.log(x);
-                        availableSpaces[offset + startedAt + x] = false;
-                    })
-                });
-        });
+        console.log(subGrid)
+        subGrid
+            .forEach((block, k) => {
+                let startedAt = parseInt(block.startedAt.split(',')[0]);
+                let duration = block.duration;
+                (new Array(duration)).fill(1).map((x, i) => i).forEach(x => {
+                    console.log(startedAt);
+                    availableSpaces[startedAt + x] = false;
+                })
+                console.log(startedAt, duration);
+            });
 
         console.log(availableSpaces);
         let widthSpace = 0;
@@ -117,10 +114,11 @@ const GridChart = () => {
 
             if (widthSpace >= newElement.duration) {
                 // let quotient = newIndex / 8;
-                const x = newIndex % 8;
+                // const x = (newIndex) % 8;
+                const x = newIndex;
                 const y = Math.floor(newIndex / 8);
 
-                newElement.startedAt = "" + newIndex; //newIndex <= 7 ? newIndex : newIndex <= 15 ? newIndex - 7 : newIndex - 15;
+                newElement.startedAt = "" + x; //newIndex <= 7 ? newIndex : newIndex <= 15 ? newIndex - 7 : newIndex - 15;
                 newElement.shift = y; //newIndex <= 7 ? 0 : newIndex <= 15 ? 1: 2 ;
                 isDeleteElement = true;
                 break;
@@ -176,11 +174,10 @@ const GridChart = () => {
 
     const addNewElement = (newGrid, newElement, targetId, sourceId, isDelete) => {
         let newTargetId = [targetId.split(',')[0], targetId.split(',')[1]].join();
-        let startedAt = [targetId.split(',')[2], targetId.split(',')[3]].join();
-        console.log(startedAt);
+        let startDate = [targetId.split(',')[2], targetId.split(',')[3]].join();
+        console.log(startDate);
         let targetCategory = targetId.split(',')[1];
         let sourceCategory = sourceId.split(',')[1];
-        console.log(targetId)
         if (targetId != sourceId) {
             newElement.type = blockColor;
             // console.log('checkpointz')
@@ -190,27 +187,45 @@ const GridChart = () => {
                     // console.log(newElement)
                     // newElement.id = (newGrid.data[i].work.blocks.length > 0 ? parseInt(newGrid.data[i].work.blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) : 0) + 1
                     // console.log(newElement.id)
-
-
+                    // let inprogressGrid =  grid.work.blocks.map((x) => {
+                    //     // let date = [x.startedAt.split(',')[1], x.startedAt.split(',')[2]].join();
+                    //     if(x.status == 'in_progress'){
+                    //         console.log( x.startedAt.split(',')[2], targetId.split(',')[3]);
+                    //         if( x.startedAt.split(',')[2] == targetId.split(',')[3]){
+                    //             console.log(x);
+                    //             return x;
+                    //         }
+                    //     }
+                    // })
+                    // console.log(grid);/
+                    let inprogressGrid = grid.work.blocks.filter((x) => x.status == 'in_progress');
+                    // console.log(inprogressGrid);
+                    inprogressGrid = inprogressGrid.filter((x) => x.startedAt.split(',')[2] == targetId.split(',')[3]);
+                    let unavailableGrid = grid.work.unavailable.filter((x) => x.startedAt.split(',')[2] == targetId.split(',')[3])
+                    // console.log(inprogressGrid);
+                    console.log(unavailableGrid);
                     // newGrid.data[i].work.blocks.push(newElement);
                     // }
                     if (targetCategory == 'in_progress') {
                         // const updatedElement = {newElement:{}, isDeleteElement: isDeleteElement};
                         newGrid.data[i].work.blocks.sort((a, b) => { return a.shift - b.shift })
                         let elementAxis = [];
-                        let gridElements = [...grid.work.blocks.filter((block) => block.startedAt.split(',')[1] == startedAt), ...grid.work.unavailable.filter((block) => block.startedAt.split(',')[1] == startedAt)];
+                        let gridElements = [...inprogressGrid, ...unavailableGrid];
                         // elementAxis = getEmptySpace(gridElements, 8, newElement, isDeleteElement);
                         // elementAxis.sort(function (a, b) { return a.y - b.y })
-                        console.log(elementAxis);
+                        // console.log(elementAxis);
+                        console.log(gridElements);
 
                         const { updatedElement, isDeleteElement } = getEmptySpace(gridElements, 8, newElement, isDelete);
+                        console.log(updatedElement);
                         newGrid.data[i].work.blocks.forEach((x, j) => {
                             if (x.id === newElement.id) {
                                 newGrid.data[i].work.blocks[j].status = targetCategory;
-                                console.log(`${updatedElement.startedAt}, ${startedAt}`);
+                                // console.log(`${updatedElement.startedAt}, ${startedAt}`);
                                 // getEmptySpace(gridElements, 8, newElement, isDelete);
-                                newGrid.data[i].work.blocks[j].startedAt = `${updatedElement.startedAt}, ${startedAt}`;
+                                newGrid.data[i].work.blocks[j].startedAt = `${updatedElement.startedAt}, ${startDate}`;
                                 newGrid.data[i].work.blocks[j].shift = updatedElement.shift;
+                                console.log(newGrid.data[i].work.blocks[j]);
                             }
                         })
                     } else {
@@ -218,6 +233,7 @@ const GridChart = () => {
                             if (x.id === newElement.id) {
                                 newGrid.data[i].work.blocks[j].status = targetCategory;
                                 // getEmptySpace(gridElements, 8, newElement, isDelete);
+                                // console.log('not in progress');
                                 newGrid.data[i].work.blocks[j].startedAt = '';
                             }
                         })
@@ -333,8 +349,9 @@ const GridChart = () => {
         // console.log(layout);
         // setLayout(layout);
         // console.log(id);/
+        setGridData('');
         const category = id.split(',')[1];
-        let newGridData = gridData;
+        let newGridData = JSON.parse(JSON.stringify(gridData));
         const newElement = JSON.parse(JSON.stringify(element));
         newElement.type = blockColor;
         let elementToBeDeleted = element;
@@ -342,7 +359,7 @@ const GridChart = () => {
 
         if (sourceId.includes('days')) {
             alert("This element is not draggable!");
-        } else if (id.split(',')[1] == 'leftovers') {
+        } else if (id.split(',')[1] == 'overdue') {
             newGridData.data.forEach((grid, i) => {
                 if (sourceId.split(',')[0] == grid.machine) {
                     newGridData.data[i][sourceId.split(',')[1]].blocks.forEach((block, k) => {
@@ -372,7 +389,7 @@ const GridChart = () => {
         // console.log(griditem);
         let newGrid = gridData
         // console.log(blockColor);
-        const x = griditem.x + (griditem.y * 8)
+        const x = parseInt(griditem.x) + (parseInt(griditem.y) * 8)
         console.log(x);
         if (griditem?.static === true) {
             alert("This element is not draggable!");
@@ -388,8 +405,8 @@ const GridChart = () => {
                         console.log(`${x}, ${date}`)
                         if (block.id == griditem.i.split(',')[2]) {
                             index = k
-                            // newGrid.data[i].work.blocks[k].startedAt = `${x}, ${date}`;
-                            // newGrid.data[i].work.blocks[k].shift = griditem.y;
+                            newGrid.data[i].work.blocks[k].startedAt = `${x}, ${date}`;
+                            newGrid.data[i].work.blocks[k].shift = griditem.y;
                             // newGrid.data[i].work.blocks[k].type = blockColor;
 
                             // console.log(block);
@@ -637,12 +654,12 @@ const GridChart = () => {
     }
     const onItemDragStart = (griditem, id, data) => {
         // console.log(griditem);
-        console.log("chckpoint");
+        // console.log("chckpoint");
         if (!dragStarted) {
             setDragStarted(true);
             // let piece = griditem.i.split(',').length > 3 ? griditem.i.split(',').splice(3, 1) : null;
 
-            console.log(griditem);
+            // console.log(griditem);
             let newGrid = gridData
             setDragItem(griditem);
 
@@ -680,8 +697,8 @@ const GridChart = () => {
         // let drag = elementGrid.data.static ? false : draggable
         // console.log(drag);
         let newData = JSON.parse(JSON.stringify(data))
-        newData.work.blocks.filter((x) => x.status == 'in_progress').forEach((block, i) => {
-            newData.work.blocks[i]['key'] = `${data.machine},in_progress,${block.id}`
+        // newData.work.blocks.filter((x) => x.status == 'in_progress').forEach((block, i) => {
+        //     newData.work.blocks[i]['key'] = `${data.machine},in_progress,${block.id}`
             // block['key'] = `${data.machine},in_progress,${block.id}`
             // if (block.startedAt == null) {
             //     newData.work.blocks[i].startedAt = `0, ${days[0]}`;
@@ -704,17 +721,19 @@ const GridChart = () => {
             //     // console.log(block.key);
 
             // }
-        })
-        // console.log(newData);
+        // })
+        console.log(newData);
         let dimensions = []
         let x = 0;
         let layout = [...newData.work.blocks
             .filter((x) => x.status == 'in_progress')
             .map((block, blockIndex) => {
+                console.log(block.startedAt.split(',')[0]);
                 x = parseInt(block.startedAt != '' ? block.startedAt.split(',')[0] : 0) % 8;;
                 // console.log(block.key);
-                console.log("check point", x)
-                let dimension = { i: block.key, x: x, y: block.shift, w: block.duration, h: 1, static: false }
+                // console.log("check point", x)
+                // console.log("check point", block.shift)
+                let dimension = { i: `${data.machine},in_progress,${block.id}`, x: x, y: block.shift, w: block.duration, h: 1, static: false }
 
                 return dimension
             }),
@@ -731,7 +750,7 @@ const GridChart = () => {
         let index = 1
 
 
-        // console.log(data.work.blocks)
+        console.log(layout)
         return (
             days.map((day, j) => {
                 // console.log(day);
@@ -790,7 +809,7 @@ const GridChart = () => {
                                     ...newData.work.blocks.filter((x) => x.status == 'in_progress' && (x.startedAt != '' ? x.startedAt.split(',')[2] : null) == day.split(',')[1]).map((block, j) => {
                                         return (
                                             <div
-                                                key={block.key}
+                                                key={`${data.machine},in_progress,${block.id}`}
                                                 draggable={draggable}
                                                 // onClick={(e) => console.log(e)}
                                                 className={`duration-${block.duration}`}
