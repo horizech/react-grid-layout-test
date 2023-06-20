@@ -697,31 +697,32 @@ const GridChart = () => {
         // let drag = elementGrid.data.static ? false : draggable
         // console.log(drag);
         let newData = JSON.parse(JSON.stringify(data))
-        // newData.work.blocks.filter((x) => x.status == 'in_progress').forEach((block, i) => {
-        //     newData.work.blocks[i]['key'] = `${data.machine},in_progress,${block.id}`
-            // block['key'] = `${data.machine},in_progress,${block.id}`
-            // if (block.startedAt == null) {
-            //     newData.work.blocks[i].startedAt = `0, ${days[0]}`;
-            // }
-            // if ((block.duration + parseInt(block.startedAt.split(',')[0])) > 8) {
-            //     let firstElementWidth = 8 - parseInt(block.startedAt.split(',')[0]);
-            //     let duration = block.duration;
-            //     newData.work.blocks.splice(i, 1);
-            //     block.duration = firstElementWidth;
-            //     block['width'] = duration * 16.6;
-            //     newData.work.blocks.push(block)
-            //     let UpdatedData = JSON.parse(JSON.stringify(newData))
-            //     block.duration = duration - firstElementWidth
-            //     // block.id = parseInt(UpdatedData.work.blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) + 1;
-            //     block.shift = block.shift + 1;
-            //     block.startedAt = 0;
-            //     block['key'] = `${data.machine},in_progress,${block.id},piece`
-            //     UpdatedData.work.blocks.push(block)
-            // newData = UpdatedData;
-            //     // console.log(block.key);
+        newData.work.blocks.filter((x) => x.status == 'in_progress').forEach((block, i) => {
+            newData.work.blocks[i]['key'] = `${data.machine},in_progress,${block.id}`
+            block['key'] = `${data.machine},in_progress,${block.id}`
+            if (block.startedAt == null) {
+                newData.work.blocks[i].startedAt = `0, ${days[0]}`;
+            }
+            if ((block.duration + parseInt(block.startedAt.split(',')[0]) % 8) > 8) {
+                let firstElementWidth = 8 - parseInt(block.startedAt.split(',')[0]) % 8;
+                let duration = block.duration;
+                newData.work.blocks.splice(i, 1);
+                block.duration = firstElementWidth;
+                block['width'] = duration * 16.6;
+                newData.work.blocks.push(block)
+                let UpdatedData = JSON.parse(JSON.stringify(newData))
+                block.duration = duration - firstElementWidth
+                // block.id = parseInt(UpdatedData.work.blocks.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) + 1;
+                block.shift = block.shift + 1;
+                block.startedAt = `${block.shift * 8}, ${block.startedAt.split(',')[1]}, ${block.startedAt.split(',')[2]}`;
+                block['key'] = `${data.machine},in_progress,${block.id},piece`
+                block['piece'] = true;
+                UpdatedData.work.blocks.push(block)
+                newData = UpdatedData;
+                // console.log(block.key);
 
-            // }
-        // })
+            }
+        })
         console.log(newData);
         let dimensions = []
         let x = 0;
@@ -767,7 +768,7 @@ const GridChart = () => {
                             "static": true
                         }}
                         key={`${data.machine},work,${index}`}
-                        style={{ textAlign: "center", backgroundColor: "white", borderLeft: 'dashed', opacity: 1, }}
+                        style={{ textAlign: "center", backgroundColor: "white", border: 'dashed', opacity: 1, }}
                     >
                         <GridLayout
                             className="layout"
@@ -871,9 +872,10 @@ const GridChart = () => {
                         className={"layout"}
                         layout={layout1}
                         cols={12}
-                        rowHeight={50}
+                        rowHeight={55}
                         width={2000}
                         isDraggable={false}
+                        margin={[0, 2]}
                     >
                         {generateDaysBox(gridData.days)}
                         {

@@ -264,6 +264,254 @@ export const defaultJson = {
                 ]
             }
         },
+        {
+            machine: "DEF",
+            // backlog: {
+            //     blocks: [
+
+            //     ]
+            // },
+            // leftovers: {
+            //     blocks: [
+
+            //     ]
+            // },
+            work: {
+                blocks: [
+                    {
+                        id: "1",
+                        importHash: '', // Hash value used for data import
+                        createdAt: 'Mon, 01 May 2023', // date time
+                        updatedAt: 'Tue, 02 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 1, // ObjectId reference to the operation schedule
+                        status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "black",
+                        tooltip: "A",
+                        duration: 2, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 1,// ObjectId reference to the tenant associated
+                        startedAt: '8, Tue, 02 May 2023', // time: "7", date time
+                        finishedAt: '16, Tue, 02 May 2023', // date time
+                        shift: 1 // turn
+                    },
+                    {
+                        id: "2",
+                        importHash: '', // Hash value used for data import
+                        createdAt: 'Mon, 01 May 2023', // date time
+                        updatedAt: 'Fri, 05 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 2, // ObjectId reference to the operation schedule
+                        status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "blue",
+                        tooltip: "A",
+                        duration: 1, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 1,// ObjectId reference to the tenant associated
+                        startedAt: "9, Fri, 05 May 2023", // time: "7", date time
+                        finishedAt: '2, Fri, 05 May 2023', // date time
+                        shift: 1 // turn
+                    },
+                    {
+                        id: "3",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 3, // ObjectId reference to the operation schedule
+                        status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "orange",
+                        tooltip: "A",
+                        duration: 2, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 1,// ObjectId reference to the tenant associated
+                        startedAt: "16, Fri, 05 May 2023", // time: "7", date time
+                        finishedAt: '22, Fri, 05 May 2023', // date time
+                        shift: 2 // turn
+                    },
+                    {
+                        id: "4",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 4, // ObjectId reference to the operation schedule
+                        status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "blue",
+                        tooltip: "A",
+                        duration: 2, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 1,// ObjectId reference to the tenant associated
+                        startedAt: "1, Wed, 03 May 2023", // time: "7", date time
+                        finishedAt: '6,  Wed, 03 May 2023', // date time
+                        shift: 0 // turn
+                    },
+                    {
+                        id: "5",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 5, // ObjectId reference to the operation schedule
+                        status: 'to_do', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "orange",
+                        tooltip: "A",
+                        duration: 2, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 1,// ObjectId reference to the tenant associated
+                        startedAt: '', // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 0 // turn
+                    },
+                    {
+                        id: "6",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 6, // ObjectId reference to the operation schedule
+                        status: 'to_do', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "orange",
+                        tooltip: "A",
+                        duration: 1, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 2,// ObjectId reference to the tenant associated
+                        startedAt: '', // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 0 // turn
+                    },
+                    {
+                        id: "7",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 7, // ObjectId reference to the operation schedule
+                        status: 'to_do', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "blue",
+                        tooltip: "A",
+                        duration: 4, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 3,// ObjectId reference to the tenant associated
+                        startedAt: '', // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 0 // turn
+                    },
+                    {
+                        id: "8",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 8, // ObjectId reference to the operation schedule
+                        status: 'overdue', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "black",
+                        tooltip: "A",
+                        duration: 2, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 3,// ObjectId reference to the tenant associated
+                        startedAt: '', // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 0 // turn
+                    },
+                    {
+                        id: "9",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 9, // ObjectId reference to the operation schedule
+                        status: 'overdue', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "black",
+                        tooltip: "A",
+                        duration: 3, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 1,// ObjectId reference to the tenant associated
+                        startedAt: '', // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: "0" // turn
+                    },
+                    {
+                        id: "10",
+                        importHash: '', // Hash value used for data import
+                        createdAt:'Tue, 02 May 2023', // date time
+                        updatedAt: 'Wed, 03 May 2023', // date time
+                        createdBy: 1, // ObjectId reference
+                        updatedBy: 1, // ObjectId reference
+                        label: '',
+                        operation: 10, // ObjectId reference to the operation schedule
+                        status: 'overdue', // "to_do", "in_progress", "completed", "overdue"
+                        prodline: 1, // The reference to the prodline associated with the task.
+                        type: "orange",
+                        tooltip: "A",
+                        duration: 8, //hours: 1,
+                        //date: "Mon, 01 May 2023",
+                        tenant: 2,// ObjectId reference to the tenant associated
+                        startedAt: '', // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 0 // turn
+                    },
+                ],
+                unavailable: [
+                    {
+                        id: "1000",
+                        type: "grey",
+                        tooltip: "C",
+                        duration: 3,
+                        // date: ,
+                        startedAt: "20, Mon, 01 May 2023", // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 2
+                    },
+                    {
+                        id: "1001",
+                        type: "grey",
+                        tooltip: "C",
+                        duration: 2,
+                        // date: "10, Mon, 01 May 2023",
+                        startedAt: "9, Mon, 01 May 2023", // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 1
+                    }, {
+                        id: "1002",
+                        type: "grey",
+                        tooltip: "C",
+                        duration: 3,
+                        // date: "1, Thu, 04 May 2023",
+                        startedAt: "1, Thu, 04 May 2023", // time: "7", date time
+                        finishedAt: '', // date time
+                        shift: 0
+                    },
+                ]
+            }
+        },
     ],
 }
 
