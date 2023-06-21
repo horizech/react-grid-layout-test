@@ -45,12 +45,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 1, // ObjectId reference to the operation schedule
+                        operation: "e44b331b-115d-41d5-8159-f55897d1215a", // ObjectId reference to the operation schedule
                         status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "black",
                         tooltip: "A",
                         duration: 7, //hours: 1,
+                        totalDuration: 7,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: "2023-05-01T17:00:00.000+0500",// '1, Tue, 01 May 2023', // time: "7", date time
@@ -65,12 +66,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 2, // ObjectId reference to the operation schedule
+                        operation: "24b5f2d7-bddd-4a0a-8c4e-73ff7fade1d8", // ObjectId reference to the operation schedule
                         status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "blue",
                         tooltip: "A",
                         duration: 7, //hours: 1,
+                        totalDuration: 7,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: "2023-05-02T01:00:00.000+0500",// "1, Fri, 02 May 2023", // time: "7", date time
@@ -85,12 +87,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 2, // ObjectId reference to the operation schedule
+                        operation: "be0ad6d4-8e22-4265-906f-2688d9055f9d", // ObjectId reference to the operation schedule
                         status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "orange",
                         tooltip: "A",
                         duration: 3, //hours: 1,
+                        totalDuration: 3,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: "2023-05-02T11:00:00.000+0500",// "3, Fri, 02 May 2023", // time: "7", date time
@@ -105,12 +108,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 2, // ObjectId reference to the operation schedule
+                        operation: "f7edeb2b-2763-4857-b7b4-4167d0c47510", // ObjectId reference to the operation schedule
                         status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "orange",
                         tooltip: "A",
                         duration: 3, //hours: 1,
+                        totalDuration: 3,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: "2023-05-03T11:00:00.000+0500",// "3, Wed, 03 May 2023", // time: "7", date time
@@ -125,12 +129,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 5, // ObjectId reference to the operation schedule
+                        operation: "9f71bbd3-264a-425b-9e02-7bffae088741", // ObjectId reference to the operation schedule
                         status: 'to_do', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "orange",
                         tooltip: "A",
                         duration: 2, //hours: 1,
+                        totalDuration: 2,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: '', // time: "7", date time
@@ -145,12 +150,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 6, // ObjectId reference to the operation schedule
+                        operation: "8120e48b-430a-415d-98fd-486c4c3850d9", // ObjectId reference to the operation schedule
                         status: 'to_do', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "orange",
                         tooltip: "A",
                         duration: 1, //hours: 1,
+                        totalDuration: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 2,// ObjectId reference to the tenant associated
                         startedAt: '', // time: "7", date time
@@ -165,12 +171,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 8, // ObjectId reference to the operation schedule
+                        operation: "c137aadb-2409-431b-aa59-95511f642b94", // ObjectId reference to the operation schedule
                         status: 'overdue', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "black",
                         tooltip: "A",
                         duration: 2, //hours: 1,
+                        totalDuration: 2,
                         //date: "Mon, 01 May 2023",
                         tenant: 3,// ObjectId reference to the tenant associated
                         startedAt: '', // time: "7", date time
@@ -185,12 +192,13 @@ export const defaultJson = {
                         createdBy: 1, // ObjectId reference
                         updatedBy: 1, // ObjectId reference
                         label: '',
-                        operation: 9, // ObjectId reference to the operation schedule
+                        operation: "353b91d4-b80b-4445-93c1-748b80fa5431", // ObjectId reference to the operation schedule
                         status: 'overdue', // "to_do", "in_progress", "completed", "overdue"
                         prodline: 1, // The reference to the prodline associated with the task.
                         type: "black",
                         tooltip: "A",
                         duration: 3, //hours: 1,
+                        totalDuration: 3,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
                         startedAt: '', // time: "7", date time
