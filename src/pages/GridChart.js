@@ -71,7 +71,29 @@ const GridChart = () => {
         }
     });
 
-    const getEmptySpace = (subGrid, columns, newElement, isDeleteElement, requiredHours) => {
+    const createElement = (originalEl, duration, id, newIndex) => {
+        return {
+            id: id ?? crypto.randomUUID(),
+            importHash: '', // Hash value used for data import
+            createdAt: (newIndex) % 8 + ", Fri, 02 May 2023", // date time
+            updatedAt: 'Fri, 02 May 2023', // date time
+            createdBy: 1, // ObjectId reference
+            updatedBy: 1, // ObjectId reference
+            label: '',
+            operation: 2, // ObjectId reference to the operation schedule
+            status: 'in_progress', // "to_do", "in_progress", "completed", "overdue"
+            prodline: 1, // The reference to the prodline associated with the task.
+            type: originalEl.type,
+            tooltip: originalEl.tooltip,
+            duration: duration, //hours: 1,
+            //date: "Mon, 01 May 2023",
+            tenant: 1,// ObjectId reference to the tenant associated
+            startedAt: ((newIndex) % 8) + ", Tue, 02 May 2023", // time: "7", date time
+            finishedAt: (((newIndex) % 8) + duration) + ', Tue, 02 May 2023', // date time
+            shift: Math.floor(newIndex / 8) // turn
+        };
+    }
+    const moveElement = (subGrid, columns, newElement, isDeleteElement, requiredHours) => {
         let spaces = []
         for (let y = 0; y <= 2; y++) {
             for (let x = 0; x < columns; x++) {
@@ -81,14 +103,14 @@ const GridChart = () => {
 
         let availableSpaces = (new Array(24)).fill(true);
         console.log(availableSpaces);
-        console.log(subGrid)
+        console.log(subGrid);
         subGrid
             .forEach((block, k) => {
                 let startedAt = parseInt(block.startedAt.split(',')[0]);
                 let duration = block.duration;
                 (new Array(duration)).fill(1).map((x, i) => i).forEach(x => {
                     console.log(startedAt);
-                    availableSpaces[startedAt + x] = false;
+                    availableSpaces[(block.shift * 8) + startedAt + x] = false;
                 })
                 console.log(startedAt, duration);
             });
@@ -96,37 +118,88 @@ const GridChart = () => {
         console.log(availableSpaces);
         let widthSpace = 0;
 
+        let lockedSpaces = [];
+        subGrid.filter(x => x.type == 'grey').forEach(lockedBlock => {
+            let startedAt = parseInt(lockedBlock.startedAt.split(',')[0]);
+            let duration = lockedBlock.duration;
+            (new Array(duration)).fill(1).map((x, i) => i).forEach(x => {
+                console.log(startedAt);
+                lockedSpaces.push((lockedBlock.shift * 8) + startedAt + x);
+            })
+        });
+        console.log(lockedSpaces);
 
         let newIndex = -1;
+        let newBlocks = [];
+
+        let blockNum = 0;
+        let totalDuration = 0;
 
         for (let spaceIndex = 0; spaceIndex < availableSpaces.length; spaceIndex++) {
+            // If new shift started
+            if (spaceIndex % 8 == 0 && widthSpace > 0) {
+                newBlocks.push(createElement(newElement, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
+                widthSpace = 0;
+                newIndex = -1;
+                isDeleteElement = true;
+            }
+            // Check if stepping on an empty space
             // availableSpaces.map((x, j) =>{
             if (availableSpaces[spaceIndex]) {
                 if (newIndex == -1) {
                     newIndex = spaceIndex;
                 }
                 widthSpace++;
+                totalDuration++;
             }
             else {
-                widthSpace = 0;
-                newIndex = -1;
+                if (lockedSpaces.includes(spaceIndex)) {
+                    if (widthSpace > 0) {
+                        newBlocks.push(createElement(newElement, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
+                        widthSpace = 0;
+                        newIndex = -1;
+                        isDeleteElement = true;
+                    }
+                }
+                else {
+                    newBlocks = [];
+                    widthSpace = 0;
+                    newIndex = -1;
+                    totalDuration = 0;
+                }
             }
 
-            if (widthSpace >= newElement.duration) {
-                // let quotient = newIndex / 8;
-                // const x = (newIndex) % 8;
-                const x = newIndex;
-                const y = Math.floor(newIndex / 8);
+            // if (widthSpace >= newElement.duration) {
+            //     // let quotient = newIndex / 8;
+            //     // const x = (newIndex) % 8;
+            //     const x = newIndex;
+            //     const y = Math.floor(newIndex / 8);
 
-                newElement.startedAt = "" + x; //newIndex <= 7 ? newIndex : newIndex <= 15 ? newIndex - 7 : newIndex - 15;
-                newElement.shift = y; //newIndex <= 7 ? 0 : newIndex <= 15 ? 1: 2 ;
-                isDeleteElement = true;
-                break;
-            }
-            else {
-                isDeleteElement = false;
-            }
+            //     newElement.startedAt = "" + x; //newIndex <= 7 ? newIndex : newIndex <= 15 ? newIndex - 7 : newIndex - 15;
+            //     newElement.shift = y; //newIndex <= 7 ? 0 : newIndex <= 15 ? 1: 2 ;
+            //     isDeleteElement = true;
+            //     break;
+            // }
+            // else {
+            //     isDeleteElement = false;
+            // }
+
+
         }
+
+        if (widthSpace > 0) {
+            newBlocks.push(createElement(newElement, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
+            widthSpace = 0;
+            newIndex = -1;
+            isDeleteElement = true;
+        }
+        // if(totalDuration == newElement.duration ) {
+        //     isDeleteElement = true;
+        // }
+        // else {
+        //     isDeleteElement = false;
+        // }
+
         console.log(newElement)
 
         console.log(columns);
@@ -142,7 +215,7 @@ const GridChart = () => {
             );
             console.log(occopied);
         });
-        return ({ updatedElement: newElement, isDeleteElement })
+        return ({ updatedElements: newBlocks.length > 1 ? newBlocks : [newElement, ...[]], isDeleteElement: (newBlocks.length > 1 ? true : false) }) //isDeleteElement
     }
 
     const updateAxisOfNewElement = (newElement, spaces, isDeleteElement) => {
@@ -211,28 +284,34 @@ const GridChart = () => {
                         newGrid.data[i].work.blocks.sort((a, b) => { return a.shift - b.shift })
                         let elementAxis = [];
                         let gridElements = [...inprogressGrid, ...unavailableGrid];
-                        // elementAxis = getEmptySpace(gridElements, 8, newElement, isDeleteElement);
+                        // elementAxis = moveElement(gridElements, 8, newElement, isDeleteElement);
                         // elementAxis.sort(function (a, b) { return a.y - b.y })
                         // console.log(elementAxis);
                         console.log(gridElements);
 
-                        const { updatedElement, isDeleteElement } = getEmptySpace(gridElements, 8, newElement, isDelete);
-                        console.log(updatedElement);
-                        newGrid.data[i].work.blocks.forEach((x, j) => {
-                            if (x.id === newElement.id) {
-                                newGrid.data[i].work.blocks[j].status = targetCategory;
-                                // console.log(`${updatedElement.startedAt}, ${startedAt}`);
-                                // getEmptySpace(gridElements, 8, newElement, isDelete);
-                                newGrid.data[i].work.blocks[j].startedAt = `${updatedElement.startedAt}, ${startDate}`;
-                                newGrid.data[i].work.blocks[j].shift = updatedElement.shift;
-                                console.log(newGrid.data[i].work.blocks[j]);
-                            }
-                        })
+                        const { updatedElements, isDeleteElement } = moveElement(gridElements, 8, newElement, isDelete);
+                        console.log(updatedElements);
+                        if (isDeleteElement) {
+                            newGrid.data[i].work.blocks = newGrid.data[i].work.blocks.filter(x => x.id != newElement.id);
+                            newGrid.data[i].work.blocks = [...newGrid.data[i].work.blocks, ...updatedElements];
+                        }
+                        else {
+                            newGrid.data[i].work.blocks.forEach((x, j) => {
+                                if (x.id === newElement.id) {
+                                    newGrid.data[i].work.blocks[j].status = targetCategory;
+                                    // console.log(`${updatedElement.startedAt}, ${startedAt}`);
+                                    // moveElement(gridElements, 8, newElement, isDelete);
+                                    newGrid.data[i].work.blocks[j].startedAt = `${updatedElements[0].startedAt}, ${startDate}`;
+                                    newGrid.data[i].work.blocks[j].shift = updatedElements[0].shift;
+                                    console.log(newGrid.data[i].work.blocks[j]);
+                                }
+                            })
+                        }
                     } else {
                         newGrid.data[i].work.blocks.forEach((x, j) => {
                             if (x.id === newElement.id) {
                                 newGrid.data[i].work.blocks[j].status = targetCategory;
-                                // getEmptySpace(gridElements, 8, newElement, isDelete);
+                                // moveElement(gridElements, 8, newElement, isDelete);
                                 // console.log('not in progress');
                                 newGrid.data[i].work.blocks[j].startedAt = '';
                             }
@@ -816,8 +895,10 @@ const GridChart = () => {
                                                 className={`duration-${block.duration}`}
                                                 // onMouseDown={}
                                                 // onMouseOver={}
-                                                // onDrag={() => {}}
+                                                onDrag={() => console.log('onDrag')}
                                                 // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                                onClick={e => console.log("clicked!")}
+                                                onDoubleClick={e => console.log('double clicked!')}
                                                 onDragStart={e => dragStartHandle(block, `${data.machine},in_progress,${day}`, `${data.machine},in_progress,${block.id}`, data)}
                                                 style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px", zIndex: '4' }}
                                             >{
