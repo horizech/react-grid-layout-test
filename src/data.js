@@ -7,13 +7,20 @@ export const colorCodes = {
 
 export const defaultJson = {
     days: [
-        "Mon, 01 May 2023",
-        "Tue, 02 May 2023",
-        "Wed, 03 May 2023",
-        "Thu, 04 May 2023",
-        "Fri, 05 May 2023",
-        "Sat, 06 May 2023",
-        "Sun, 07 May 2023",
+        "2023-05-01T17:00:00.000+0500",
+        "2023-05-02T17:00:00.000+0500",
+        "2023-05-03T17:00:00.000+0500",
+        "2023-05-04T17:00:00.000+0500",
+        "2023-05-05T17:00:00.000+0500",
+        "2023-05-06T17:00:00.000+0500",
+        "2023-05-07T17:00:00.000+0500",
+        // "Mon, 01 May 2023",
+        // "Tue, 02 May 2023",
+        // "Wed, 03 May 2023",
+        // "Thu, 04 May 2023",
+        // "Fri, 05 May 2023",
+        // "Sat, 06 May 2023",
+        // "Sun, 07 May 2023",
     ],
     data: [
         {
@@ -46,8 +53,8 @@ export const defaultJson = {
                         duration: 7, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
-                        startedAt: '1, Tue, 01 May 2023', // time: "7", date time
-                        finishedAt: '7, Tue, 01 May 2023', // date time
+                        startedAt: "2023-05-01T17:00:00.000+0500",// '1, Tue, 01 May 2023', // time: "7", date time
+                        finishedAt: "2023-05-02T00:00:00.000+0500",// '7, Tue, 01 May 2023', // date time
                         shift: 2 // turn
                     },
                     {
@@ -66,8 +73,8 @@ export const defaultJson = {
                         duration: 7, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
-                        startedAt: "1, Fri, 02 May 2023", // time: "7", date time
-                        finishedAt: '7, Fri, 02 May 2023', // date time
+                        startedAt: "2023-05-02T01:00:00.000+0500",// "1, Fri, 02 May 2023", // time: "7", date time
+                        finishedAt: "2023-05-02T08:00:00.000+0500",// '7, Fri, 02 May 2023', // date time
                         shift: 0 // turn
                     },
                     {
@@ -86,8 +93,8 @@ export const defaultJson = {
                         duration: 3, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
-                        startedAt: "3, Fri, 02 May 2023", // time: "7", date time
-                        finishedAt: '5, Fri, 02 May 2023', // date time
+                        startedAt: "2023-05-02T11:00:00.000+0500",// "3, Fri, 02 May 2023", // time: "7", date time
+                        finishedAt: "2023-05-02T14:00:00.000+0500",// '5, Fri, 02 May 2023', // date time
                         shift: 1 // turn
                     },
                     {
@@ -106,8 +113,8 @@ export const defaultJson = {
                         duration: 3, //hours: 1,
                         //date: "Mon, 01 May 2023",
                         tenant: 1,// ObjectId reference to the tenant associated
-                        startedAt: "3, Wed, 03 May 2023", // time: "7", date time
-                        finishedAt: '5, Wed, 03 May 2023', // date time
+                        startedAt: "2023-05-03T11:00:00.000+0500",// "3, Wed, 03 May 2023", // time: "7", date time
+                        finishedAt: "2023-05-03T14:00:00.000+0500",// '5, Wed, 03 May 2023', // date time
                         shift: 1 // turn
                     },
                     {
@@ -198,8 +205,8 @@ export const defaultJson = {
                         tooltip: "C",
                         duration: 3,
                         // date: ,
-                        startedAt: "3, Mon, 02 May 2023", // time: "7", date time
-                        finishedAt: '5, Mon, 02 May 2023', // date time
+                        startedAt: "2023-05-02T19:00:00.000+0500",// "3, Mon, 02 May 2023", // time: "7", date time
+                        finishedAt: "2023-05-02T22:00:00.000+0500",// '5, Mon, 02 May 2023', // date time
                         shift: 2
                     },
                     {
@@ -208,8 +215,8 @@ export const defaultJson = {
                         tooltip: "C",
                         duration: 2,
                         // date: "10, Mon, 01 May 2023",
-                        startedAt: "9, Mon, 01 May 2023", // time: "7", date time
-                        finishedAt: '', // date time
+                        startedAt: "2023-05-01T17:00:00.000+0500",// "9, Mon, 01 May 2023", // time: "7", date time
+                        finishedAt: "2023-05-01T19:00:00.000+0500",// '', // date time
                         shift: 1
                     }, {
                         id: "1002",
@@ -217,8 +224,8 @@ export const defaultJson = {
                         tooltip: "C",
                         duration: 3,
                         // date: "1, Thu, 04 May 2023",
-                        startedAt: "1, Thu, 04 May 2023", // time: "7", date time
-                        finishedAt: '', // date time
+                        startedAt: "2023-05-04T01:00:00.000+0500",// "1, Thu, 04 May 2023", // time: "7", date time
+                        finishedAt: "2023-05-04T04:00:00.000+0500",// '', // date time
                         shift: 0
                     },
                 ]

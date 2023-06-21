@@ -71,7 +71,16 @@ const GridChart = () => {
         }
     });
 
-    const createElement = (originalEl, duration, id, newIndex) => {
+    const createElement = (originalEl, targetDateStr, duration, id, newIndex, newStartedAt) => {
+        let targetDate = new Date(targetDateStr);
+        targetDate.setHours(newIndex); //(Math.floor(newIndex / 8)) + ((newIndex) % 8));
+
+        let startedDate = new Date(originalEl.startedAt);
+        startedDate.setHours((Math.floor(newIndex / 8)) + ((newIndex) % 8));
+
+        let finishedDate = new Date(targetDate.toISOString());
+        finishedDate.setHours(targetDate.getHours() + duration);
+
         return {
             id: id ?? crypto.randomUUID(),
             importHash: '', // Hash value used for data import
@@ -88,12 +97,12 @@ const GridChart = () => {
             duration: duration, //hours: 1,
             //date: "Mon, 01 May 2023",
             tenant: 1,// ObjectId reference to the tenant associated
-            startedAt: ((newIndex) % 8) + ", Tue, 02 May 2023", // time: "7", date time
-            finishedAt: (((newIndex) % 8) + duration) + ', Tue, 02 May 2023', // date time
+            startedAt: targetDate.toISOString(),// ((newIndex) % 8) + ", Tue, 02 May 2023", // time: "7", date time
+            finishedAt: finishedDate.toISOString(),// (((newIndex) % 8) + duration) + ', Tue, 02 May 2023', // date time
             shift: Math.floor(newIndex / 8) // turn
         };
     }
-    const moveElement = (subGrid, columns, newElement, isDeleteElement, requiredHours) => {
+    const moveElement = (subGrid, targetDate, columns, newElement, isDeleteElement, requiredHours) => {
         let spaces = []
         for (let y = 0; y <= 2; y++) {
             for (let x = 0; x < columns; x++) {
@@ -106,7 +115,7 @@ const GridChart = () => {
         console.log(subGrid);
         subGrid
             .forEach((block, k) => {
-                let startedAt = parseInt(block.startedAt.split(',')[0]);
+                let startedAt = ((new Date(block.startedAt)).getHours() % 8); // parseInt(block.startedAt.split(',')[0]);
                 let duration = block.duration;
                 (new Array(duration)).fill(1).map((x, i) => i).forEach(x => {
                     console.log(startedAt);
@@ -120,7 +129,7 @@ const GridChart = () => {
 
         let lockedSpaces = [];
         subGrid.filter(x => x.type == 'grey').forEach(lockedBlock => {
-            let startedAt = parseInt(lockedBlock.startedAt.split(',')[0]);
+            let startedAt = ((new Date(lockedBlock.startedAt)).getHours() % 8); // parseInt(lockedBlock.startedAt.split(',')[0]);
             let duration = lockedBlock.duration;
             (new Array(duration)).fill(1).map((x, i) => i).forEach(x => {
                 console.log(startedAt);
@@ -138,7 +147,7 @@ const GridChart = () => {
         for (let spaceIndex = 0; spaceIndex < availableSpaces.length; spaceIndex++) {
             // If new shift started
             if (spaceIndex % 8 == 0 && widthSpace > 0) {
-                newBlocks.push(createElement(newElement, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
+                newBlocks.push(createElement(newElement, targetDate, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
                 widthSpace = 0;
                 newIndex = -1;
                 isDeleteElement = true;
@@ -155,7 +164,7 @@ const GridChart = () => {
             else {
                 if (lockedSpaces.includes(spaceIndex)) {
                     if (widthSpace > 0) {
-                        newBlocks.push(createElement(newElement, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
+                        newBlocks.push(createElement(newElement, targetDate, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
                         widthSpace = 0;
                         newIndex = -1;
                         isDeleteElement = true;
@@ -167,6 +176,14 @@ const GridChart = () => {
                     newIndex = -1;
                     totalDuration = 0;
                 }
+            }
+
+            if (widthSpace > 0 && totalDuration == newElement.duration) {
+                newBlocks.push(createElement(newElement, targetDate, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
+                widthSpace = 0;
+                newIndex = -1;
+                isDeleteElement = true;
+                break;
             }
 
             // if (widthSpace >= newElement.duration) {
@@ -187,12 +204,7 @@ const GridChart = () => {
 
         }
 
-        if (widthSpace > 0) {
-            newBlocks.push(createElement(newElement, widthSpace, newBlocks.length == 0 ? newElement.id : null, newIndex));
-            widthSpace = 0;
-            newIndex = -1;
-            isDeleteElement = true;
-        }
+
         // if(totalDuration == newElement.duration ) {
         //     isDeleteElement = true;
         // }
@@ -204,18 +216,18 @@ const GridChart = () => {
 
         console.log(columns);
         console.log(spaces);
-        subGrid.forEach((block, k) => {
-            let occopied = [];
-            let x = parseInt(block.startedAt);
-            spaces.map((a, i) => {
-                if (block.shift === a.y && x === a.x) {
-                    occopied = spaces.splice(i, block.duration)
-                }
-            }
-            );
-            console.log(occopied);
-        });
-        return ({ updatedElements: newBlocks.length > 1 ? newBlocks : [newElement, ...[]], isDeleteElement: (newBlocks.length > 1 ? true : false) }) //isDeleteElement
+        // subGrid.forEach((block, k) => {
+        //     let occopied = [];
+        //     let x = new Date(block.startedAt).getHours() % 8; // parseInt(block.startedAt);
+        //     spaces.map((a, i) => {
+        //         if (block.shift === a.y && x === a.x) {
+        //             occopied = spaces.splice(i, block.duration)
+        //         }
+        //     }
+        //     );
+        //     console.log(occopied);
+        // });
+        return ({ updatedElements: newBlocks.length > 0 ? newBlocks : [newElement, ...[]], isDeleteElement: isDeleteElement }) //isDeleteElement
     }
 
     const updateAxisOfNewElement = (newElement, spaces, isDeleteElement) => {
@@ -247,10 +259,17 @@ const GridChart = () => {
 
     const addNewElement = (newGrid, newElement, targetId, sourceId, isDelete) => {
         let newTargetId = [targetId.split(',')[0], targetId.split(',')[1]].join();
-        let startDate = [targetId.split(',')[2], targetId.split(',')[3]].join();
-        console.log(startDate);
+        let targetDate = targetId.split(',')[2]; //[targetId.split(',')[2], targetId.split(',')[3]].join();
+        console.log(targetDate);
         let targetCategory = targetId.split(',')[1];
         let sourceCategory = sourceId.split(',')[1];
+        const targetIdParts = targetId.split(',');
+
+        const targetIdDate = targetIdParts.length > 2 ?
+            new Date(targetIdParts[2]).getDate() : null;
+        const targetIdMonth = targetIdParts.length > 2 ?
+            new Date(targetIdParts[2]).getMonth() : null;
+
         if (targetId != sourceId) {
             newElement.type = blockColor;
             // console.log('checkpointz')
@@ -273,8 +292,32 @@ const GridChart = () => {
                     // console.log(grid);/
                     let inprogressGrid = grid.work.taskSchedules.filter((x) => x.status == 'in_progress');
                     // console.log(inprogressGrid);
-                    inprogressGrid = inprogressGrid.filter((x) => x.startedAt.split(',')[2] == targetId.split(',')[3]);
-                    let unavailableGrid = grid.work.unavailable.filter((x) => x.startedAt.split(',')[2] == targetId.split(',')[3])
+
+                    if (targetIdParts.length > 2) {
+                        inprogressGrid = inprogressGrid.filter((x) => {
+                            const blockDateTime = new Date(x.startedAt);
+                            const blockDate = blockDateTime.getDate();
+                            const blockMonth = blockDateTime.getMonth();
+
+                            return blockDate === targetIdDate && blockMonth === targetIdMonth;
+
+                            // return x.startedAt.split(',')[2] == targetId.split(',')[3]
+                        });
+                    }
+                    let unavailableGrid = [];
+                    if (targetIdParts.length > 2) {
+                        unavailableGrid = grid.work.unavailable.filter((x) => {
+                            const blockDateTime = new Date(x.startedAt);
+                            const blockDate = blockDateTime.getDate();
+                            const blockMonth = blockDateTime.getMonth();
+
+                            return blockDate === targetIdDate && blockMonth === targetIdMonth;
+
+                            // return x.startedAt.split(',')[2] == targetId.split(',')[3]
+                        });
+                    }
+
+
                     // console.log(inprogressGrid);
                     console.log(unavailableGrid);
                     // newGrid.data[i].work.taskSchedules.push(newElement);
@@ -289,7 +332,7 @@ const GridChart = () => {
                         // console.log(elementAxis);
                         console.log(gridElements);
 
-                        const { updatedElements, isDeleteElement } = moveElement(gridElements, 8, newElement, isDelete);
+                        const { updatedElements, isDeleteElement } = moveElement(gridElements, targetDate, 8, newElement, isDelete);
                         console.log(updatedElements);
                         if (isDeleteElement) {
                             newGrid.data[i].work.taskSchedules = newGrid.data[i].work.taskSchedules.filter(x => x.id != newElement.id);
@@ -301,7 +344,7 @@ const GridChart = () => {
                                     newGrid.data[i].work.taskSchedules[j].status = targetCategory;
                                     // console.log(`${updatedElement.startedAt}, ${startedAt}`);
                                     // moveElement(gridElements, 8, newElement, isDelete);
-                                    newGrid.data[i].work.taskSchedules[j].startedAt = `${updatedElements[0].startedAt}, ${startDate}`;
+                                    newGrid.data[i].work.taskSchedules[j].startedAt = updatedElements[0].startedAt; //`${updatedElements[0].startedAt}, ${targetDate}`;
                                     newGrid.data[i].work.taskSchedules[j].shift = updatedElements[0].shift;
                                     console.log(newGrid.data[i].work.taskSchedules[j]);
                                 }
@@ -441,9 +484,9 @@ const GridChart = () => {
         } else if (id.split(',')[1] == 'overdue') {
             newGridData.data.forEach((grid, i) => {
                 if (sourceId.split(',')[0] == grid.machine) {
-                    newGridData.data[i][sourceId.split(',')[1]].taskSchedules.forEach((block, k) => {
+                    newGridData.data[i].work.taskSchedules.forEach((block, k) => {
                         if (block.id == newElement.id) {
-                            newGridData.data[i][sourceId.split(',')[1]].taskSchedules[k].type = blockColor
+                            newGridData.data[i].work.taskSchedules[k].type = blockColor
                         }
                     });
                 }
@@ -474,7 +517,8 @@ const GridChart = () => {
             alert("This element is not draggable!");
         } else {
             let category = id.split(',')[1];
-            let date = id.split(',')[2] + ',' + id.split(',')[3];
+            const idParts = id.split(',');
+            const date = idParts.length > 2 ? idParts[2] : null;
             console.log(date);
             // if (targetId == sourceId) {
             newGrid.data.forEach((grid, i) => {
@@ -484,7 +528,9 @@ const GridChart = () => {
                         console.log(`${x}, ${date}`)
                         if (block.id == griditem.i.split(',')[2]) {
                             index = k
-                            newGrid.data[i].work.taskSchedules[k].startedAt = `${x}, ${date}`;
+                            let newDate = newGrid.data[i].work.taskSchedules[k].startedAt ? new Date(newGrid.data[i].work.taskSchedules[k].startedAt) : new Date();
+                            newDate.setHours(x); //(griditem.y * 8) + x);
+                            newGrid.data[i].work.taskSchedules[k].startedAt = newDate.toISOString(); // `${x}, ${date}`;
                             newGrid.data[i].work.taskSchedules[k].shift = griditem.y;
                             // newGrid.data[i].work.taskSchedules[k].type = blockColor;
 
@@ -782,8 +828,8 @@ const GridChart = () => {
             if (block.startedAt == null) {
                 newData.work.taskSchedules[i].startedAt = `0, ${days[0]}`;
             }
-            if ((block.duration + parseInt(block.startedAt.split(',')[0]) % 8) > 8) {
-                let firstElementWidth = 8 - parseInt(block.startedAt.split(',')[0]) % 8;
+            if ((block.duration + ((new Date(block.startedAt)).getHours() % 8) > 8)) { // parseInt(block.startedAt.split(',')[0]) % 8) > 8) {
+                let firstElementWidth = 8 - ((new Date(block.startedAt)).getHours() % 8); //parseInt(block.startedAt.split(',')[0]) % 8;
                 let duration = block.duration;
                 newData.work.taskSchedules.splice(i, 1);
                 block.duration = firstElementWidth;
@@ -793,7 +839,7 @@ const GridChart = () => {
                 block.duration = duration - firstElementWidth
                 // block.id = parseInt(UpdatedData.work.taskSchedules.reduce((a, b) => parseInt(a.id) < parseInt(b.id) ? b : a).id) + 1;
                 block.shift = block.shift + 1;
-                block.startedAt = `${block.shift * 8}, ${block.startedAt.split(',')[1]}, ${block.startedAt.split(',')[2]}`;
+                // block.startedAt = `${block.shift * 8}, ${block.startedAt.split(',')[1]}, ${block.startedAt.split(',')[2]}`;
                 block['key'] = `${data.machine},in_progress,${block.id},piece`
                 block['piece'] = true;
                 UpdatedData.work.taskSchedules.push(block)
@@ -808,8 +854,11 @@ const GridChart = () => {
         let layout = [...newData.work.taskSchedules
             .filter((x) => x.status == 'in_progress')
             .map((block, blockIndex) => {
-                console.log(block.startedAt.split(',')[0]);
-                x = parseInt(block.startedAt != '' ? block.startedAt.split(',')[0] : 0) % 8;;
+                // console.log(block.startedAt.split(',')[0]);
+                x = block.startedAt != '' ?
+                    ((new Date(block.startedAt)).getHours() % 8) : 0;
+                // parseInt(block.startedAt != '' ? block.startedAt.split(',')[0] : 0) % 8;;
+                console.log(x);
                 // console.log(block.key);
                 // console.log("check point", x)
                 // console.log("check point", block.shift)
@@ -818,7 +867,9 @@ const GridChart = () => {
                 return dimension
             }),
         ...newData.work.unavailable.map((block, blockIndex) => {
-            x = parseInt(block.startedAt != '' ? block.startedAt.split(',')[0] : 0) % 8;
+            x = block.startedAt != '' ?
+                ((new Date(block.startedAt)).getHours() % 8) : 0;
+            // parseInt(block.startedAt != '' ? block.startedAt.split(',')[0] : 0) % 8;
             // console.log("check point",x)
             let dimension = { i: `${data.machine},unavailable,${block.id}`, x: x, y: block.shift, w: block.duration, h: 1, static: true }
 
@@ -837,6 +888,10 @@ const GridChart = () => {
                 // console.log(xaxis);
                 xaxis = xaxis + w
                 index = index + 1;
+                const dayDateTime = new Date(day);
+                const dayDate = dayDateTime.getDate();
+                const dayMonth = dayDateTime.getMonth();
+
                 return (
                     <div
                         data-grid={{
@@ -886,31 +941,56 @@ const GridChart = () => {
                         >
                             {
                                 [
-                                    ...newData.work.taskSchedules.filter((x) => x.status == 'in_progress' && (x.startedAt != '' ? x.startedAt.split(',')[2] : null) == day.split(',')[1]).map((block, j) => {
-                                        return (
-                                            <div
-                                                key={`${data.machine},in_progress,${block.id}`}
-                                                draggable={draggable}
-                                                // onClick={(e) => console.log(e)}
-                                                className={`duration-${block.duration}`}
-                                                // onMouseDown={}
-                                                // onMouseOver={}
-                                                onDrag={() => console.log('onDrag')}
-                                                // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
-                                                onClick={e => console.log("clicked!")}
-                                                onDoubleClick={e => console.log('double clicked!')}
-                                                onDragStart={e => dragStartHandle(block, `${data.machine},in_progress,${day}`, `${data.machine},in_progress,${block.id}`, data)}
-                                                style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px", zIndex: '4' }}
-                                            >{
-                                                    showOverlay && dragItem.i == `${data.machine},in_progress,${block.id}` && (
-                                                        <BlockOverlay overlayWidth={block.width} color={blockColor} />
-                                                    )
-                                                }
-                                            </div>
+                                    ...newData.work.taskSchedules.filter((x) => x.status == 'in_progress')
+                                        .filter((block) => {
+                                            if (!block.startedAt) {
+                                                return false;
+                                            }
 
-                                        )
-                                    }),
-                                    ...newData.work.unavailable.filter(block => (block.startedAt != '' ? block.startedAt.split(',')[2] : null) == day.split(',')[1]).map((block, blockIndex) => {
+                                            const blockDateTime = new Date(block.startedAt);
+                                            const blockDate = blockDateTime.getDate();
+                                            const blockMonth = blockDateTime.getMonth();
+
+                                            return dayDate === blockDate && dayMonth === blockMonth;
+
+                                            // (x.startedAt != '' ? x.startedAt.split(',')[2] : null) == day.split(',')[1]
+                                        }).map((block, j) => {
+                                            return (
+                                                <div
+                                                    key={`${data.machine},in_progress,${block.id}`}
+                                                    draggable={draggable}
+                                                    // onClick={(e) => console.log(e)}
+                                                    className={`duration-${block.duration}`}
+                                                    // onMouseDown={}
+                                                    // onMouseOver={}
+                                                    onDrag={() => console.log('onDrag')}
+                                                    // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
+                                                    onClick={e => console.log("clicked!")}
+                                                    onDoubleClick={e => console.log('double clicked!')}
+                                                    onDragStart={e => dragStartHandle(block, `${data.machine},in_progress,${day}`, `${data.machine},in_progress,${block.id}`, data)}
+                                                    style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px", zIndex: '4' }}
+                                                >{
+                                                        showOverlay && dragItem.i == `${data.machine},in_progress,${block.id}` && (
+                                                            <BlockOverlay overlayWidth={block.width} color={blockColor} />
+                                                        )
+                                                    }
+                                                </div>
+
+                                            )
+                                        }),
+                                    ...newData.work.unavailable.filter(block => {
+                                        if (!block.startedAt) {
+                                            return false;
+                                        }
+
+                                        const blockDateTime = new Date(block.startedAt);
+                                        const blockDate = blockDateTime.getDate();
+                                        const blockMonth = blockDateTime.getMonth();
+
+                                        return dayDate === blockDate && dayMonth === blockMonth;
+
+                                        // return (block.startedAt != '' ? block.startedAt.split(',')[2] : null) == day.split(',')[1]
+                                    }).map((block, blockIndex) => {
                                         return (
                                             <div
                                                 key={`${data.machine},unavailable,${block.id}`}
