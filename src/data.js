@@ -29,7 +29,7 @@ export const defaultJson = {
             //     ]
             // },
             work: {
-                blocks: [
+                taskSchedules: [
                     {
                         id: "97f2fe4d-e8f8-4e59-b46e-ea827a5dc994",
                         importHash: '', // Hash value used for data import
