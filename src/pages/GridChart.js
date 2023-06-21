@@ -485,19 +485,13 @@ const GridChart = () => {
                             })
                         }
                     } else {
-                        newGrid.data[i].work.taskSchedules.forEach((x, j) => {
-                            if (x.operation === newElement.operation && x.id != newElement.id) {
-                                newGrid.data[i].work.taskSchedules.splice(j, 1);
-                            }
-                        });
-                        newGrid.data[i].work.taskSchedules.forEach((x, j) => {
-                            if (x.id == newElement.id) {
-                                newGrid.data[i].work.taskSchedules[j].status = targetCategory;
-                                newGrid.data[i].work.taskSchedules[j].duration = newElement.totalDuration;
-                                newGrid.data[i].work.taskSchedules[j].type = blockColor
-                                newGrid.data[i].work.taskSchedules[j].startedAt = '';
-                            }
-                        })
+                        let newData = newGrid.data[i].work.taskSchedules.filter(x => x.operation != newElement.operation);
+                        newElement.status=targetCategory;
+                        newElement.duration=newElement.totalDuration
+                        newElement.type=blockColor
+                        newElement.startedAt='';
+                        newGrid.data[i].work.taskSchedules = [...newData, newElement];
+                        
                     }
                     //     // updateAxisOfNewElement(newElement, elementAxis, isDelete);
                     //     // console.log(elementAxis);
