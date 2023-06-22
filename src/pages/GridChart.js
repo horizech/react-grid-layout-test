@@ -623,10 +623,10 @@ const GridChart = () => {
 
     }
 
-    const onDoubleClick = (e) => {
+    const onDoubleClick = (e, dataKey) => {
         e.preventDefault();
 
-        const dataKey = e.target.getAttribute('data-key');
+        // const dataKey = e.target.getAttribute('data-key');
         const dataKeyParts = dataKey.split(',');
         const blockId = dataKeyParts[2];
 
@@ -1233,7 +1233,7 @@ const GridChart = () => {
                                                     onDrag={() => console.log('onDrag')}
                                                     // onDragStop={e => dragStopHandle(elementGrid, subGrid.id)}
                                                     onClick={(e) => restoreItemColor(e, block.operation, `${data.machine},in_progress,${day}`)}
-                                                    onDoubleClick={e => onDoubleClick(e)}
+                                                    onDoubleClick={e => onDoubleClick(e, `${data.machine},in_progress,${block.id}`)}
 
                                                     onDragStart={e => dragStartHandle(block, `${data.machine},in_progress,${day}`, `${data.machine},in_progress,${block.id}`, data)}
                                                     style={{ backgroundColor: block.type, padding: '0px', borderRadius: "5px", zIndex: '4' }}
