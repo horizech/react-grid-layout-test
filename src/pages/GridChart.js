@@ -5,6 +5,9 @@ import { defaultGrid, defaultJson } from "../data";
 import '../App.css';
 import { BlockOverlay } from "./BlockOverlay";
 import { PdfDoc } from "./PdfDoc";
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+
 // import { Document, Page } from "react-pdf";
 // import PdfDoc from "./PdfDoc";
 
@@ -1278,6 +1281,57 @@ const GridChart = () => {
         // })
     }
     let y = 1;
+    let chartNew
+   
+    const ctx = "myChart";
+    const xValues = ["2023-05-02", "2023-05-03", "2023-05-04", "2023-05-05", "2023-05-06", "2023-05-07"];
+    const yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+    const configuration = {
+        type: "bar",
+        data: {
+            labels: xValues,
+            // label: "Machine",
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: [
+                    "Red",
+                    "Blue",
+                    "Yellow",
+                    "Green",
+                    "Purple",
+                    "Orange"
+                ],
+                borderColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Machine",
+                fontSize: 16
+            },
+            scales: {
+                yAxes: [{ ticks: { min: 6, max: 16 } }],
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (isStart) {
+            setStart(false);
+            var ctx = document.getElementById('myChart');
+            console.log(chartNew);
+            if (chartNew) {
+                chartNew.destroy();
+            }
+            chartNew = new Chart(ctx, configuration);
+        }
+
+    });
     return (
         <Fragment>
             <GridLayout
@@ -1358,8 +1412,10 @@ const GridChart = () => {
                         "static": true
                     }}
                     key={"graph"}
-                    style={{ overflow: "auto", textAlign: "center", backgroundColor: "lightgrey", border: 'solid', opacity: 1, borderRadius: "20px" }}
-                ></div>
+                    style={{ overflow: "auto", textAlign: "center", backgroundColor: "white", border: 'solid', opacity: 1, borderRadius: "20px" }}
+                >
+                    <canvas id="myChart" width="600" height="200"></canvas>
+                </div>
             </GridLayout >
         </Fragment >
     );
