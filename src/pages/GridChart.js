@@ -513,11 +513,12 @@ const GridChart = () => {
                         else {
                             newGrid.data[i].work.taskSchedules.forEach((x, j) => {
                                 if (x.id === newElement.id) {
-                                    newGrid.data[i].work.taskSchedules[j].status = targetCategory;
+                                    newGrid.data[i].work.taskSchedules[j].status = updatedElements[0].status; //targetCategory;
+                                    newGrid.data[i].work.taskSchedules[j].type = blockColor; //targetCategory;
                                     // console.log(`${updatedElement.startedAt}, ${startedAt}`);
                                     // moveElement(gridElements, 8, newElement, isDelete);
-                                    newGrid.data[i].work.taskSchedules[j].startedAt = updatedElements[0].startedAt; //`${updatedElements[0].startedAt}, ${targetDate}`;
-                                    newGrid.data[i].work.taskSchedules[j].shift = updatedElements[0].shift;
+                                    // newGrid.data[i].work.taskSchedules[j].startedAt = updatedElements[0].startedAt; //`${updatedElements[0].startedAt}, ${targetDate}`;
+                                    // newGrid.data[i].work.taskSchedules[j].shift = updatedElements[0].shift;
                                     // console.log(newGrid.data[i].work.taskSchedules[j]);
                                 }
                             })
